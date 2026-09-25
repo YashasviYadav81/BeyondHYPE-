@@ -1,0 +1,1868 @@
+{
+  "metadata": {
+    "name": "Beyond HYPE Final Research Dataset",
+    "research_date": "2026-09-21",
+    "purpose": "Interactive industry-change → work-change → role-change → capability → build → evidence system",
+    "note": "Claims are deliberately separated from interpretation; layoffs are not treated as proof of AI replacement without evidence."
+  },
+  "fields": [
+    {
+      "field_id": "F1",
+      "field_name": "Software Engineering",
+      "description": "Building, shipping and operating software systems.",
+      "current_landscape": "AI-assisted development, cloud-native systems, distributed systems, automation and stronger end-to-end ownership.",
+      "primary_evidence": "Stack Overflow 2025; Amazon SDE India 2027; GitHub Octoverse 2025",
+      "overall_status": "Established + evolving"
+    },
+    {
+      "field_id": "F2",
+      "field_name": "AI / ML",
+      "description": "Developing and deploying machine-learning and AI systems.",
+      "current_landscape": "Production ML, GenAI/LLMs, large-scale data, evaluation, deployment and AI-enabled products.",
+      "primary_evidence": "Amazon Applied Scientist India 2027; TCS AI Careers 2026; WEF 2025",
+      "overall_status": "Growing + specializing"
+    },
+    {
+      "field_id": "F3",
+      "field_name": "Data",
+      "description": "Turning data into reliable analysis, products and decisions.",
+      "current_landscape": "Data platforms, pipelines, cloud warehouses/lakes, analytics, ML-ready data and data quality.",
+      "primary_evidence": "Amazon Data Engineer India 2027; WEF 2025",
+      "overall_status": "Evolving + expanding"
+    },
+    {
+      "field_id": "F4",
+      "field_name": "Cybersecurity",
+      "description": "Protecting applications, infrastructure, identities, data and AI systems.",
+      "current_landscape": "Cloud security, application security, AI security, risk, detection/response and governance.",
+      "primary_evidence": "ISC2 Workforce Study 2025; WEF 2025",
+      "overall_status": "Growing + specializing"
+    },
+    {
+      "field_id": "F5",
+      "field_name": "Cloud & DevOps",
+      "description": "Building and operating reliable cloud infrastructure and delivery systems.",
+      "current_landscape": "Cloud-native architecture, containers/Kubernetes, automation, observability, platform engineering and AI infrastructure.",
+      "primary_evidence": "CNCF research; Amazon cloud roles 2026-27; WEF 2025",
+      "overall_status": "Established + evolving"
+    }
+  ],
+  "industry_changes": [
+    {
+      "field_id": "F1",
+      "piece": "01",
+      "change": "AI-assisted software development",
+      "what_is_happening": "Code generation, documentation, testing and learning are increasingly integrated into developer workflows.",
+      "why_it_matters": "AI assistance is widespread, but trust and verification remain active constraints.",
+      "status": "Established shift",
+      "source": "Stack Overflow 2025 AI"
+    },
+    {
+      "field_id": "F1",
+      "piece": "02",
+      "change": "Cloud-native and distributed systems remain core",
+      "what_is_happening": "Modern software roles increasingly involve scalable cloud services, microservices and distributed systems.",
+      "why_it_matters": "Current India SDE postings explicitly mention cloud-native architectures, microservices and resilient distributed systems.",
+      "status": "Established shift",
+      "source": "Amazon SDE India 2027"
+    },
+    {
+      "field_id": "F1",
+      "piece": "03",
+      "change": "End-to-end ownership is becoming more visible",
+      "what_is_happening": "Intern and early-career roles increasingly describe design-through-deployment and operations, not only coding.",
+      "why_it_matters": "This widens the capability set expected from software engineers.",
+      "status": "Emerging/established",
+      "source": "Amazon SDE India 2027"
+    },
+    {
+      "field_id": "F1",
+      "piece": "04",
+      "change": "AI does not remove the need for verification",
+      "what_is_happening": "AI adoption is high, but developers report distrust, near-correct outputs and debugging costs.",
+      "why_it_matters": "The useful shift is toward assisted production plus human verification.",
+      "status": "Established tension",
+      "source": "Stack Overflow 2025 AI"
+    },
+    {
+      "field_id": "F1",
+      "piece": "05",
+      "change": "Developer ecosystems are expanding and changing",
+      "what_is_happening": "GitHub reports continued growth in developers and AI-related repositories, while language usage is shifting.",
+      "why_it_matters": "Open-source activity is a useful technology signal, not a direct measure of hiring demand.",
+      "status": "Established signal",
+      "source": "GitHub Octoverse 2025"
+    },
+    {
+      "field_id": "F2",
+      "piece": "01",
+      "change": "AI is moving from experiments toward enterprise systems",
+      "what_is_happening": "Organizations are investing in enterprise AI, GenAI, agents and AI-enabled operations.",
+      "why_it_matters": "The work is increasingly about integrating AI into real products and workflows.",
+      "status": "Established/emerging",
+      "source": "TCS AI Careers 2026"
+    },
+    {
+      "field_id": "F2",
+      "piece": "02",
+      "change": "Production ML requires more than model training",
+      "what_is_happening": "Current applied-science roles combine models with data, experimentation, system design and production deployment.",
+      "why_it_matters": "Students need both ML knowledge and engineering ability.",
+      "status": "Established shift",
+      "source": "Amazon Applied Scientist India 2027"
+    },
+    {
+      "field_id": "F2",
+      "piece": "03",
+      "change": "AI specialization is widening",
+      "what_is_happening": "Agentic AI, ML engineering, MLOps and AI infrastructure are distinct areas of work.",
+      "why_it_matters": "These are specializations, not guarantees of job growth for every student.",
+      "status": "Emerging opportunity",
+      "source": "TCS AI Careers 2026"
+    },
+    {
+      "field_id": "F2",
+      "piece": "04",
+      "change": "Evaluation becomes central",
+      "what_is_happening": "As AI systems generate outputs, teams need to test quality, reliability and failure modes.",
+      "why_it_matters": "Evaluation is a practical bridge between research and production.",
+      "status": "Emerging/established",
+      "source": "Stack Overflow 2025 AI; Amazon Applied Scientist India 2027"
+    },
+    {
+      "field_id": "F2",
+      "piece": "05",
+      "change": "AI work is increasingly cross-functional",
+      "what_is_happening": "AI roles interact with software, data, infrastructure, product and business teams.",
+      "why_it_matters": "Communication and system thinking therefore sit alongside technical ML skills.",
+      "status": "Established shift",
+      "source": "Amazon Applied Scientist India 2027; TCS AI Careers 2026"
+    },
+    {
+      "field_id": "F3",
+      "piece": "01",
+      "change": "Data engineering is increasingly platform-oriented",
+      "what_is_happening": "Roles cover pipelines, warehouses, lakes, schemas, ETL/ELT and cloud data services.",
+      "why_it_matters": "Data work is moving beyond spreadsheets toward production data systems.",
+      "status": "Established shift",
+      "source": "Amazon Data Engineer India 2027"
+    },
+    {
+      "field_id": "F3",
+      "piece": "02",
+      "change": "Data quality and validation matter more",
+      "what_is_happening": "Current data roles explicitly mention integrity, testing, validation and documentation.",
+      "why_it_matters": "Reliable data is a prerequisite for analytics and ML.",
+      "status": "Established",
+      "source": "Amazon Data Engineer India 2027"
+    },
+    {
+      "field_id": "F3",
+      "piece": "03",
+      "change": "Cloud data platforms are mainstream",
+      "what_is_happening": "Data roles increasingly combine SQL with cloud services, distributed processing and warehouse/lake technologies.",
+      "why_it_matters": "Students benefit from understanding where data lives and how it moves.",
+      "status": "Established",
+      "source": "Amazon Data Engineer India 2027"
+    },
+    {
+      "field_id": "F3",
+      "piece": "04",
+      "change": "Analytics is becoming closer to product decisions",
+      "what_is_happening": "Data scientists and engineers are expected to create metrics, dashboards, analysis and decision-support systems.",
+      "why_it_matters": "Business/domain understanding matters alongside technical skill.",
+      "status": "Established",
+      "source": "Amazon Data Engineer India 2027; Amazon Data Science"
+    },
+    {
+      "field_id": "F3",
+      "piece": "05",
+      "change": "AI increases demand for usable data infrastructure",
+      "what_is_happening": "AI systems depend on large datasets, data pipelines and reliable access to data.",
+      "why_it_matters": "This is an infrastructure requirement, not proof that every data job is growing.",
+      "status": "Emerging/established",
+      "source": "Amazon Applied Scientist India 2027"
+    },
+    {
+      "field_id": "F4",
+      "piece": "01",
+      "change": "Cloud security is a major skills need",
+      "what_is_happening": "ISC2 respondents identify cloud security among the top cybersecurity skills needs.",
+      "why_it_matters": "Security work increasingly includes distributed cloud environments.",
+      "status": "Established",
+      "source": "ISC2 Workforce Study 2025"
+    },
+    {
+      "field_id": "F4",
+      "piece": "02",
+      "change": "AI is becoming part of security operations",
+      "what_is_happening": "Security teams are adopting AI tools for monitoring, detection and investigation, while evaluating new AI risks.",
+      "why_it_matters": "AI changes both defensive workflows and the attack surface.",
+      "status": "Emerging/established",
+      "source": "ISC2 Workforce Study 2025"
+    },
+    {
+      "field_id": "F4",
+      "piece": "03",
+      "change": "AI security creates new specialist work",
+      "what_is_happening": "Respondents identify AI threat detection, threat modeling, model security, governance and privacy as important AI-security skills.",
+      "why_it_matters": "This supports specialization rather than a single generic 'AI security' job.",
+      "status": "Emerging opportunity",
+      "source": "ISC2 Workforce Study 2025"
+    },
+    {
+      "field_id": "F4",
+      "piece": "04",
+      "change": "Application security remains important",
+      "what_is_happening": "Security engineering and application security remain prominent skills needs.",
+      "why_it_matters": "Secure software practices therefore connect cybersecurity with software engineering.",
+      "status": "Established",
+      "source": "ISC2 Workforce Study 2025"
+    },
+    {
+      "field_id": "F4",
+      "piece": "05",
+      "change": "Risk and governance remain human-heavy",
+      "what_is_happening": "Risk assessment, GRC, policy and communication remain important alongside technical controls.",
+      "why_it_matters": "Cybersecurity is not only tooling.",
+      "status": "Established",
+      "source": "ISC2 Workforce Study 2025"
+    },
+    {
+      "field_id": "F5",
+      "piece": "01",
+      "change": "Cloud-native adoption is mature",
+      "what_is_happening": "Cloud-native platforms and Kubernetes are established in production environments.",
+      "why_it_matters": "Students should understand containers, orchestration and operations rather than only cloud-provider dashboards.",
+      "status": "Established",
+      "source": "CNCF cloud-native research"
+    },
+    {
+      "field_id": "F5",
+      "piece": "02",
+      "change": "Kubernetes is increasingly relevant to AI infrastructure",
+      "what_is_happening": "CNCF reports widespread Kubernetes production use and significant use for GenAI inference.",
+      "why_it_matters": "AI infrastructure connects cloud/platform engineering with ML.",
+      "status": "Emerging/established",
+      "source": "CNCF cloud-native research"
+    },
+    {
+      "field_id": "F5",
+      "piece": "03",
+      "change": "Infrastructure work includes reliability",
+      "what_is_happening": "Cloud roles involve troubleshooting, monitoring, capacity, resilience and operational ownership.",
+      "why_it_matters": "Operations is a core engineering capability.",
+      "status": "Established",
+      "source": "Amazon Data Center Operations; Amazon SDE India"
+    },
+    {
+      "field_id": "F5",
+      "piece": "04",
+      "change": "Automation and CI/CD remain core",
+      "what_is_happening": "Modern software roles mention build, deployment, testing, CI/CD and operational responsibilities.",
+      "why_it_matters": "Automation reduces repetitive work but increases the importance of understanding delivery systems.",
+      "status": "Established",
+      "source": "Amazon SDE India 2027"
+    },
+    {
+      "field_id": "F5",
+      "piece": "05",
+      "change": "Cloud roles span software and physical infrastructure",
+      "what_is_happening": "Cloud operations can include servers, networks, hardware, power, security and scripting.",
+      "why_it_matters": "Cloud is a broad engineering field, not just learning AWS console commands.",
+      "status": "Established",
+      "source": "Amazon Data Center Operations India"
+    }
+  ],
+  "work_changes": [
+    {
+      "field_id": "F1",
+      "item": "01",
+      "task": "Code generation",
+      "shift": "Manual boilerplate → AI-assisted generation",
+      "mode": "Assist",
+      "human_role": "Review, test and integrate output."
+    },
+    {
+      "field_id": "F1",
+      "item": "02",
+      "task": "Documentation",
+      "shift": "Manual first-draft writing → AI-assisted drafting",
+      "mode": "Assist",
+      "human_role": "Check correctness and context."
+    },
+    {
+      "field_id": "F1",
+      "item": "03",
+      "task": "Testing",
+      "shift": "Manual test creation → greater automation/AI assistance",
+      "mode": "Automate/assist",
+      "human_role": "Design meaningful test coverage and investigate failures."
+    },
+    {
+      "field_id": "F1",
+      "item": "04",
+      "task": "Debugging",
+      "shift": "Search/debug manually → AI-assisted investigation",
+      "mode": "Assist",
+      "human_role": "Reproduce, diagnose and verify fixes."
+    },
+    {
+      "field_id": "F1",
+      "item": "05",
+      "task": "Deployment/operations",
+      "shift": "AI assistance remains limited for high-responsibility work",
+      "mode": "Human-led + automated tools",
+      "human_role": "Own reliability, monitoring and incident decisions."
+    },
+    {
+      "field_id": "F2",
+      "item": "01",
+      "task": "Model development",
+      "shift": "More reusable tooling and foundation models",
+      "mode": "Assist/accelerate",
+      "human_role": "Choose methods and evaluate results."
+    },
+    {
+      "field_id": "F2",
+      "item": "02",
+      "task": "Data preparation",
+      "shift": "Pipelines increasingly automated",
+      "mode": "Automate/assist",
+      "human_role": "Validate data quality and leakage."
+    },
+    {
+      "field_id": "F2",
+      "item": "03",
+      "task": "Experimentation",
+      "shift": "Faster iteration with AI/tooling",
+      "mode": "Assist",
+      "human_role": "Design sound experiments and interpret results."
+    },
+    {
+      "field_id": "F2",
+      "item": "04",
+      "task": "Model evaluation",
+      "shift": "Increasing importance as systems become generative",
+      "mode": "Expand",
+      "human_role": "Define metrics, test failure modes and compare outputs."
+    },
+    {
+      "field_id": "F2",
+      "item": "05",
+      "task": "Production deployment",
+      "shift": "Research → production integration",
+      "mode": "Human + automation",
+      "human_role": "Design reliable deployment and monitoring."
+    },
+    {
+      "field_id": "F3",
+      "item": "01",
+      "task": "ETL/ELT",
+      "shift": "More pipeline automation and managed services",
+      "mode": "Automate",
+      "human_role": "Design robust transformations and validation."
+    },
+    {
+      "field_id": "F3",
+      "item": "02",
+      "task": "Schema/data modeling",
+      "shift": "More complex analytical and ML workloads",
+      "mode": "Evolve",
+      "human_role": "Choose structures that support actual queries/use cases."
+    },
+    {
+      "field_id": "F3",
+      "item": "03",
+      "task": "Dashboarding",
+      "shift": "Self-service and automated reporting expand",
+      "mode": "Assist/automate",
+      "human_role": "Select useful metrics and avoid misleading interpretation."
+    },
+    {
+      "field_id": "F3",
+      "item": "04",
+      "task": "Data validation",
+      "shift": "Automated checks increase",
+      "mode": "Automate + verify",
+      "human_role": "Define quality rules and investigate anomalies."
+    },
+    {
+      "field_id": "F3",
+      "item": "05",
+      "task": "Business analysis",
+      "shift": "Tool-assisted analysis grows",
+      "mode": "Assist",
+      "human_role": "Frame questions and connect results to decisions."
+    },
+    {
+      "field_id": "F4",
+      "item": "01",
+      "task": "Alert monitoring",
+      "shift": "AI-assisted detection and triage",
+      "mode": "Assist/automate",
+      "human_role": "Validate alerts and investigate real incidents."
+    },
+    {
+      "field_id": "F4",
+      "item": "02",
+      "task": "Threat detection",
+      "shift": "Pattern recognition increasingly automated",
+      "mode": "Assist",
+      "human_role": "Understand attack paths and false positives."
+    },
+    {
+      "field_id": "F4",
+      "item": "03",
+      "task": "Incident response",
+      "shift": "Automation can handle repetitive steps",
+      "mode": "Assist",
+      "human_role": "Coordinate response and make risk decisions."
+    },
+    {
+      "field_id": "F4",
+      "item": "04",
+      "task": "Security testing",
+      "shift": "Automation increases coverage",
+      "mode": "Automate/assist",
+      "human_role": "Interpret findings and prioritize risk."
+    },
+    {
+      "field_id": "F4",
+      "item": "05",
+      "task": "Governance/risk",
+      "shift": "Tools support evidence gathering",
+      "mode": "Human-led",
+      "human_role": "Make risk, policy and compliance decisions."
+    },
+    {
+      "field_id": "F5",
+      "item": "01",
+      "task": "Infrastructure provisioning",
+      "shift": "Infrastructure as code and automation",
+      "mode": "Automate",
+      "human_role": "Understand desired state and failure recovery."
+    },
+    {
+      "field_id": "F5",
+      "item": "02",
+      "task": "Deployments",
+      "shift": "CI/CD automates repeatable delivery",
+      "mode": "Automate",
+      "human_role": "Design safe release and rollback processes."
+    },
+    {
+      "field_id": "F5",
+      "item": "03",
+      "task": "Monitoring",
+      "shift": "More telemetry and automated detection",
+      "mode": "Assist",
+      "human_role": "Interpret signals and respond to incidents."
+    },
+    {
+      "field_id": "F5",
+      "item": "04",
+      "task": "Scaling",
+      "shift": "Autoscaling and managed services automate routine capacity work",
+      "mode": "Automate",
+      "human_role": "Set appropriate limits, cost and reliability controls."
+    },
+    {
+      "field_id": "F5",
+      "item": "05",
+      "task": "AI infrastructure",
+      "shift": "New workload requirements for GPUs, inference and orchestration",
+      "mode": "Evolving",
+      "human_role": "Understand workload/resource trade-offs."
+    }
+  ],
+  "human_capabilities": [
+    {
+      "field_id": "F1",
+      "capability": "Requirements",
+      "why_it_matters": "Translate ambiguous needs into technical requirements.",
+      "work_mode": "Human-led",
+      "why_human": "AI can draft; humans resolve ambiguity and priorities."
+    },
+    {
+      "field_id": "F1",
+      "capability": "Architecture",
+      "why_it_matters": "Choose system boundaries and trade-offs.",
+      "work_mode": "Human-led",
+      "why_human": "Requires context, constraints and accountability."
+    },
+    {
+      "field_id": "F1",
+      "capability": "Verification",
+      "why_it_matters": "Judge whether generated code actually works.",
+      "work_mode": "Human-led",
+      "why_human": "AI output can be almost correct; verification remains necessary."
+    },
+    {
+      "field_id": "F1",
+      "capability": "Production ownership",
+      "why_it_matters": "Handle reliability, incidents and consequences.",
+      "work_mode": "Human-led",
+      "why_human": "High-responsibility tasks remain less AI-automated."
+    },
+    {
+      "field_id": "F1",
+      "capability": "Communication",
+      "why_it_matters": "Explain technical decisions to teams/stakeholders.",
+      "work_mode": "Human-led",
+      "why_human": "Cross-functional coordination remains essential."
+    },
+    {
+      "field_id": "F2",
+      "capability": "Problem formulation",
+      "why_it_matters": "Turn a real problem into a measurable ML task.",
+      "work_mode": "Human-led",
+      "why_human": "Model quality depends on the problem definition."
+    },
+    {
+      "field_id": "F2",
+      "capability": "Experiment design",
+      "why_it_matters": "Design comparisons and avoid misleading conclusions.",
+      "work_mode": "Human-led",
+      "why_human": "Tooling cannot replace sound experimental reasoning."
+    },
+    {
+      "field_id": "F2",
+      "capability": "Evaluation",
+      "why_it_matters": "Define what 'good' means for an AI system.",
+      "work_mode": "Human-led",
+      "why_human": "Generative systems need task-specific evaluation."
+    },
+    {
+      "field_id": "F2",
+      "capability": "System integration",
+      "why_it_matters": "Connect models to products and workflows.",
+      "work_mode": "Human + tools",
+      "why_human": "Requires engineering and domain context."
+    },
+    {
+      "field_id": "F2",
+      "capability": "Responsible deployment",
+      "why_it_matters": "Consider privacy, safety and failure modes.",
+      "work_mode": "Human-led",
+      "why_human": "Consequences require accountable decisions."
+    },
+    {
+      "field_id": "F3",
+      "capability": "Question framing",
+      "why_it_matters": "Define the business question before querying data.",
+      "work_mode": "Human-led",
+      "why_human": "Better tools do not fix a bad question."
+    },
+    {
+      "field_id": "F3",
+      "capability": "Data quality judgment",
+      "why_it_matters": "Decide whether data is fit for use.",
+      "work_mode": "Human-led",
+      "why_human": "Automated checks need meaningful rules."
+    },
+    {
+      "field_id": "F3",
+      "capability": "Metric design",
+      "why_it_matters": "Choose metrics that represent the actual goal.",
+      "work_mode": "Human-led",
+      "why_human": "Wrong metrics can produce correct but useless analysis."
+    },
+    {
+      "field_id": "F3",
+      "capability": "Domain interpretation",
+      "why_it_matters": "Connect patterns to business context.",
+      "work_mode": "Human-led",
+      "why_human": "Requires knowledge beyond the dataset."
+    },
+    {
+      "field_id": "F3",
+      "capability": "Communication",
+      "why_it_matters": "Explain uncertainty and implications.",
+      "work_mode": "Human-led",
+      "why_human": "Decision-makers need understandable conclusions."
+    },
+    {
+      "field_id": "F4",
+      "capability": "Risk judgment",
+      "why_it_matters": "Prioritize threats by business impact.",
+      "work_mode": "Human-led",
+      "why_human": "Security is a risk decision, not only detection."
+    },
+    {
+      "field_id": "F4",
+      "capability": "Threat modeling",
+      "why_it_matters": "Reason about how systems can be attacked.",
+      "work_mode": "Human-led",
+      "why_human": "Requires system and adversarial understanding."
+    },
+    {
+      "field_id": "F4",
+      "capability": "Incident decisions",
+      "why_it_matters": "Choose containment and recovery actions.",
+      "work_mode": "Human-led",
+      "why_human": "High-consequence decisions require accountability."
+    },
+    {
+      "field_id": "F4",
+      "capability": "Policy/governance",
+      "why_it_matters": "Translate risk into controls and policies.",
+      "work_mode": "Human-led",
+      "why_human": "Requires organizational and regulatory context."
+    },
+    {
+      "field_id": "F4",
+      "capability": "Security communication",
+      "why_it_matters": "Explain risks to non-security teams.",
+      "work_mode": "Human-led",
+      "why_human": "Security controls fail when people cannot act on them."
+    },
+    {
+      "field_id": "F5",
+      "capability": "Architecture",
+      "why_it_matters": "Balance reliability, cost, performance and complexity.",
+      "work_mode": "Human-led",
+      "why_human": "Cloud offers options; engineers choose trade-offs."
+    },
+    {
+      "field_id": "F5",
+      "capability": "Incident response",
+      "why_it_matters": "Diagnose failures across distributed systems.",
+      "work_mode": "Human + tools",
+      "why_human": "Automation helps detect; engineers investigate and recover."
+    },
+    {
+      "field_id": "F5",
+      "capability": "Capacity/cost decisions",
+      "why_it_matters": "Balance resource usage against service requirements.",
+      "work_mode": "Human-led",
+      "why_human": "Requires business and technical context."
+    },
+    {
+      "field_id": "F5",
+      "capability": "Platform design",
+      "why_it_matters": "Create reusable internal infrastructure for teams.",
+      "work_mode": "Human-led",
+      "why_human": "Requires understanding developer workflows."
+    },
+    {
+      "field_id": "F5",
+      "capability": "Operational judgment",
+      "why_it_matters": "Decide when automation is safe.",
+      "work_mode": "Human-led",
+      "why_human": "Automation needs boundaries and rollback plans."
+    }
+  ],
+  "roles": [
+    {
+      "field_id": "F1",
+      "role": "Software Development Engineer",
+      "status": "Evolving",
+      "what_is_changing": "Coding remains central, while current internship descriptions also emphasize cloud, databases, AI tools, SDLC, deployment, monitoring and resilient systems.",
+      "key_shift": "AI-assisted coding; stronger lifecycle ownership",
+      "evidence": "Amazon SDE India 2027; Stack Overflow 2025"
+    },
+    {
+      "field_id": "F1",
+      "role": "Software Test / Quality Engineer",
+      "status": "Evolving",
+      "what_is_changing": "Testing is increasingly automated and AI-assisted, increasing the value of test design, validation and failure analysis.",
+      "key_shift": "Automation + validation",
+      "evidence": "Stack Overflow 2025"
+    },
+    {
+      "field_id": "F1",
+      "role": "Platform / Developer Infrastructure Engineer",
+      "status": "Growing specialization",
+      "what_is_changing": "Developer workflows depend on CI/CD, cloud platforms, observability and internal tooling.",
+      "key_shift": "Automation, platforms, reliability",
+      "evidence": "Amazon SDE India 2027; GitHub"
+    },
+    {
+      "field_id": "F1",
+      "role": "Software Architect",
+      "status": "Evolving",
+      "what_is_changing": "Higher-level design and trade-off decisions become more important as implementation gets faster.",
+      "key_shift": "Architecture, integration, trade-offs",
+      "evidence": "Stack Overflow 2025; Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "role": "AI-enabled Application Engineer",
+      "status": "Emerging specialization",
+      "what_is_changing": "Software engineers increasingly integrate AI capabilities into products and workflows.",
+      "key_shift": "AI integration + software engineering",
+      "evidence": "TCS AI Careers; Amazon SDE"
+    },
+    {
+      "field_id": "F2",
+      "role": "Machine Learning Engineer",
+      "status": "Growing specialization",
+      "what_is_changing": "Combines ML knowledge with production software and deployment.",
+      "key_shift": "Model + engineering",
+      "evidence": "Amazon Applied Scientist; TCS AI"
+    },
+    {
+      "field_id": "F2",
+      "role": "Applied Scientist",
+      "status": "Specialized",
+      "what_is_changing": "Current roles combine research, experiments, large-scale data and production systems.",
+      "key_shift": "Research + production",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "role": "MLOps / ML Platform Engineer",
+      "status": "Emerging specialization",
+      "what_is_changing": "Operationalizes ML systems, deployment, monitoring and infrastructure.",
+      "key_shift": "ML + cloud + reliability",
+      "evidence": "TCS AI Careers; Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "role": "AI Engineer / GenAI Engineer",
+      "status": "Emerging specialization",
+      "what_is_changing": "Builds applications around modern AI models, agents and enterprise workflows.",
+      "key_shift": "AI systems + application engineering",
+      "evidence": "TCS AI Careers"
+    },
+    {
+      "field_id": "F2",
+      "role": "AI Governance / Responsible AI",
+      "status": "Emerging specialization",
+      "what_is_changing": "Focuses on risk, governance, evaluation, policy and responsible deployment.",
+      "key_shift": "AI + risk + policy",
+      "evidence": "TCS AI Careers; WEF 2025"
+    },
+    {
+      "field_id": "F3",
+      "role": "Data Engineer",
+      "status": "Established + evolving",
+      "what_is_changing": "Current roles combine SQL, Python, pipelines, data warehouses/lakes, cloud and data quality.",
+      "key_shift": "Data platforms + cloud",
+      "evidence": "Amazon Data Engineer India 2027"
+    },
+    {
+      "field_id": "F3",
+      "role": "Data Scientist",
+      "status": "Established + evolving",
+      "what_is_changing": "Combines analysis, metrics, modeling and business/domain understanding.",
+      "key_shift": "Statistics + ML + decision support",
+      "evidence": "Amazon Data Science; WEF"
+    },
+    {
+      "field_id": "F3",
+      "role": "Analytics Engineer",
+      "status": "Evolving specialization",
+      "what_is_changing": "Connects analytics requirements with reliable modeled data and engineering practices.",
+      "key_shift": "SQL + data modeling + engineering",
+      "evidence": "Industry pattern; verify with current job sample before claiming market-wide growth"
+    },
+    {
+      "field_id": "F3",
+      "role": "BI / Analytics Developer",
+      "status": "Evolving",
+      "what_is_changing": "Dashboarding and reporting are increasingly self-service, shifting value toward metric design and interpretation.",
+      "key_shift": "Automation + decision support",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "role": "Data Quality / Governance Specialist",
+      "status": "Emerging specialization",
+      "what_is_changing": "Growing data and AI systems increase the need for quality, lineage, access and governance.",
+      "key_shift": "Quality + governance",
+      "evidence": "Amazon Data Engineer; WEF"
+    },
+    {
+      "field_id": "F4",
+      "role": "Security Analyst / SOC Analyst",
+      "status": "Evolving",
+      "what_is_changing": "Detection and triage are increasingly tool-assisted while investigation and response remain important.",
+      "key_shift": "AI-assisted detection + investigation",
+      "evidence": "ISC2 2025"
+    },
+    {
+      "field_id": "F4",
+      "role": "Cloud Security Engineer",
+      "status": "Growing specialization",
+      "what_is_changing": "Cloud architecture and infrastructure security are major reported skill needs.",
+      "key_shift": "Cloud + security",
+      "evidence": "ISC2 2025"
+    },
+    {
+      "field_id": "F4",
+      "role": "Application Security Engineer",
+      "status": "Established + evolving",
+      "what_is_changing": "Application security remains a major skills need as software supply chains expand.",
+      "key_shift": "Secure software + threat modeling",
+      "evidence": "ISC2 2025"
+    },
+    {
+      "field_id": "F4",
+      "role": "Security Engineer",
+      "status": "Established + evolving",
+      "what_is_changing": "Combines engineering controls with identity, infrastructure and detection.",
+      "key_shift": "Engineering + security",
+      "evidence": "ISC2 2025"
+    },
+    {
+      "field_id": "F4",
+      "role": "AI Security / AI Risk Specialist",
+      "status": "Emerging specialization",
+      "what_is_changing": "AI creates new security risks and specialized defensive needs.",
+      "key_shift": "AI + threat modeling + governance",
+      "evidence": "ISC2 2025"
+    },
+    {
+      "field_id": "F5",
+      "role": "Cloud Engineer",
+      "status": "Established + evolving",
+      "what_is_changing": "Cloud roles increasingly require architecture, automation, networking, security and operations.",
+      "key_shift": "Cloud + automation",
+      "evidence": "Amazon Solutions Architect; Amazon DCO"
+    },
+    {
+      "field_id": "F5",
+      "role": "DevOps Engineer",
+      "status": "Evolving",
+      "what_is_changing": "CI/CD, infrastructure automation and operational responsibility remain central.",
+      "key_shift": "Automation + reliability",
+      "evidence": "Amazon SDE; CNCF"
+    },
+    {
+      "field_id": "F5",
+      "role": "Site Reliability Engineer",
+      "status": "Evolving specialization",
+      "what_is_changing": "Reliability, monitoring, troubleshooting and scalable systems remain core.",
+      "key_shift": "Reliability + systems",
+      "evidence": "Amazon SDE; CNCF"
+    },
+    {
+      "field_id": "F5",
+      "role": "Platform Engineer",
+      "status": "Emerging specialization",
+      "what_is_changing": "Creates internal platforms that standardize deployment and developer workflows.",
+      "key_shift": "Cloud + developer experience",
+      "evidence": "CNCF; Amazon SDE"
+    },
+    {
+      "field_id": "F5",
+      "role": "AI Infrastructure Engineer",
+      "status": "Emerging specialization",
+      "what_is_changing": "AI workloads increase demand for specialized compute, orchestration and deployment infrastructure.",
+      "key_shift": "Cloud + AI systems",
+      "evidence": "CNCF; Amazon cloud hardware"
+    }
+  ],
+  "capabilities": [
+    {
+      "field_id": "F1",
+      "capability": "Programming fundamentals",
+      "category": "Foundation",
+      "meaning": "Write, read and modify reliable code.",
+      "examples": "Python / Java / C++ / TypeScript",
+      "priority": "High",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "Data structures & algorithms",
+      "category": "Foundation",
+      "meaning": "Reason about efficiency and implement core structures.",
+      "examples": "Arrays, trees, graphs, hashing, complexity",
+      "priority": "High",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "Databases",
+      "category": "System building",
+      "meaning": "Store, query and model application data.",
+      "examples": "SQL, indexing, transactions, NoSQL concepts",
+      "priority": "High",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "APIs & backend systems",
+      "category": "System building",
+      "meaning": "Connect services and expose functionality reliably.",
+      "examples": "REST, HTTP, authentication, FastAPI/Node/Spring",
+      "priority": "High",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "Git & collaboration",
+      "category": "Engineering practice",
+      "meaning": "Work safely in shared codebases.",
+      "examples": "Git, branching, pull requests, code review",
+      "priority": "High",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "Testing & debugging",
+      "category": "Engineering practice",
+      "meaning": "Prove behavior and diagnose failures.",
+      "examples": "Unit/integration tests, logs, debugging",
+      "priority": "High",
+      "evidence": "Amazon SDE; Stack Overflow"
+    },
+    {
+      "field_id": "F1",
+      "capability": "Cloud & deployment",
+      "category": "Engineering practice",
+      "meaning": "Run software outside the local machine.",
+      "examples": "Docker, cloud basics, deployment",
+      "priority": "High",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "System design",
+      "category": "Engineering thinking",
+      "meaning": "Design components and trade-offs.",
+      "examples": "Caching, queues, scalability, failure modes",
+      "priority": "High",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "AI-assisted engineering",
+      "category": "Modern practice",
+      "meaning": "Use AI while verifying and owning the result.",
+      "examples": "Code assistants, review, tests, evaluation",
+      "priority": "High",
+      "evidence": "Stack Overflow; Amazon SDE"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Python & programming",
+      "category": "Foundation",
+      "meaning": "Implement models and data workflows.",
+      "examples": "Python, NumPy, pandas",
+      "priority": "High",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Statistics & probability",
+      "category": "Foundation",
+      "meaning": "Reason about uncertainty and experiments.",
+      "examples": "Distributions, hypothesis tests, confidence",
+      "priority": "High",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Machine learning",
+      "category": "Core",
+      "meaning": "Train and evaluate predictive models.",
+      "examples": "Regression, trees, clustering, metrics",
+      "priority": "High",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Deep learning",
+      "category": "Specialization",
+      "meaning": "Build neural models for complex data.",
+      "examples": "PyTorch, training, regularization",
+      "priority": "Medium/High",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Data pipelines",
+      "category": "Engineering",
+      "meaning": "Move and prepare data reliably.",
+      "examples": "ETL, validation, batch/stream concepts",
+      "priority": "High",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Model evaluation",
+      "category": "AI engineering",
+      "meaning": "Measure quality and failure modes.",
+      "examples": "Metrics, test sets, error analysis",
+      "priority": "High",
+      "evidence": "Amazon Applied Scientist; Stack Overflow"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Deployment / MLOps",
+      "category": "Production",
+      "meaning": "Serve and monitor models.",
+      "examples": "APIs, Docker, monitoring, versioning",
+      "priority": "Medium/High",
+      "evidence": "Amazon Applied Scientist; TCS"
+    },
+    {
+      "field_id": "F2",
+      "capability": "GenAI application engineering",
+      "category": "Specialization",
+      "meaning": "Build useful applications around foundation models.",
+      "examples": "RAG, tool use, evaluation, guardrails",
+      "priority": "Medium/High",
+      "evidence": "TCS AI Careers"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Experiment design",
+      "category": "Research/engineering",
+      "meaning": "Compare approaches without misleading conclusions.",
+      "examples": "Baselines, ablations, A/B tests",
+      "priority": "High",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F3",
+      "capability": "SQL",
+      "category": "Foundation",
+      "meaning": "Retrieve and transform relational data.",
+      "examples": "Joins, CTEs, windows, aggregation",
+      "priority": "High",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "capability": "Python for data",
+      "category": "Foundation",
+      "meaning": "Automate analysis and pipelines.",
+      "examples": "pandas, scripts, APIs",
+      "priority": "High",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "capability": "Data modeling",
+      "category": "System building",
+      "meaning": "Structure data for reliable use.",
+      "examples": "Star schema, normalization, dimensional modeling",
+      "priority": "High",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "capability": "ETL/ELT",
+      "category": "Engineering",
+      "meaning": "Build repeatable data movement.",
+      "examples": "Pipelines, orchestration, validation",
+      "priority": "High",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "capability": "Cloud data platforms",
+      "category": "Engineering",
+      "meaning": "Work with managed data infrastructure.",
+      "examples": "S3, warehouses, Spark, managed services",
+      "priority": "Medium/High",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "capability": "Statistics & analysis",
+      "category": "Analytics",
+      "meaning": "Turn data into defensible findings.",
+      "examples": "Sampling, uncertainty, experiment analysis",
+      "priority": "High",
+      "evidence": "Amazon Data Science"
+    },
+    {
+      "field_id": "F3",
+      "capability": "Visualization & communication",
+      "category": "Decision support",
+      "meaning": "Explain patterns without misleading users.",
+      "examples": "Dashboards, charts, narrative",
+      "priority": "High",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Networking fundamentals",
+      "category": "Foundation",
+      "meaning": "Understand traffic, protocols and attack surfaces.",
+      "examples": "TCP/IP, DNS, HTTP, TLS",
+      "priority": "High",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Linux & systems",
+      "category": "Foundation",
+      "meaning": "Operate and inspect systems securely.",
+      "examples": "Processes, permissions, logs, shell",
+      "priority": "High",
+      "evidence": "Amazon Support; ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Threat modeling",
+      "category": "Security engineering",
+      "meaning": "Identify plausible attack paths and controls.",
+      "examples": "STRIDE-style thinking, attack surfaces",
+      "priority": "High",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Cloud security",
+      "category": "Specialization",
+      "meaning": "Secure cloud identities, infrastructure and data.",
+      "examples": "IAM, secure configuration, encryption",
+      "priority": "High",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Application security",
+      "category": "Security engineering",
+      "meaning": "Find and prevent software vulnerabilities.",
+      "examples": "OWASP, secure coding, testing",
+      "priority": "High",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Detection & response",
+      "category": "Operations",
+      "meaning": "Investigate and contain security incidents.",
+      "examples": "Logs, SIEM concepts, triage, response",
+      "priority": "High",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "AI security",
+      "category": "Emerging specialization",
+      "meaning": "Assess AI-specific threats and controls.",
+      "examples": "Prompt injection, model/data risks, AI governance",
+      "priority": "Medium/High",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Risk & governance",
+      "category": "Human capability",
+      "meaning": "Translate technical threats into organizational decisions.",
+      "examples": "Risk assessment, GRC, policy",
+      "priority": "High",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Linux & networking",
+      "category": "Foundation",
+      "meaning": "Operate servers and understand network paths.",
+      "examples": "Linux, TCP/IP, DNS, routing",
+      "priority": "High",
+      "evidence": "Amazon DCO; Amazon Support"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Cloud fundamentals",
+      "category": "Foundation",
+      "meaning": "Understand compute, storage, networking and identity.",
+      "examples": "AWS/Azure/GCP concepts",
+      "priority": "High",
+      "evidence": "Amazon Solutions Architect"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Containers",
+      "category": "Platform",
+      "meaning": "Package and run applications consistently.",
+      "examples": "Docker, images, registries",
+      "priority": "High",
+      "evidence": "CNCF"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Kubernetes",
+      "category": "Platform",
+      "meaning": "Orchestrate containerized workloads.",
+      "examples": "Deployments, services, config, scaling",
+      "priority": "Medium/High",
+      "evidence": "CNCF"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Infrastructure as code",
+      "category": "Automation",
+      "meaning": "Define infrastructure reproducibly.",
+      "examples": "Terraform/CloudFormation concepts",
+      "priority": "Medium/High",
+      "evidence": "Cloud engineering practice"
+    },
+    {
+      "field_id": "F5",
+      "capability": "CI/CD",
+      "category": "Delivery",
+      "meaning": "Automate build, test and deployment.",
+      "examples": "GitHub Actions/Jenkins/GitLab CI",
+      "priority": "High",
+      "evidence": "Amazon SDE; CNCF"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Observability",
+      "category": "Reliability",
+      "meaning": "Understand system health from telemetry.",
+      "examples": "Logs, metrics, traces, alerts",
+      "priority": "High",
+      "evidence": "Amazon SDE; CNCF"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Reliability & incident response",
+      "category": "Operations",
+      "meaning": "Keep services available and recover from failure.",
+      "examples": "SLOs, runbooks, incident analysis",
+      "priority": "High",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F5",
+      "capability": "AI infrastructure basics",
+      "category": "Emerging specialization",
+      "meaning": "Understand infrastructure needs of AI workloads.",
+      "examples": "GPU concepts, inference, orchestration",
+      "priority": "Medium",
+      "evidence": "CNCF; Amazon cloud hardware"
+    }
+  ],
+  "learning_paths": [
+    {
+      "field_id": "F1",
+      "capability": "Programming fundamentals",
+      "level": "Beginner",
+      "exercise": "Build a CLI expense tracker with input validation and file persistence.",
+      "skills_built": "Programming, validation, debugging",
+      "next_step": "Create tests for edge cases and refactor one messy function.",
+      "industry_connection": "Shows ability to build and maintain code, not only solve syntax exercises.",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "Databases",
+      "level": "Beginner",
+      "exercise": "Add SQLite/PostgreSQL to a small API and design three related tables.",
+      "skills_built": "SQL, schema design, CRUD",
+      "next_step": "Add indexes and explain why each query needs them.",
+      "industry_connection": "Shows data modeling plus application integration.",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "APIs & backend",
+      "level": "Beginner",
+      "exercise": "Build a REST API for a small task system.",
+      "skills_built": "HTTP, endpoints, validation",
+      "next_step": "Add authentication, pagination and error handling.",
+      "industry_connection": "Shows end-to-end backend thinking.",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "Testing/debugging",
+      "level": "Beginner",
+      "exercise": "Write tests for an existing small project, then introduce and fix three bugs.",
+      "skills_built": "Testing, debugging, regression thinking",
+      "next_step": "Add integration tests and a reproducible bug report.",
+      "industry_connection": "Shows verification ability, important when AI-generated code can be almost right.",
+      "evidence": "Stack Overflow"
+    },
+    {
+      "field_id": "F1",
+      "capability": "AI-assisted engineering",
+      "level": "Beginner",
+      "exercise": "Use an AI coding assistant to implement a feature, then write tests that catch at least one generated mistake.",
+      "skills_built": "AI use + verification",
+      "next_step": "Compare AI-generated and hand-written approaches and document trade-offs.",
+      "industry_connection": "Builds the capability to use AI without outsourcing judgment.",
+      "evidence": "Stack Overflow; Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "System design",
+      "level": "Intermediate",
+      "exercise": "Design and build a URL shortener with API + database.",
+      "skills_built": "Architecture, caching, IDs",
+      "next_step": "Add caching, rate limiting and failure scenarios.",
+      "industry_connection": "Moves from isolated code to system-level reasoning.",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F1",
+      "capability": "Cloud/deployment",
+      "level": "Intermediate",
+      "exercise": "Containerize and deploy your API.",
+      "skills_built": "Docker, environment variables, deployment",
+      "next_step": "Add CI/CD and rollback documentation.",
+      "industry_connection": "Demonstrates software lifecycle ownership.",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F2",
+      "capability": "ML fundamentals",
+      "level": "Beginner",
+      "exercise": "Build a small classification model and compare two baselines.",
+      "skills_built": "Features, training, metrics",
+      "next_step": "Perform error analysis and explain five wrong predictions.",
+      "industry_connection": "Shows model evaluation rather than only training.",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Statistics",
+      "level": "Beginner",
+      "exercise": "Analyze an A/B-test-like dataset and report uncertainty.",
+      "skills_built": "Sampling, tests, confidence",
+      "next_step": "Simulate repeated experiments and compare conclusions.",
+      "industry_connection": "Builds evidence-based reasoning for ML/data work.",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "capability": "Model evaluation",
+      "level": "Intermediate",
+      "exercise": "Create an evaluation suite for a model with multiple failure categories.",
+      "skills_built": "Metrics, slices, error analysis",
+      "next_step": "Add robustness tests and document limitations.",
+      "industry_connection": "Shows ability to judge model quality.",
+      "evidence": "Amazon Applied Scientist"
+    },
+    {
+      "field_id": "F2",
+      "capability": "MLOps",
+      "level": "Intermediate",
+      "exercise": "Serve a trained model through an API and containerize it.",
+      "skills_built": "API, Docker, versioning",
+      "next_step": "Add monitoring for latency and prediction distribution.",
+      "industry_connection": "Connects ML to production engineering.",
+      "evidence": "Amazon Applied Scientist; TCS"
+    },
+    {
+      "field_id": "F2",
+      "capability": "GenAI application",
+      "level": "Intermediate",
+      "exercise": "Build a small RAG application over a controlled document set.",
+      "skills_built": "Retrieval, prompts, evaluation",
+      "next_step": "Create a test set and measure incorrect/unsupported answers.",
+      "industry_connection": "Demonstrates evaluation and integration, not prompt tricks alone.",
+      "evidence": "TCS; Stack Overflow"
+    },
+    {
+      "field_id": "F3",
+      "capability": "SQL",
+      "level": "Beginner",
+      "exercise": "Analyze a realistic sales dataset using joins, CTEs and window functions.",
+      "skills_built": "Querying, aggregation, reasoning",
+      "next_step": "Optimize two slow queries and explain the index choice.",
+      "industry_connection": "Builds practical data manipulation ability.",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "capability": "Data modeling",
+      "level": "Beginner",
+      "exercise": "Convert messy spreadsheet data into a normalized relational schema.",
+      "skills_built": "Normalization, keys, relationships",
+      "next_step": "Create a dimensional model for analytics and compare the designs.",
+      "industry_connection": "Shows ability to structure data for use.",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "capability": "ETL/ELT",
+      "level": "Intermediate",
+      "exercise": "Build a pipeline that ingests CSV/API data, validates it and stores clean tables.",
+      "skills_built": "Pipelines, validation, automation",
+      "next_step": "Schedule it and add failure/retry logging.",
+      "industry_connection": "Demonstrates production data workflow.",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F3",
+      "capability": "Cloud data",
+      "level": "Intermediate",
+      "exercise": "Create a small cloud-style data lake locally using object storage concepts + Spark.",
+      "skills_built": "Storage, distributed processing",
+      "next_step": "Add partitioning and compare query performance.",
+      "industry_connection": "Connects data engineering concepts to modern platforms.",
+      "evidence": "Amazon Data Engineer"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Networking",
+      "level": "Beginner",
+      "exercise": "Capture and explain HTTP/DNS/TCP traffic for a simple web request.",
+      "skills_built": "Protocols, traffic flow",
+      "next_step": "Identify where TLS changes what an observer can see.",
+      "industry_connection": "Builds foundational security reasoning.",
+      "evidence": "ISC2; Amazon Support"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Threat modeling",
+      "level": "Beginner",
+      "exercise": "Threat-model a student web app and identify five attack paths.",
+      "skills_built": "Assets, threats, controls",
+      "next_step": "Prioritize threats by likelihood and impact.",
+      "industry_connection": "Builds risk reasoning rather than tool memorization.",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Application security",
+      "level": "Intermediate",
+      "exercise": "Build a deliberately vulnerable web app and then fix its top vulnerabilities.",
+      "skills_built": "Secure coding, OWASP",
+      "next_step": "Add automated security checks to CI.",
+      "industry_connection": "Shows ability to connect development and security.",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "Detection/response",
+      "level": "Intermediate",
+      "exercise": "Create a small log-analysis pipeline and detect suspicious patterns.",
+      "skills_built": "Logs, detection, triage",
+      "next_step": "Write an incident timeline and response playbook.",
+      "industry_connection": "Builds investigation and response capability.",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F4",
+      "capability": "AI security",
+      "level": "Intermediate",
+      "exercise": "Threat-model a RAG/LLM application for prompt injection, data leakage and unsafe tools.",
+      "skills_built": "AI threat modeling",
+      "next_step": "Create tests for each threat and document mitigations.",
+      "industry_connection": "Directly connects emerging AI systems to security work.",
+      "evidence": "ISC2"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Linux/networking",
+      "level": "Beginner",
+      "exercise": "Deploy a small Linux service and troubleshoot a broken network configuration.",
+      "skills_built": "Linux, TCP/IP, logs",
+      "next_step": "Write a runbook for three common failures.",
+      "industry_connection": "Builds operational troubleshooting.",
+      "evidence": "Amazon DCO; Amazon Support"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Docker",
+      "level": "Beginner",
+      "exercise": "Containerize a backend app with a database.",
+      "skills_built": "Images, networking, environment config",
+      "next_step": "Add health checks and resource limits.",
+      "industry_connection": "Demonstrates repeatable application deployment.",
+      "evidence": "CNCF; Amazon SDE"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Kubernetes",
+      "level": "Intermediate",
+      "exercise": "Deploy a two-service application to Kubernetes.",
+      "skills_built": "Pods, services, deployments",
+      "next_step": "Add scaling, configuration and a failure simulation.",
+      "industry_connection": "Builds platform concepts beyond memorizing kubectl commands.",
+      "evidence": "CNCF"
+    },
+    {
+      "field_id": "F5",
+      "capability": "CI/CD",
+      "level": "Intermediate",
+      "exercise": "Create a pipeline that tests and deploys a containerized app.",
+      "skills_built": "Build, test, deploy",
+      "next_step": "Add a failed-test gate and rollback step.",
+      "industry_connection": "Demonstrates automated software delivery.",
+      "evidence": "Amazon SDE"
+    },
+    {
+      "field_id": "F5",
+      "capability": "Observability",
+      "level": "Intermediate",
+      "exercise": "Instrument an API with logs, metrics and traces.",
+      "skills_built": "Telemetry, monitoring",
+      "next_step": "Create an incident and use telemetry to diagnose it.",
+      "industry_connection": "Connects monitoring to actual operational decisions.",
+      "evidence": "Amazon SDE; CNCF"
+    },
+    {
+      "field_id": "F5",
+      "capability": "AI infrastructure",
+      "level": "Intermediate",
+      "exercise": "Run a small local inference workload and document compute/memory trade-offs.",
+      "skills_built": "Inference, resources, scaling",
+      "next_step": "Compare batching/concurrency settings and measure latency.",
+      "industry_connection": "Shows why AI workloads create infrastructure problems.",
+      "evidence": "CNCF"
+    }
+  ],
+  "company_cases": [
+    {
+      "company": "Oracle",
+      "area": "Software/Cloud",
+      "date": "2026",
+      "what_happened": "Oracle described restructuring product-development teams around smaller groups and greater AI-driven productivity; subsequent workforce reductions had multiple reported factors, so layoffs should not be attributed solely to AI.",
+      "what_students_should_notice": "Use as a case of workforce restructuring + changing software economics, not proof of universal replacement.",
+      "evidence_strength": "High for Oracle's stated direction; medium for causal interpretation of layoffs.",
+      "source": "Oracle Q3 FY26; Reuters reporting",
+      "url": "https://www.oracle.com/news/announcement/q3fy26-earnings-release-2026-03-10/"
+    },
+    {
+      "company": "Oracle India",
+      "area": "Software/Cloud",
+      "date": "Sep 2026",
+      "what_happened": "Recent Indian layoffs were reported across multiple functions; reported figures and affected groups were not fully disclosed/independently verified by Oracle.",
+      "what_students_should_notice": "Useful as a current case requiring careful sourcing and uncertainty labels.",
+      "evidence_strength": "Medium",
+      "source": "Times of India / Financial Express",
+      "url": "https://timesofindia.indiatimes.com/business/india-business/1500-india-staff-likely-hit-in-another-round-of-oracle-layoff/articleshow/134276037.cms"
+    },
+    {
+      "company": "Amazon",
+      "area": "Corporate/Technology",
+      "date": "Jan 2026",
+      "what_happened": "Amazon announced a large corporate workforce reduction while describing organizational simplification and fewer management layers; the company continues hiring and training in technical areas.",
+      "what_students_should_notice": "Shows restructuring can coexist with continued investment in new capabilities.",
+      "evidence_strength": "High for company's stated rationale.",
+      "source": "Amazon",
+      "url": "https://www.aboutamazon.com/news/company-news/amazon-layoffs-corporate-jan-2026"
+    },
+    {
+      "company": "TCS",
+      "area": "IT Services",
+      "date": "2025-26",
+      "what_happened": "TCS reduced workforce while management framed the change around workforce/skill alignment and restructuring rather than claiming AI alone caused the reductions.",
+      "what_students_should_notice": "Important counterexample to simplistic 'AI caused layoffs' narratives.",
+      "evidence_strength": "High for company statements; causal interpretation still limited.",
+      "source": "Reuters/TCS",
+      "url": "https://www.tcs.com/careers/india/tcs-ai-careers"
+    },
+    {
+      "company": "TCS",
+      "area": "AI Services",
+      "date": "2026",
+      "what_happened": "TCS publicly emphasizes AI-led services, AI agents, MLOps, GenAI, enterprise AI, governance and modernization as opportunity areas.",
+      "what_students_should_notice": "Shows simultaneous reduction/reallocation in some workforce areas and investment in AI capabilities.",
+      "evidence_strength": "High for TCS's stated strategy.",
+      "source": "TCS",
+      "url": "https://www.tcs.com/careers/india/tcs-ai-careers"
+    },
+    {
+      "company": "Amazon",
+      "area": "Software internships",
+      "date": "2026",
+      "what_happened": "Current India SDE internship postings combine programming fundamentals with AI development tools, cloud, databases, version control, debugging, SDLC, CI/CD, monitoring and production ownership.",
+      "what_students_should_notice": "Strong employer evidence for the combined skill profile Beyond HYPE recommends.",
+      "evidence_strength": "High",
+      "source": "Amazon Jobs",
+      "url": "https://www.amazon.jobs/en/jobs/10517894/software-development-engineer-intern-jan-2027-6-month-amazon-university-talent-acquisition"
+    },
+    {
+      "company": "Amazon",
+      "area": "Data internships",
+      "date": "2026",
+      "what_happened": "Current India Data Engineer internship requirements include SQL, Python, RDBMS, NoSQL, ETL, warehousing, AWS data services, validation, documentation and domain knowledge.",
+      "what_students_should_notice": "Strong employer evidence for data capability categories.",
+      "evidence_strength": "High",
+      "source": "Amazon Jobs",
+      "url": "https://www.amazon.jobs/en/jobs/10496769/data-engineer-intern-2027"
+    },
+    {
+      "company": "Amazon",
+      "area": "Applied Science internships",
+      "date": "2026",
+      "what_happened": "Current India Applied Scientist internship combines Python, ML, large-scale data, end-to-end system design, experimentation and production deployment.",
+      "what_students_should_notice": "Strong evidence that AI roles combine research and engineering.",
+      "evidence_strength": "High",
+      "source": "Amazon Jobs",
+      "url": "https://www.amazon.jobs/en-gb/jobs/10477346/applied-scientist-i-intern-jan-2027-6-months"
+    },
+    {
+      "company": "Amazon",
+      "area": "Cloud/Infrastructure",
+      "date": "2026",
+      "what_happened": "Current roles span cloud architecture, data-center operations, Linux, networking, hardware, scripting and reliability.",
+      "what_students_should_notice": "Shows cloud is broader than learning a cloud console.",
+      "evidence_strength": "High",
+      "source": "Amazon Jobs",
+      "url": "https://www.amazon.jobs/en/jobs/10413868/dco-trainee-data-center-operations-dco"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E01",
+      "field_id": "F1",
+      "claim": "AI tool adoption",
+      "finding": "84% of survey respondents use or plan to use AI tools in development; 51% of professional developers use AI daily.",
+      "supports": "Developer workflow adoption",
+      "does_not_prove": "Does not prove job replacement or universal productivity gains.",
+      "source": "Stack Overflow 2025 AI",
+      "year": "2025",
+      "evidence_type": "Developer survey",
+      "geography": "Global developer survey",
+      "status": "Established signal",
+      "url": "https://survey.stackoverflow.co/2025/ai"
+    },
+    {
+      "evidence_id": "E02",
+      "field_id": "F1",
+      "claim": "AI output trust",
+      "finding": "46% distrust AI output accuracy versus 33% who trust it.",
+      "supports": "Verification remains important.",
+      "does_not_prove": "Does not mean AI is generally unusable.",
+      "source": "Stack Overflow 2025 AI",
+      "year": "2025",
+      "evidence_type": "Developer survey",
+      "geography": "Global developer survey",
+      "status": "Established signal",
+      "url": "https://survey.stackoverflow.co/2025/ai"
+    },
+    {
+      "evidence_id": "E03",
+      "field_id": "F1",
+      "claim": "High-responsibility tasks",
+      "finding": "76% do not plan to use AI for deployment/monitoring; 69% do not plan to use it for project planning.",
+      "supports": "Developers remain cautious about delegating high-responsibility work.",
+      "does_not_prove": "Survey intent is not a forecast of actual future adoption.",
+      "source": "Stack Overflow 2025 AI",
+      "year": "2025",
+      "evidence_type": "Developer survey",
+      "geography": "Global developer survey",
+      "status": "Established signal",
+      "url": "https://survey.stackoverflow.co/2025/ai"
+    },
+    {
+      "evidence_id": "E04",
+      "field_id": "F1",
+      "claim": "AI coding frustration",
+      "finding": "66% cite almost-right AI solutions as a frustration; 45% say debugging AI-generated code can be more time-consuming.",
+      "supports": "Verification/debugging capability matters.",
+      "does_not_prove": "Does not quantify the economic value of AI assistance.",
+      "source": "Stack Overflow 2025 AI",
+      "year": "2025",
+      "evidence_type": "Developer survey",
+      "geography": "Global developer survey",
+      "status": "Established signal",
+      "url": "https://survey.stackoverflow.co/2025/ai"
+    },
+    {
+      "evidence_id": "E05",
+      "field_id": "F2",
+      "claim": "AI opportunity areas",
+      "finding": "TCS identifies modernizing technology foundations, AI-enabled operations, AI governance, sovereign AI and physical AI as opportunity areas.",
+      "supports": "Shows one major IT-services employer is organizing AI work across multiple domains.",
+      "does_not_prove": "Company strategy is not proof of industry-wide hiring growth.",
+      "source": "TCS AI Careers",
+      "year": "2026",
+      "evidence_type": "Company strategy",
+      "geography": "India/global IT services",
+      "status": "Emerging signal",
+      "url": "https://www.tcs.com/careers/india/tcs-ai-careers"
+    },
+    {
+      "evidence_id": "E06",
+      "field_id": "F2",
+      "claim": "AI production role requirements",
+      "finding": "Amazon Applied Scientist India asks for ML experience, Python, large-scale datasets, end-to-end system design and production deployment.",
+      "supports": "AI roles combine research, engineering and production.",
+      "does_not_prove": "One employer's requirements are not universal.",
+      "source": "Amazon Applied Scientist",
+      "year": "2026",
+      "evidence_type": "Job posting",
+      "geography": "India",
+      "status": "Employer signal",
+      "url": "https://www.amazon.jobs/en-gb/jobs/10477346/applied-scientist-i-intern-jan-2027-6-months"
+    },
+    {
+      "evidence_id": "E07",
+      "field_id": "F3",
+      "claim": "Data engineering requirements",
+      "finding": "Amazon Data Engineer India asks for SQL, Python, RDBMS, NoSQL, ETL, warehouses, AWS data services, validation and documentation.",
+      "supports": "Data engineering is a systems + data quality discipline.",
+      "does_not_prove": "One employer is not the entire market.",
+      "source": "Amazon Data Engineer",
+      "year": "2026",
+      "evidence_type": "Job posting",
+      "geography": "India",
+      "status": "Employer signal",
+      "url": "https://www.amazon.jobs/en/jobs/10496769/data-engineer-intern-2027"
+    },
+    {
+      "evidence_id": "E08",
+      "field_id": "F4",
+      "claim": "Cybersecurity skills shortage",
+      "finding": "ISC2 reports AI 41%, cloud security 36%, risk assessment 29%, application security 28%, security engineering/GRC 27% as top cited needs.",
+      "supports": "Supports a multi-capability cybersecurity skill map.",
+      "does_not_prove": "Survey responses are perceptions of need, not vacancy counts.",
+      "source": "ISC2 Workforce Study",
+      "year": "2025",
+      "evidence_type": "Workforce survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study"
+    },
+    {
+      "evidence_id": "E09",
+      "field_id": "F4",
+      "claim": "AI security adoption",
+      "finding": "28% report AI tools already integrated in security operations; 19% testing; 22% evaluating.",
+      "supports": "AI is entering security workflows.",
+      "does_not_prove": "Adoption stage varies; not proof of replacement.",
+      "source": "ISC2 Workforce Study",
+      "year": "2025",
+      "evidence_type": "Workforce survey",
+      "geography": "Global",
+      "status": "Emerging/established",
+      "url": "https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study"
+    },
+    {
+      "evidence_id": "E10",
+      "field_id": "F4",
+      "claim": "AI security skills",
+      "finding": "ISC2 respondents identify AI threat detection/response, AI threat modeling, model defense, AI governance and privacy as important skills.",
+      "supports": "Supports an AI-security capability cluster.",
+      "does_not_prove": "Does not define exact job titles or salary outcomes.",
+      "source": "ISC2 Workforce Study",
+      "year": "2025",
+      "evidence_type": "Workforce survey",
+      "geography": "Global",
+      "status": "Emerging opportunity",
+      "url": "https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study"
+    },
+    {
+      "evidence_id": "E11",
+      "field_id": "F5",
+      "claim": "Cloud-native production",
+      "finding": "CNCF research describes widespread production use of cloud-native technologies and Kubernetes.",
+      "supports": "Supports containers/orchestration as practical platform skills.",
+      "does_not_prove": "Does not mean every student needs Kubernetes immediately.",
+      "source": "CNCF research",
+      "year": "2025",
+      "evidence_type": "Industry survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.cncf.io/announcements/2025/04/01/cncf-research-reveals-how-cloud-native-technology-is-reshaping-global-business-and-innovation/"
+    },
+    {
+      "evidence_id": "E12",
+      "field_id": "F5",
+      "claim": "AI + Kubernetes",
+      "finding": "CNCF reported Kubernetes use in GenAI inference workloads.",
+      "supports": "AI infrastructure connects ML with platform engineering.",
+      "does_not_prove": "Does not mean Kubernetes is required for every AI project.",
+      "source": "CNCF",
+      "year": "2026",
+      "evidence_type": "Industry research",
+      "geography": "Global",
+      "status": "Emerging/established",
+      "url": "https://www.cncf.io/announcements/2026/01/20/kubernetes-established-as-the-de-facto-operating-system-for-ai-as-production-use-hits-82-in-2025-cncf-annual-cloud-native-survey/"
+    },
+    {
+      "evidence_id": "E13",
+      "field_id": "F1",
+      "claim": "Employer skill stack",
+      "finding": "Amazon India SDE internship lists AI development tools, cloud, SQL/NoSQL, open source, version control, debugging, SDLC, communication and operational excellence.",
+      "supports": "Supports the combined 'fundamentals + systems + AI-assisted engineering' student map.",
+      "does_not_prove": "One employer's requirements are not universal.",
+      "source": "Amazon SDE India",
+      "year": "2026",
+      "evidence_type": "Job posting",
+      "geography": "India",
+      "status": "Employer signal",
+      "url": "https://www.amazon.jobs/en/jobs/10517894/software-development-engineer-intern-jan-2027-6-month-amazon-university-talent-acquisition"
+    },
+    {
+      "evidence_id": "E14",
+      "field_id": "F3",
+      "claim": "Data + domain knowledge",
+      "finding": "Amazon Data Engineer role includes domain knowledge, metrics, reports and decision support alongside technical data systems.",
+      "supports": "Supports combining technical data skills with domain understanding.",
+      "does_not_prove": "Does not imply all data roles require the same stack.",
+      "source": "Amazon Data Engineer",
+      "year": "2026",
+      "evidence_type": "Job posting",
+      "geography": "India",
+      "status": "Employer signal",
+      "url": "https://www.amazon.jobs/en/jobs/10496769/data-engineer-intern-2027"
+    },
+    {
+      "evidence_id": "E15",
+      "field_id": "F5",
+      "claim": "Cloud infrastructure breadth",
+      "finding": "Amazon India data-center roles require Linux/Unix, hardware troubleshooting, networking, AWS, scripting and operational work.",
+      "supports": "Shows infrastructure includes physical and software layers.",
+      "does_not_prove": "Role is specifically data-center operations, not all cloud jobs.",
+      "source": "Amazon DCO",
+      "year": "2026",
+      "evidence_type": "Job posting",
+      "geography": "India",
+      "status": "Employer signal",
+      "url": "https://www.amazon.jobs/en/jobs/10413868/dco-trainee-data-center-operations-dco"
+    }
+  ],
+  "sources": [
+    {
+      "source_name": "Stack Overflow 2025 AI",
+      "url": "https://survey.stackoverflow.co/2025/ai"
+    },
+    {
+      "source_name": "GitHub Octoverse 2025",
+      "url": "https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/"
+    },
+    {
+      "source_name": "WEF Future of Jobs 2025",
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/"
+    },
+    {
+      "source_name": "Amazon SDE India 2027",
+      "url": "https://www.amazon.jobs/en/jobs/10517894/software-development-engineer-intern-jan-2027-6-month-amazon-university-talent-acquisition"
+    },
+    {
+      "source_name": "Amazon Data Engineer India 2027",
+      "url": "https://www.amazon.jobs/en/jobs/10496769/data-engineer-intern-2027"
+    },
+    {
+      "source_name": "Amazon Applied Scientist India 2027",
+      "url": "https://www.amazon.jobs/en-gb/jobs/10477346/applied-scientist-i-intern-jan-2027-6-months"
+    },
+    {
+      "source_name": "Amazon Support Engineer India 2027",
+      "url": "https://www.amazon.jobs/en/jobs/10498163/support-engineer-intern-2027"
+    },
+    {
+      "source_name": "Amazon Solutions Architect India",
+      "url": "https://www.amazon.jobs/en-gb/jobs/3086228/solutions-architect-intern"
+    },
+    {
+      "source_name": "TCS AI Careers 2026",
+      "url": "https://www.tcs.com/careers/india/tcs-ai-careers"
+    },
+    {
+      "source_name": "ISC2 Workforce Study 2025",
+      "url": "https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study"
+    },
+    {
+      "source_name": "CNCF Cloud Native Research",
+      "url": "https://www.cncf.io/announcements/2025/04/01/cncf-research-reveals-how-cloud-native-technology-is-reshaping-global-business-and-innovation/"
+    },
+    {
+      "source_name": "Amazon Data Center Operations India",
+      "url": "https://www.amazon.jobs/en/jobs/10413868/dco-trainee-data-center-operations-dco"
+    },
+    {
+      "source_name": "Microsoft Explore India",
+      "url": "https://careers.microsoft.com/v2/global/en/exploremicrosoft"
+    }
+  ]
+}
