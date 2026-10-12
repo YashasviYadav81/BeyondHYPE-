@@ -1,19 +1,22 @@
 /* =========================================================
-   BEYOND HYPE
-   Dataset-driven frontend
+   BEYOND HYPE — frontend (reads the Flask + SQLite API)
 ========================================================= */
 
-const API = "http://127.0.0.1:5000";
+// Local development uses the local backend.
+// After deployment, paste your Render URL where it says YOUR-BACKEND-URL.
+const API =
+    location.protocol === "file:" ||
+    location.hostname === "127.0.0.1" ||
+    location.hostname === "localhost"
+        ? "http://127.0.0.1:5000"
+        : "https://YOUR-BACKEND-URL";
 
-let dataset = null;
 let fieldData = {};
 let currentField = "F1";
 let currentPiece = 0;
 
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+/* ================= ELEMENTS ================= */
 
 const fieldCards = document.querySelectorAll(".field-card");
 
@@ -32,7 +35,6 @@ const pieceMeaning = document.getElementById("pieceMeaning");
 
 const evidenceToggle = document.getElementById("evidenceToggle");
 const pieceEvidence = document.getElementById("pieceEvidence");
-
 const evidenceSource = document.getElementById("evidenceSource");
 const evidenceDate = document.getElementById("evidenceDate");
 const evidenceType = document.getElementById("evidenceType");
@@ -55,9 +57,7 @@ const takeawayTitle = document.getElementById("takeawayTitle");
 const takeawayText = document.getElementById("takeawayText");
 
 
-/* =========================================================
-   FIELD ID ↔ HTML KEY
-========================================================= */
+/* ================= FIELD ID <-> HTML KEY ================= */
 
 const fieldKeys = {
     F1: "software",
@@ -76,215 +76,161 @@ const keyToField = {
 };
 
 
-/* =========================================================
-   LOAD BACKEND DATA
-========================================================= */
+/* ================= HELPERS ================= */
 
-async function loadBackendData() {
+function escapeHTML(value) {
+    if (value === null || value === undefined) return "";
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-    try {
+function unique(values) {
+    return [...new Set(values.filter(Boolean))];
+}
 
-        const response = await fetch(`${API}/data`);
+function safeUrl(url) {
+    return /^https?:\/\//i.test(url || "") ? url : "";
+}
 
-        if (!response.ok) {
-            throw new Error(`Backend error: ${response.status}`);
-        }
 
-        dataset = await response.json();
+/* ================= LOAD ONE FIELD FROM THE API (cached) ================= */
 
-        buildFieldData();
+async function loadField(fieldId) {
 
-        updateField("F1");
+    if (fieldData[fieldId]) return fieldData[fieldId];
 
-        console.log("Beyond HYPE dataset loaded.");
+    const response = await fetch(`${API}/api/fields/${fieldId}`);
 
-    } catch (error) {
-
-        console.error("Could not load Beyond HYPE data:", error);
-
-        fieldTitle.textContent = "Could not load the industry data.";
-        fieldDescription.textContent =
-            "Make sure the Flask backend is running at http://127.0.0.1:5000";
-
+    if (!response.ok) {
+        throw new Error(`Backend error: ${response.status}`);
     }
+
+    const bundle = await response.json();
+
+    fieldData[fieldId] = {
+        info: bundle.field,
+        industryChanges: bundle.industry_changes,
+        workChanges: bundle.work_changes,
+        humanCapabilities: bundle.human_capabilities,
+        roles: bundle.roles,
+        capabilities: bundle.capabilities,
+        learningPaths: bundle.learning_paths,
+        evidence: bundle.evidence,
+        companyCases: bundle.company_cases
+    };
+
+    return fieldData[fieldId];
 }
 
 
-/* =========================================================
-   BUILD FIELD DATA
-========================================================= */
+/* ================= LOADING + ERROR STATES ================= */
 
-function buildFieldData() {
+function showLoading() {
+    fieldTitle.textContent = "Loading the evidence…";
+    fieldDescription.textContent = "";
+    piecePoints.innerHTML = '<div class="detail-point">Loading…</div>';
+    pieceMeaning.innerHTML = "";
+}
 
-    dataset.fields.forEach(field => {
-
-        const id = field.field_id;
-
-        fieldData[id] = {
-
-            info: field,
-
-            industryChanges:
-                dataset.industry_changes.filter(
-                    item => item.field_id === id
-                ),
-
-            workChanges:
-                dataset.work_changes.filter(
-                    item => item.field_id === id
-                ),
-
-            humanCapabilities:
-                dataset.human_capabilities.filter(
-                    item => item.field_id === id
-                ),
-
-            roles:
-                dataset.roles.filter(
-                    item => item.field_id === id
-                ),
-
-            capabilities:
-                dataset.capabilities.filter(
-                    item => item.field_id === id
-                ),
-
-            learningPaths:
-                dataset.learning_paths.filter(
-                    item => item.field_id === id
-                ),
-
-            evidence:
-                dataset.evidence.filter(
-                    item => item.field_id === id
-                ),
-
-            companyCases:
-                dataset.company_cases.filter(
-                    item => item.field_id === id
-                )
-        };
-
-    });
+function showError(fieldId, error) {
+    console.error("Could not load field:", error);
+    fieldTitle.textContent = "Could not load this field.";
+    fieldDescription.innerHTML =
+        'Make sure the backend is running. ' +
+        '<button type="button" class="evidence-toggle" id="retryField">Try again</button>';
+    piecePoints.innerHTML = "";
+    pieceMeaning.innerHTML = "";
+    document.getElementById("retryField").onclick = () => updateField(fieldId);
 }
 
 
-/* =========================================================
-   UPDATE FIELD
-========================================================= */
+/* ================= UPDATE FIELD ================= */
 
-function updateField(fieldId) {
+async function updateField(fieldId) {
 
     currentField = fieldId;
     currentPiece = 0;
 
-    const data = fieldData[fieldId];
-
-    if (!data) return;
-
-
-    fieldNumber.textContent =
-        fieldId.replace("F", "").padStart(2, "0");
-
-    fieldLabel.textContent =
-        data.info.field_name.toUpperCase();
-
-
-    fieldTitle.innerHTML =
-        `How is <span>${data.info.field_name}</span> changing?`;
-
-
-    fieldDescription.textContent =
-        data.info.description;
-
-
     fieldCards.forEach(card => {
-
         card.classList.toggle(
             "active",
             card.dataset.field === fieldKeys[fieldId]
         );
-
     });
 
+    showLoading();
+
+    let data;
+
+    try {
+        data = await loadField(fieldId);
+    } catch (error) {
+        showError(fieldId, error);
+        return;
+    }
+
+    if (currentField !== fieldId) return;   // user already clicked another field
+
+    fieldNumber.textContent = fieldId.replace("F", "").padStart(2, "0");
+    fieldLabel.textContent = data.info.field_name.toUpperCase();
+    fieldTitle.innerHTML =
+        `How is <span>${escapeHTML(data.info.field_name)}</span> changing?`;
+    fieldDescription.textContent = data.info.description;
 
     updatePuzzle();
     updateBigPicture(data);
-
 }
 
 
-/* =========================================================
-   FIVE MAIN PUZZLE PIECES
-========================================================= */
+/* ================= FIVE MAIN PUZZLE PIECES ================= */
 
 function getPieces(data) {
 
     return [
 
-        /* 01 — INDUSTRY */
         {
             type: "industry",
             status: "INDUSTRY CHANGE",
-
             title: "What's changing in the industry?",
-
             items: data.industryChanges,
-
             source:
                 data.industryChanges[0]?.source ||
                 data.info.primary_evidence
         },
 
-
-        /* 02 — WORK */
         {
             type: "work",
             status: "WORK IS CHANGING",
-
             title: "How is the actual work changing?",
-
             items: data.workChanges,
-
             source: "Employer + industry evidence"
         },
 
-
-        /* 03 — HUMAN */
         {
             type: "human",
             status: "HUMAN CAPABILITY",
-
             title: "What still requires human capability?",
-
             items: data.humanCapabilities,
-
             source: "Industry evidence"
         },
 
-
-        /* 04 — ROLES */
         {
             type: "roles",
             status: "ROLE LANDSCAPE",
-
             title: "How are roles changing?",
-
             items: data.roles,
-
             source: "Employer + industry evidence"
         },
 
-
-        /* 05 — CAPABILITIES */
         {
             type: "capabilities",
             status: "BUILD THESE CAPABILITIES",
-
             title: "What capabilities should I develop?",
-
             items: data.capabilities,
-
             source: "Employer + industry evidence"
         }
 
@@ -292,102 +238,48 @@ function getPieces(data) {
 }
 
 
-/* =========================================================
-   UPDATE PUZZLE
-========================================================= */
+/* ================= UPDATE PUZZLE ================= */
 
 function updatePuzzle() {
 
     const data = fieldData[currentField];
-
     if (!data) return;
 
     const pieces = getPieces(data);
     const piece = pieces[currentPiece];
-
     if (!piece) return;
 
+    pieceCurrent.textContent = String(currentPiece + 1).padStart(2, "0");
+    pieceProgress.textContent = String(pieces.length).padStart(2, "0");
 
-    pieceCurrent.textContent =
-        String(currentPiece + 1).padStart(2, "0");
-
-    pieceProgress.textContent =
-        String(pieces.length).padStart(2, "0");
-
-
-    pieceStatus.textContent =
-        piece.status;
-
-    pieceSource.textContent =
-        piece.source;
-
-    pieceTitle.textContent =
-        piece.title;
-
+    pieceStatus.textContent = piece.status;
+    pieceSource.textContent = piece.source;
+    pieceTitle.textContent = piece.title;
 
     renderPieceContent(piece);
-
-
     updateEvidence(data, piece);
-
     updateDeepDive(data, piece);
-
     updatePuzzlePieces();
-
 }
 
 
-/* =========================================================
-   RENDER PIECE CONTENT
-========================================================= */
+/* ================= RENDER PIECE CONTENT ================= */
+
+const MAIN_TEXT = {
+    industry: item => [item.change, item.what_is_happening],
+    work: item => [item.task, item.shift],
+    human: item => [item.capability, item.why_it_matters],
+    roles: item => [item.role, item.what_is_changing],
+    capabilities: item => [item.capability, item.meaning]
+};
 
 function renderPieceContent(piece) {
 
     const items = piece.items.slice(0, 5);
 
-
-    /* ---------- MAIN POINTS ---------- */
-
     piecePoints.innerHTML = items.map((item, index) => {
 
-        let title = "";
-        let text = "";
-
-        if (piece.type === "industry") {
-
-            title = item.change;
-            text = item.what_is_happening;
-
-        }
-
-        else if (piece.type === "work") {
-
-            title = item.task;
-            text = item.shift;
-
-        }
-
-        else if (piece.type === "human") {
-
-            title = item.capability;
-            text = item.why_it_matters;
-
-        }
-
-        else if (piece.type === "roles") {
-
-            title = item.role;
-            text = item.what_is_changing;
-
-        }
-
-        else if (piece.type === "capabilities") {
-
-            title = item.capability;
-            text = item.meaning;
-
-        }
-
+        const [title, text] = MAIN_TEXT[piece.type](item);
 
         return `
             <div class="detail-point">
@@ -398,584 +290,309 @@ function renderPieceContent(piece) {
 
     }).join("");
 
-
-    /* ---------- WHAT THIS MEANS ---------- */
-
     pieceMeaning.innerHTML = items.map(item => {
 
         let text = "";
 
         if (piece.type === "industry") {
-            text = item.why_it_matters;
+            text = escapeHTML(item.why_it_matters);
         }
-
         else if (piece.type === "work") {
-            text =
-                `<strong>Mode:</strong> ${item.mode}<br>
-                 <strong>Human role:</strong> ${item.human_role}`;
+            text = `<strong>Mode:</strong> ${escapeHTML(item.mode)}<br>
+                    <strong>Human role:</strong> ${escapeHTML(item.human_role)}`;
         }
-
         else if (piece.type === "human") {
-            text =
-                `<strong>${item.work_mode}</strong> — ${item.why_human}`;
+            text = `<strong>${escapeHTML(item.work_mode)}</strong> — ${escapeHTML(item.why_human)}`;
         }
-
         else if (piece.type === "roles") {
-            text =
-                `<strong>Key shift:</strong> ${item.key_shift}`;
+            text = `<strong>Key shift:</strong> ${escapeHTML(item.key_shift)}`;
         }
-
         else if (piece.type === "capabilities") {
-            text =
-                `<strong>Examples:</strong> ${item.examples}<br>
-                 <strong>Priority:</strong> ${item.priority}`;
+            text = `<strong>Examples:</strong> ${escapeHTML(item.examples)}<br>
+                    <strong>Priority:</strong> ${escapeHTML(item.priority)}`;
         }
 
         return `<li>${text}</li>`;
 
     }).join("");
-
 }
 
 
-/* =========================================================
-   EVIDENCE
-========================================================= */
+/* ================= EVIDENCE (tied to the claims on screen) ================= */
 
 function updateEvidence(data, piece) {
 
     pieceEvidence.classList.remove("open");
+    evidenceToggle.textContent = "See the evidence +";
 
-    evidenceToggle.textContent =
-        "See the evidence +";
+    // Industry piece: only the evidence linked to the claims on screen.
+    // Other pieces: our interpretation, so show the field's evidence overall.
+    let records;
+    let isInterpretation = false;
 
+    if (piece.type === "industry") {
+        const ids = new Set(piece.items.flatMap(item => item.evidence_ids || []));
+        records = data.evidence.filter(item => ids.has(item.evidence_id));
+    } else {
+        records = data.evidence.filter(
+            item => item.field_id === data.info.field_id
+        );
+        isInterpretation = true;
+    }
 
-    const evidence = data.evidence;
-
-
-    if (!evidence.length) {
-
-        evidenceSource.textContent =
-            piece.source || "Industry evidence";
-
-        evidenceDate.textContent =
-            "—";
-
-        evidenceType.textContent =
-            "Industry signal";
-
+    if (!records.length) {
+        evidenceSource.textContent = piece.source || "—";
+        evidenceDate.textContent = "—";
+        evidenceType.textContent = "No evidence record yet";
         evidenceShows.innerHTML =
-            "<li>Evidence record not available for this field.</li>";
-
+            "<li>Evidence record not available for this piece.</li>";
         evidenceDoesNot.innerHTML =
-            "<li>Do not treat the field summary as a forecast.</li>";
-
+            "<li>Do not treat this summary as a forecast.</li>";
         return;
     }
 
+    const names = unique(records.map(r => r.source_name || r.source));
 
-    const currentEvidence =
-        evidence[Math.min(currentPiece, evidence.length - 1)];
-
-
-    evidenceSource.textContent =
-        currentEvidence.source || "—";
+    evidenceSource.innerHTML = names.map(name => {
+        const record = records.find(r => (r.source_name || r.source) === name);
+        const url = safeUrl(record.url || record.source_url);
+        return url
+            ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(name)}</a>`
+            : escapeHTML(name);
+    }).join("<br>");
 
     evidenceDate.textContent =
-        currentEvidence.year || "—";
+        unique(records.map(r => r.year)).join(", ") || "—";
 
-    evidenceType.textContent =
-        currentEvidence.evidence_type || "—";
+    evidenceType.textContent = isInterpretation
+        ? "Interpretation (based on this field's evidence)"
+        : unique(records.map(r => r.evidence_type)).join(", ") || "—";
 
+    evidenceShows.innerHTML = records.slice(0, 6)
+        .map(r => `<li>${escapeHTML(r.finding)}</li>`).join("");
 
-    evidenceShows.innerHTML =
-        evidence
-            .slice(0, 3)
-            .map(item => `
-                <li>
-                    ${escapeHTML(item.finding || item.supports || "")}
-                </li>
-            `)
-            .join("");
-
-
-    evidenceDoesNot.innerHTML =
-        evidence
-            .slice(0, 3)
-            .map(item => `
-                <li>
-                    ${escapeHTML(item.does_not_prove || "Not enough evidence to make a broader claim.")}
-                </li>
-            `)
-            .join("");
-
+    evidenceDoesNot.innerHTML = records.slice(0, 6)
+        .map(r => `<li>${escapeHTML(r.does_not_prove || "Not enough evidence to make a broader claim.")}</li>`)
+        .join("");
 }
 
 
-/* =========================================================
-   DEEP DIVE
-========================================================= */
+/* ================= DEEP DIVE ================= */
+
+function para(text, label) {
+    return `<p>${label ? `<strong>${label}:</strong> ` : ""}${escapeHTML(text)}</p>`;
+}
+
+function deepCard(title, paragraphs, small) {
+    return `<div class="deep-dive-item">
+                <strong>${escapeHTML(title)}</strong>
+                ${paragraphs.join("")}
+                ${small ? `<small>${escapeHTML(small)}</small>` : ""}
+            </div>`;
+}
 
 function updateDeepDive(data, piece) {
 
     deepDivePanel.classList.remove("open");
-
-    deepDiveToggle.textContent =
-        "Deep dive →";
-
-    deepDiveLabel.textContent =
-        "DEEP DIVE";
-
+    deepDiveToggle.textContent = "Deep dive →";
+    deepDiveLabel.textContent = "DEEP DIVE";
 
     let title = "";
     let intro = "";
     let content = "";
 
-
-    /* ---------- INDUSTRY ---------- */
-
     if (piece.type === "industry") {
 
         title = "Understand the industry change";
+        intro = "Look at the evidence behind the shift and what it does — and does not — tell us.";
 
-        intro =
-            "Look at the evidence behind the shift and what it does — and does not — tell us.";
-
-        content =
-            data.industryChanges.map(item => `
-                <div class="deep-dive-item">
-
-                    <strong>${escapeHTML(item.change)}</strong>
-
-                    <p>
-                        ${escapeHTML(item.what_is_happening)}
-                    </p>
-
-                    <p>
-                        <strong>Why it matters:</strong>
-                        ${escapeHTML(item.why_it_matters)}
-                    </p>
-
-                    <small>
-                        ${escapeHTML(item.status)}
-                    </small>
-
-                </div>
-            `).join("");
+        content = data.industryChanges.map(item => deepCard(
+            item.change,
+            [para(item.what_is_happening), para(item.why_it_matters, "Why it matters")],
+            item.status
+        )).join("");
 
     }
-
-
-    /* ---------- WORK ---------- */
-
     else if (piece.type === "work") {
 
         title = "Inside the changing workflow";
+        intro = "The important question is not simply whether a task is automated, but what responsibility remains with the person doing the work.";
 
-        intro =
-            "The important question is not simply whether a task is automated, but what responsibility remains with the person doing the work.";
-
-        content =
-            data.workChanges.map(item => `
-                <div class="deep-dive-item">
-
-                    <strong>${escapeHTML(item.task)}</strong>
-
-                    <p>
-                        ${escapeHTML(item.shift)}
-                    </p>
-
-                    <p>
-                        <strong>Mode:</strong>
-                        ${escapeHTML(item.mode)}
-                    </p>
-
-                    <p>
-                        <strong>Human role:</strong>
-                        ${escapeHTML(item.human_role)}
-                    </p>
-
-                </div>
-            `).join("");
+        content = data.workChanges.map(item => deepCard(
+            item.task,
+            [para(item.shift), para(item.mode, "Mode"), para(item.human_role, "Human role")]
+        )).join("");
 
     }
-
-
-    /* ---------- HUMAN CAPABILITIES ---------- */
-
     else if (piece.type === "human") {
 
         title = "What remains human-led";
+        intro = "These capabilities are connected to judgment, context, accountability and interpretation.";
 
-        intro =
-            "These capabilities are connected to judgment, context, accountability and interpretation.";
-
-        content =
-            data.humanCapabilities.map(item => `
-                <div class="deep-dive-item">
-
-                    <strong>${escapeHTML(item.capability)}</strong>
-
-                    <p>
-                        ${escapeHTML(item.why_it_matters)}
-                    </p>
-
-                    <p>
-                        <strong>Why human:</strong>
-                        ${escapeHTML(item.why_human)}
-                    </p>
-
-                </div>
-            `).join("");
+        content = data.humanCapabilities.map(item => deepCard(
+            item.capability,
+            [para(item.why_it_matters), para(item.why_human, "Why human")]
+        )).join("");
 
     }
-
-
-    /* ---------- ROLES ---------- */
-
     else if (piece.type === "roles") {
 
         title = "Inside the role landscape";
+        intro = "Roles are changing through shifts in responsibilities, tools and the capabilities employers expect.";
 
-        intro =
-            "Roles are changing through shifts in responsibilities, tools and the capabilities employers expect.";
-
-        content =
-            data.roles.map(item => `
-                <div class="deep-dive-item">
-
-                    <strong>${escapeHTML(item.role)}</strong>
-
-                    <p>
-                        ${escapeHTML(item.what_is_changing)}
-                    </p>
-
-                    <p>
-                        <strong>Key shift:</strong>
-                        ${escapeHTML(item.key_shift)}
-                    </p>
-
-                    <small>
-                        ${escapeHTML(item.status)}
-                    </small>
-
-                </div>
-            `).join("");
+        content = data.roles.map(item => deepCard(
+            item.role,
+            [para(item.what_is_changing), para(item.key_shift, "Key shift")],
+            item.status
+        )).join("");
 
     }
-
-
-    /* ---------- CAPABILITIES ---------- */
-
     else if (piece.type === "capabilities") {
 
         title = "How to build these capabilities";
+        intro = "These are not just technology names. They describe capabilities you can practise through projects and exercises.";
 
-        intro =
-            "These are not just technology names. They describe capabilities you can practise through projects and exercises.";
+        content = data.capabilities.map(item => {
 
-        content =
-            data.capabilities.map(item => {
+            // joined by ID, so no practice exercise goes missing
+            const paths = data.learningPaths.filter(
+                path => path.capability_id === item.id
+            );
 
-                const paths =
-                    data.learningPaths.filter(path =>
-                        path.capability === item.capability
-                    );
+            return deepCard(item.capability, [
+                para(item.meaning),
+                para(item.examples, "Examples"),
+                para(item.priority, "Priority"),
+                ...paths.map(path => para(path.exercise, "Practice"))
+            ]);
 
-                const pathHTML =
-                    paths.map(path => `
-                        <p>
-                            <strong>Practice:</strong>
-                            ${escapeHTML(path.exercise)}
-                        </p>
-                    `).join("");
-
-                return `
-                    <div class="deep-dive-item">
-
-                        <strong>
-                            ${escapeHTML(item.capability)}
-                        </strong>
-
-                        <p>
-                            ${escapeHTML(item.meaning)}
-                        </p>
-
-                        <p>
-                            <strong>Examples:</strong>
-                            ${escapeHTML(item.examples)}
-                        </p>
-
-                        <p>
-                            <strong>Priority:</strong>
-                            ${escapeHTML(item.priority)}
-                        </p>
-
-                        ${pathHTML}
-
-                    </div>
-                `;
-
-            }).join("");
+        }).join("");
 
     }
 
-
     deepDiveTitle.textContent = title;
-
     deepDiveIntro.textContent = intro;
-
-    deepDiveBody.innerHTML =
-        `<div class="deep-dive-list">${content}</div>`;
-
+    deepDiveBody.innerHTML = `<div class="deep-dive-list">${content}</div>`;
 }
 
 
-/* =========================================================
-   BIG PICTURE
-========================================================= */
+/* ================= BIG PICTURE ================= */
 
 function updateBigPicture(data) {
 
     const info = data.info;
 
-    bigTitle.textContent =
-        info.current_landscape;
-
+    bigTitle.textContent = info.current_landscape;
 
     const points = [
-
         `Overall status: ${info.overall_status}`,
-
         `Primary evidence: ${info.primary_evidence}`,
-
         `${data.humanCapabilities.length} human capabilities identified`,
-
         `${data.roles.length} roles mapped`,
-
         `${data.capabilities.length} capabilities to develop`
-
     ];
 
+    bigPoints.innerHTML = points
+        .map(point => `<li>${escapeHTML(point)}</li>`)
+        .join("");
 
-    bigPoints.innerHTML =
-        points.map(point => `
-            <li>${escapeHTML(point)}</li>
-        `).join("");
-
-
-    takeawayTitle.innerHTML =
-        `Understand the <span>change.</span>`;
-
+    takeawayTitle.innerHTML = `Understand the <span>change.</span>`;
 
     takeawayText.textContent =
         `The goal isn't to chase every new technology. Understand what is changing in ${info.field_name}, how the work is shifting, and which capabilities you can actually practise.`;
-
 }
 
 
-/* =========================================================
-   PUZZLE PIECES VISUAL STATE
-========================================================= */
+/* ================= PUZZLE PIECES VISUAL STATE ================= */
 
 function updatePuzzlePieces() {
 
-    const puzzlePieces =
-        document.querySelectorAll(".puzzle-piece");
-
+    const puzzlePieces = document.querySelectorAll(".puzzle-piece");
 
     puzzlePieces.forEach((element, index) => {
 
         element.classList.remove("active");
         element.classList.remove("done");
 
-
-        if (index < currentPiece) {
-            element.classList.add("done");
-        }
-
-
-        if (index === currentPiece) {
-            element.classList.add("active");
-        }
+        if (index < currentPiece) element.classList.add("done");
+        if (index === currentPiece) element.classList.add("active");
 
     });
-
 
     if (currentPiece === 4) {
 
-        nextPiece.innerHTML =
-            `View the big picture <span>↓</span>`;
+        nextPiece.innerHTML = `View the big picture <span>↓</span>`;
 
         nextPiece.onclick = () => {
-
-            document
-                .getElementById("bigPicture")
-                .scrollIntoView({
-                    behavior: "smooth"
-                });
-
+            document.getElementById("bigPicture")
+                .scrollIntoView({ behavior: "smooth" });
         };
 
-    }
+    } else {
 
-    else {
-
-        nextPiece.innerHTML =
-            `Next piece <span>→</span>`;
-
-        nextPiece.onclick =
-            nextPieceHandler;
+        nextPiece.innerHTML = `Next piece <span>→</span>`;
+        nextPiece.onclick = nextPieceHandler;
 
     }
-
 }
-
-
-/* =========================================================
-   NEXT PIECE
-========================================================= */
 
 function nextPieceHandler() {
-
     if (currentPiece < 4) {
-
         currentPiece++;
-
         updatePuzzle();
-
     }
-
 }
 
 
-/* =========================================================
-   FIELD CARD CLICKS
-========================================================= */
+/* ================= EVENTS ================= */
 
 fieldCards.forEach(card => {
-
     card.addEventListener("click", () => {
-
-        const fieldId =
-            keyToField[card.dataset.field];
-
-        if (fieldId) {
-            updateField(fieldId);
-        }
-
+        const fieldId = keyToField[card.dataset.field];
+        if (fieldId) updateField(fieldId);
     });
-
 });
-
-
-/* =========================================================
-   EVIDENCE DRAWER
-========================================================= */
 
 evidenceToggle.addEventListener("click", () => {
-
-    const isOpen =
-        pieceEvidence.classList.toggle("open");
-
+    const isOpen = pieceEvidence.classList.toggle("open");
     evidenceToggle.textContent =
-        isOpen
-            ? "Hide the evidence −"
-            : "See the evidence +";
-
+        isOpen ? "Hide the evidence −" : "See the evidence +";
 });
-
-
-/* =========================================================
-   DEEP DIVE DRAWER
-========================================================= */
 
 deepDiveToggle.addEventListener("click", () => {
-
-    const isOpen =
-        deepDivePanel.classList.toggle("open");
-
+    const isOpen = deepDivePanel.classList.toggle("open");
     deepDiveToggle.textContent =
-        isOpen
-            ? "Close deep dive −"
-            : "Deep dive →";
-
+        isOpen ? "Close deep dive −" : "Deep dive →";
 });
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
+/* ================= INITIAL LOAD ================= */
 
-function escapeHTML(value) {
-
-    if (value === null || value === undefined) {
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
+updateField("F1");
 
 
-/* =========================================================
-   INITIAL LOAD
-========================================================= */
+/* ================= SCROLL REVEAL ================= */
 
-loadBackendData();
+const revealElements = document.querySelectorAll(
+    ".field-card, .method-card, .emerging-item"
+);
 
-
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
-
-const revealElements =
-    document.querySelectorAll(
-        ".field-card, .method-card, .emerging-item"
-    );
-
-
-const observer =
-    new IntersectionObserver(
-        entries => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    entry.target.style.opacity = "1";
-
-                    entry.target.style.transform =
-                        "translateY(0)";
-
-                    observer.unobserve(entry.target);
-
-                }
-
-            });
-
-        },
-        {
-            threshold: 0.12
-        }
-    );
-
+const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+                observer.unobserve(entry.target);
+            }
+        });
+    },
+    { threshold: 0.12 }
+);
 
 revealElements.forEach(element => {
-
     element.style.opacity = "0";
-
-    element.style.transform =
-        "translateY(20px)";
-
-    element.style.transition =
-        "opacity .6s ease, transform .6s ease";
-
+    element.style.transform = "translateY(20px)";
+    element.style.transition = "opacity .6s ease, transform .6s ease";
     observer.observe(element);
-
 });
