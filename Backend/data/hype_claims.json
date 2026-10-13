@@ -1,0 +1,202 @@
+[
+  {
+    "id": "H01",
+    "claim": "Coding is dead?",
+    "keywords": [
+      "coding is dead",
+      "programming is dead",
+      "developers will be replaced",
+      "programmers obsolete",
+      "is coding dead",
+      "is programming dead",
+      "coding is dying",
+      "will ai replace programmers",
+      "ai will replace developers",
+      "ai will replace programmers"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "Our evidence shows AI coding tools are widely used: 84% of surveyed developers use or plan to use them. The same survey reports distrust of AI output and extra debugging time, and a current employer posting still lists programming fundamentals alongside AI tools. This points to a change in how code is written and checked, not to the work disappearing.",
+    "limitation": "These are survey responses and one employer's job posting. They do not measure hiring volumes or predict future demand.",
+    "evidence_ids": [
+      "E01",
+      "E02",
+      "E04",
+      "E13"
+    ],
+    "student_action": "Keep your programming fundamentals strong and practise reviewing and testing AI-generated code."
+  },
+  {
+    "id": "H02",
+    "claim": "Learn AI now or you will be left behind",
+    "keywords": [
+      "learn ai now",
+      "left behind",
+      "everyone must learn ai",
+      "learn ai or",
+      "need to learn ai",
+      "learn ai or get left behind"
+    ],
+    "verdict": "Partly supported",
+    "interpretation": "Our evidence shows AI adoption in developer workflows and one major IT-services employer organising work around AI. But the AI role we reviewed asks for ML, Python, large-scale data and production deployment together, and nothing in our evidence says every student must specialise in AI. The sensible reading is fundamentals first, then one AI capability backed by a project.",
+    "limitation": "Company strategy is not proof of industry-wide hiring growth, and one employer's requirements are not universal.",
+    "evidence_ids": [
+      "E01",
+      "E05",
+      "E06"
+    ],
+    "student_action": "Build solid fundamentals, then add one AI capability, for example a small RAG app with an evaluation set."
+  },
+  {
+    "id": "H03",
+    "claim": "You must learn Kubernetes to get a cloud job",
+    "keywords": [
+      "learn kubernetes",
+      "kubernetes is required",
+      "must know kubernetes",
+      "kubernetes to get a job",
+      "do i need kubernetes",
+      "is kubernetes required",
+      "kubernetes is a must"
+    ],
+    "verdict": "Partly supported",
+    "interpretation": "CNCF research describes widespread production use of Kubernetes, including for GenAI inference, so it is a relevant platform skill. But an Amazon data-center posting asks for Linux, networking, hardware troubleshooting, AWS and scripting, so cloud work is broader than one tool. Our evidence does not show Kubernetes is required for every cloud role.",
+    "limitation": "A survey of production use is not a list of job requirements, and one posting is not the whole market.",
+    "evidence_ids": [
+      "E11",
+      "E12",
+      "E15"
+    ],
+    "student_action": "Learn Linux, networking and Docker first, then Kubernetes through a two-service project."
+  },
+  {
+    "id": "H04",
+    "claim": "Cybersecurity is just hacking tools",
+    "keywords": [
+      "cybersecurity is just hacking",
+      "just hacking",
+      "hacking tools",
+      "learn kali"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "ISC2 respondents name skills needs such as risk assessment (29%), application security (28%) and security engineering and GRC (27%) alongside AI (41%) and cloud security (36%). Risk and governance appear among the top needs, so the field is not only about tools.",
+    "limitation": "These are survey perceptions of skills needs, not vacancy counts or salaries.",
+    "evidence_ids": [
+      "E08"
+    ],
+    "student_action": "Pair a technical skill such as threat modeling with risk-assessment practice."
+  },
+  {
+    "id": "H05",
+    "claim": "AI will replace security analysts",
+    "keywords": [
+      "ai will replace security",
+      "replace analysts",
+      "soc analysts replaced",
+      "automate security jobs",
+      "ai replacing security analysts",
+      "will ai replace soc",
+      "ai will replace soc analysts"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "ISC2 reports AI tools already integrated in security operations at 28% of respondents, with others testing (19%) or evaluating (22%). That shows AI entering security workflows, not analysts being replaced. Respondents also name AI threat detection, threat modeling and governance as important skills, which points to new specialist work.",
+    "limitation": "Absence of replacement in this survey does not prove it will not happen later. Adoption stage varies by organisation.",
+    "evidence_ids": [
+      "E09",
+      "E10"
+    ],
+    "student_action": "Learn how detections are validated and investigated, and practise AI threat modeling."
+  },
+  {
+    "id": "H06",
+    "claim": "AI means every data job is growing",
+    "keywords": [
+      "every data job",
+      "data jobs are growing",
+      "data science is booming",
+      "data jobs growing"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "The data-engineering posting we reviewed asks for SQL, pipelines, cloud services, validation and documentation, and AI systems depend on large datasets and reliable pipelines. That is an infrastructure requirement. Our evidence does not measure whether data jobs overall are growing.",
+    "limitation": "One employer's posting cannot show market-wide growth.",
+    "evidence_ids": [
+      "E06",
+      "E07"
+    ],
+    "student_action": "Build reliable pipelines and data-validation skills, which AI work depends on."
+  },
+  {
+    "id": "H07",
+    "claim": "Knowing prompts is enough for an AI job",
+    "keywords": [
+      "prompts are enough",
+      "prompt engineering is enough",
+      "just learn prompts",
+      "only need prompting"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "The applied-science posting we reviewed asks for ML experience, Python, large-scale datasets, end-to-end system design and production deployment. Nothing in our evidence shows that prompting alone is enough for AI roles.",
+    "limitation": "One employer's requirements are not universal, and some GenAI roles may weigh skills differently.",
+    "evidence_ids": [
+      "E05",
+      "E06"
+    ],
+    "student_action": "Build an application around a model and measure its wrong answers with an evaluation set."
+  },
+  {
+    "id": "H08",
+    "claim": "AI will take over deployment and operations",
+    "keywords": [
+      "ai will take over devops",
+      "ai replaces devops",
+      "automate deployment",
+      "ai will run operations"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "In the Stack Overflow survey, 76% of respondents do not plan to use AI for deployment and monitoring. Our own work analysis for software engineering treats deployment and operations as human-led with automated tools.",
+    "limitation": "Survey intent is not a forecast of what organisations will actually do.",
+    "evidence_ids": [
+      "E03"
+    ],
+    "student_action": "Learn monitoring, rollback and incident response, not only deployment commands."
+  },
+  {
+    "id": "H09",
+    "claim": "AI coding tools are just hype",
+    "keywords": [
+      "ai coding tools are hype",
+      "ai tools are overhyped",
+      "ai coding is overrated",
+      "nobody uses ai tools",
+      "are ai coding tools overhyped",
+      "ai coding tools are just hype"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "84% of surveyed developers use or plan to use AI tools, and 51% of professional developers use them daily. Trust is mixed: 46% distrust output accuracy versus 33% who trust it. Adoption is real, and so is the need to verify.",
+    "limitation": "Adoption does not prove job replacement or universal productivity gains.",
+    "evidence_ids": [
+      "E01",
+      "E02"
+    ],
+    "student_action": "Use AI tools, and always test and review what they produce."
+  },
+  {
+    "id": "H10",
+    "claim": "Cloud just means learning the AWS console",
+    "keywords": [
+      "cloud is just aws",
+      "learn the aws console",
+      "aws console is enough",
+      "cloud means aws",
+      "is cloud just aws",
+      "cloud is only aws"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "CNCF research describes cloud-native production environments built on containers and Kubernetes, and the Amazon data-center posting asks for Linux, networking, hardware troubleshooting and scripting alongside AWS. Cloud work in our evidence is broader than one provider's console.",
+    "limitation": "Two sources do not cover every cloud role.",
+    "evidence_ids": [
+      "E11",
+      "E15"
+    ],
+    "student_action": "Practise containers, Linux and CI/CD, not only provider dashboards."
+  }
+]

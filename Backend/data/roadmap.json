@@ -1,0 +1,573 @@
+[
+  {
+    "id": "F1-RM-01",
+    "field_id": "F1",
+    "order": 1,
+    "title": "Programming fundamentals",
+    "level": "Beginner",
+    "category": "Foundation",
+    "prerequisite_id": null,
+    "capability_id": "F1-C-programming-fundamentals",
+    "tools": "Python",
+    "exercise": "Build a CLI expense tracker with input validation and file persistence.",
+    "project_id": null,
+    "next_step": "Create tests for edge cases and refactor one messy function.",
+    "estimated_effort": "2-3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon SDE India 2027.",
+    "docs_links": [
+      "https://docs.python.org/3/tutorial/"
+    ]
+  },
+  {
+    "id": "F1-RM-02",
+    "field_id": "F1",
+    "order": 2,
+    "title": "Git and collaboration",
+    "level": "Beginner",
+    "category": "Engineering practice",
+    "prerequisite_id": "F1-RM-01",
+    "capability_id": "F1-C-git-collaboration",
+    "tools": "Git and GitHub",
+    "exercise": "Put your project on GitHub and make every change through a branch and pull request.",
+    "project_id": null,
+    "next_step": "Review someone else's pull request and respond to a review of yours.",
+    "estimated_effort": "1 week",
+    "evidence": "Exercise is our suggestion. Capability evidence: Amazon SDE India 2027.",
+    "docs_links": [
+      "https://git-scm.com/doc"
+    ]
+  },
+  {
+    "id": "F1-RM-03",
+    "field_id": "F1",
+    "order": 3,
+    "title": "APIs and backend",
+    "level": "Beginner",
+    "category": "System building",
+    "prerequisite_id": "F1-RM-02",
+    "capability_id": "F1-C-apis-backend-systems",
+    "tools": "FastAPI, SQLite",
+    "exercise": "Build a REST API for a small task system.",
+    "project_id": "F1-P-task-api",
+    "next_step": "Add authentication, pagination and error handling.",
+    "estimated_effort": "3-4 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon SDE India 2027.",
+    "docs_links": [
+      "https://fastapi.tiangolo.com/",
+      "https://www.sqlite.org/docs.html"
+    ]
+  },
+  {
+    "id": "F1-RM-04",
+    "field_id": "F1",
+    "order": 4,
+    "title": "Testing and debugging",
+    "level": "Intermediate",
+    "category": "Engineering practice",
+    "prerequisite_id": "F1-RM-03",
+    "capability_id": "F1-C-testing-debugging",
+    "tools": "pytest",
+    "exercise": "Write tests for an existing small project, then introduce and fix three bugs.",
+    "project_id": null,
+    "next_step": "Add integration tests and a reproducible bug report.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon SDE India 2027; Stack Overflow 2025 AI.",
+    "docs_links": [
+      "https://docs.pytest.org/"
+    ]
+  },
+  {
+    "id": "F1-RM-05",
+    "field_id": "F1",
+    "order": 5,
+    "title": "AI-assisted engineering",
+    "level": "Intermediate",
+    "category": "Modern practice",
+    "prerequisite_id": "F1-RM-04",
+    "capability_id": "F1-C-ai-assisted-engineering",
+    "tools": "pytest, Git and GitHub",
+    "exercise": "Use an AI coding assistant to implement a feature, then write tests that catch at least one generated mistake.",
+    "project_id": "F1-P-ai-feature",
+    "next_step": "Compare AI-generated and hand-written approaches and document the trade-offs.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Stack Overflow 2025 AI; Amazon SDE India 2027.",
+    "docs_links": [
+      "https://docs.pytest.org/",
+      "https://git-scm.com/doc"
+    ]
+  },
+  {
+    "id": "F1-RM-06",
+    "field_id": "F1",
+    "order": 6,
+    "title": "System design",
+    "level": "Advanced",
+    "category": "Engineering thinking",
+    "prerequisite_id": "F1-RM-05",
+    "capability_id": "F1-C-system-design",
+    "tools": "FastAPI, SQLite",
+    "exercise": "Design and build a URL shortener with an API and a database.",
+    "project_id": "F1-P-url-shortener",
+    "next_step": "Add caching, rate limiting and failure scenarios.",
+    "estimated_effort": "3-4 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon SDE India 2027.",
+    "docs_links": [
+      "https://fastapi.tiangolo.com/",
+      "https://www.sqlite.org/docs.html"
+    ]
+  },
+  {
+    "id": "F2-RM-01",
+    "field_id": "F2",
+    "order": 1,
+    "title": "Python for machine learning",
+    "level": "Beginner",
+    "category": "Foundation",
+    "prerequisite_id": null,
+    "capability_id": "F2-C-python-programming",
+    "tools": "pandas",
+    "exercise": "Load, clean and explore a public dataset with pandas.",
+    "project_id": null,
+    "next_step": "Write down three questions the data could answer.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise is our suggestion. Capability evidence: Amazon Applied Scientist India 2027.",
+    "docs_links": [
+      "https://pandas.pydata.org/docs/"
+    ]
+  },
+  {
+    "id": "F2-RM-02",
+    "field_id": "F2",
+    "order": 2,
+    "title": "Statistics",
+    "level": "Beginner",
+    "category": "Foundation",
+    "prerequisite_id": "F2-RM-01",
+    "capability_id": "F2-C-statistics-probability",
+    "tools": "pandas",
+    "exercise": "Analyze an A/B-test-like dataset and report uncertainty.",
+    "project_id": null,
+    "next_step": "Simulate repeated experiments and compare conclusions.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Applied Scientist India 2027.",
+    "docs_links": [
+      "https://pandas.pydata.org/docs/"
+    ]
+  },
+  {
+    "id": "F2-RM-03",
+    "field_id": "F2",
+    "order": 3,
+    "title": "Machine learning fundamentals",
+    "level": "Beginner",
+    "category": "Core",
+    "prerequisite_id": "F2-RM-02",
+    "capability_id": "F2-C-machine-learning",
+    "tools": "scikit-learn",
+    "exercise": "Build a small classification model and compare two baselines.",
+    "project_id": "F2-P-classifier",
+    "next_step": "Perform error analysis and explain five wrong predictions.",
+    "estimated_effort": "3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Applied Scientist India 2027.",
+    "docs_links": [
+      "https://scikit-learn.org/stable/user_guide.html"
+    ]
+  },
+  {
+    "id": "F2-RM-04",
+    "field_id": "F2",
+    "order": 4,
+    "title": "Model evaluation",
+    "level": "Intermediate",
+    "category": "AI engineering",
+    "prerequisite_id": "F2-RM-03",
+    "capability_id": "F2-C-model-evaluation",
+    "tools": "scikit-learn",
+    "exercise": "Create an evaluation suite for a model with multiple failure categories.",
+    "project_id": "F2-P-eval-suite",
+    "next_step": "Add robustness tests and document limitations.",
+    "estimated_effort": "2-3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Applied Scientist India 2027; Stack Overflow 2025 AI.",
+    "docs_links": [
+      "https://scikit-learn.org/stable/user_guide.html"
+    ]
+  },
+  {
+    "id": "F2-RM-05",
+    "field_id": "F2",
+    "order": 5,
+    "title": "Deploying and monitoring models",
+    "level": "Intermediate",
+    "category": "Production",
+    "prerequisite_id": "F2-RM-04",
+    "capability_id": "F2-C-deployment-mlops",
+    "tools": "MLflow",
+    "exercise": "Serve a trained model through an API and containerize it.",
+    "project_id": null,
+    "next_step": "Add monitoring for latency and prediction distribution.",
+    "estimated_effort": "3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Applied Scientist India 2027; TCS AI Careers 2026.",
+    "docs_links": [
+      "https://mlflow.org/docs/latest/index.html"
+    ]
+  },
+  {
+    "id": "F2-RM-06",
+    "field_id": "F2",
+    "order": 6,
+    "title": "GenAI application with evaluation",
+    "level": "Advanced",
+    "category": "Specialization",
+    "prerequisite_id": "F2-RM-05",
+    "capability_id": "F2-C-genai-application-engineering",
+    "tools": "Hugging Face Transformers",
+    "exercise": "Build a small RAG application over a controlled document set.",
+    "project_id": "F2-P-rag-app",
+    "next_step": "Create a test set and measure incorrect or unsupported answers.",
+    "estimated_effort": "3-4 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: TCS AI Careers 2026.",
+    "docs_links": [
+      "https://huggingface.co/docs/transformers/index"
+    ]
+  },
+  {
+    "id": "F3-RM-01",
+    "field_id": "F3",
+    "order": 1,
+    "title": "SQL",
+    "level": "Beginner",
+    "category": "Foundation",
+    "prerequisite_id": null,
+    "capability_id": "F3-C-sql",
+    "tools": "PostgreSQL",
+    "exercise": "Analyze a realistic sales dataset using joins, CTEs and window functions.",
+    "project_id": "F3-P-sql-sales",
+    "next_step": "Optimize two slow queries and explain the index choice.",
+    "estimated_effort": "3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Data Engineer India 2027.",
+    "docs_links": [
+      "https://www.postgresql.org/docs/"
+    ]
+  },
+  {
+    "id": "F3-RM-02",
+    "field_id": "F3",
+    "order": 2,
+    "title": "Python for data",
+    "level": "Beginner",
+    "category": "Foundation",
+    "prerequisite_id": "F3-RM-01",
+    "capability_id": "F3-C-python-for-data",
+    "tools": "pandas",
+    "exercise": "Write a script that pulls data from a public API and saves clean tables.",
+    "project_id": null,
+    "next_step": "Add error handling for missing or malformed records.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise is our suggestion. Capability evidence: Amazon Data Engineer India 2027.",
+    "docs_links": [
+      "https://pandas.pydata.org/docs/"
+    ]
+  },
+  {
+    "id": "F3-RM-03",
+    "field_id": "F3",
+    "order": 3,
+    "title": "Data modeling",
+    "level": "Beginner",
+    "category": "System building",
+    "prerequisite_id": "F3-RM-02",
+    "capability_id": "F3-C-data-modeling",
+    "tools": "PostgreSQL",
+    "exercise": "Convert messy spreadsheet data into a normalized relational schema.",
+    "project_id": "F3-P-schema",
+    "next_step": "Create a dimensional model for analytics and compare the designs.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Data Engineer India 2027.",
+    "docs_links": [
+      "https://www.postgresql.org/docs/"
+    ]
+  },
+  {
+    "id": "F3-RM-04",
+    "field_id": "F3",
+    "order": 4,
+    "title": "ETL/ELT pipelines",
+    "level": "Intermediate",
+    "category": "Engineering",
+    "prerequisite_id": "F3-RM-03",
+    "capability_id": "F3-C-etl-elt",
+    "tools": "Apache Airflow",
+    "exercise": "Build a pipeline that ingests CSV or API data, validates it and stores clean tables.",
+    "project_id": "F3-P-pipeline",
+    "next_step": "Schedule it and add failure and retry logging.",
+    "estimated_effort": "3-4 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Data Engineer India 2027.",
+    "docs_links": [
+      "https://airflow.apache.org/docs/"
+    ]
+  },
+  {
+    "id": "F3-RM-05",
+    "field_id": "F3",
+    "order": 5,
+    "title": "Tested analytics models",
+    "level": "Intermediate",
+    "category": "System building",
+    "prerequisite_id": "F3-RM-04",
+    "capability_id": "F3-C-data-modeling",
+    "tools": "dbt",
+    "exercise": "Rebuild your relational schema as tested dbt models.",
+    "project_id": null,
+    "next_step": "Add a data-quality test for each model.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise is our suggestion. Capability evidence: Amazon Data Engineer India 2027.",
+    "docs_links": [
+      "https://docs.getdbt.com/"
+    ]
+  },
+  {
+    "id": "F3-RM-06",
+    "field_id": "F3",
+    "order": 6,
+    "title": "Cloud-style data lake",
+    "level": "Advanced",
+    "category": "Engineering",
+    "prerequisite_id": "F3-RM-05",
+    "capability_id": "F3-C-cloud-data-platforms",
+    "tools": "Apache Spark",
+    "exercise": "Create a small cloud-style data lake locally using object storage concepts and Spark.",
+    "project_id": null,
+    "next_step": "Add partitioning and compare query performance.",
+    "estimated_effort": "3-4 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Data Engineer India 2027.",
+    "docs_links": [
+      "https://spark.apache.org/docs/latest/"
+    ]
+  },
+  {
+    "id": "F4-RM-01",
+    "field_id": "F4",
+    "order": 1,
+    "title": "Networking fundamentals",
+    "level": "Beginner",
+    "category": "Foundation",
+    "prerequisite_id": null,
+    "capability_id": "F4-C-networking-fundamentals",
+    "tools": "Wireshark",
+    "exercise": "Capture and explain HTTP/DNS/TCP traffic for a simple web request.",
+    "project_id": null,
+    "next_step": "Identify where TLS changes what an observer can see.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: ISC2 Workforce Study 2025.",
+    "docs_links": [
+      "https://www.wireshark.org/docs/"
+    ]
+  },
+  {
+    "id": "F4-RM-02",
+    "field_id": "F4",
+    "order": 2,
+    "title": "Threat modeling",
+    "level": "Beginner",
+    "category": "Security engineering",
+    "prerequisite_id": "F4-RM-01",
+    "capability_id": "F4-C-threat-modeling",
+    "tools": "OWASP Threat Modeling (STRIDE)",
+    "exercise": "Threat-model a student web app and identify five attack paths.",
+    "project_id": "F4-P-threat-model",
+    "next_step": "Prioritize threats by likelihood and impact.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: ISC2 Workforce Study 2025.",
+    "docs_links": [
+      "https://owasp.org/www-community/Threat_Modeling"
+    ]
+  },
+  {
+    "id": "F4-RM-03",
+    "field_id": "F4",
+    "order": 3,
+    "title": "Application security",
+    "level": "Intermediate",
+    "category": "Security engineering",
+    "prerequisite_id": "F4-RM-02",
+    "capability_id": "F4-C-application-security",
+    "tools": "OWASP Top 10",
+    "exercise": "Build a deliberately vulnerable web app and then fix its top vulnerabilities.",
+    "project_id": "F4-P-vuln-app",
+    "next_step": "Add automated security checks to CI.",
+    "estimated_effort": "3-4 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: ISC2 Workforce Study 2025.",
+    "docs_links": [
+      "https://owasp.org/www-project-top-ten/"
+    ]
+  },
+  {
+    "id": "F4-RM-04",
+    "field_id": "F4",
+    "order": 4,
+    "title": "Detection and response",
+    "level": "Intermediate",
+    "category": "Operations",
+    "prerequisite_id": "F4-RM-03",
+    "capability_id": "F4-C-detection-response",
+    "tools": "MITRE ATT&CK",
+    "exercise": "Create a small log-analysis pipeline and detect suspicious patterns.",
+    "project_id": null,
+    "next_step": "Write an incident timeline and response playbook.",
+    "estimated_effort": "3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: ISC2 Workforce Study 2025.",
+    "docs_links": [
+      "https://attack.mitre.org/"
+    ]
+  },
+  {
+    "id": "F4-RM-05",
+    "field_id": "F4",
+    "order": 5,
+    "title": "AI security",
+    "level": "Advanced",
+    "category": "Emerging specialization",
+    "prerequisite_id": "F4-RM-04",
+    "capability_id": "F4-C-ai-security",
+    "tools": "OWASP Top 10 for LLM Applications",
+    "exercise": "Threat-model a RAG/LLM application for prompt injection, data leakage and unsafe tools.",
+    "project_id": "F4-P-llm-threat",
+    "next_step": "Create tests for each threat and document mitigations.",
+    "estimated_effort": "3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: ISC2 Workforce Study 2025.",
+    "docs_links": [
+      "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
+    ]
+  },
+  {
+    "id": "F4-RM-06",
+    "field_id": "F4",
+    "order": 6,
+    "title": "Risk and governance",
+    "level": "Advanced",
+    "category": "Human capability",
+    "prerequisite_id": "F4-RM-05",
+    "capability_id": "F4-C-risk-governance",
+    "tools": "",
+    "exercise": "Write a one-page risk assessment for one of your own projects, ranking each risk by impact.",
+    "project_id": null,
+    "next_step": "Explain it to a non-technical reader and revise it.",
+    "estimated_effort": "1-2 weeks",
+    "evidence": "Exercise is our suggestion. Capability evidence: ISC2 Workforce Study 2025.",
+    "docs_links": []
+  },
+  {
+    "id": "F5-RM-01",
+    "field_id": "F5",
+    "order": 1,
+    "title": "Linux and networking",
+    "level": "Beginner",
+    "category": "Foundation",
+    "prerequisite_id": null,
+    "capability_id": "F5-C-linux-networking",
+    "tools": "Linux command line",
+    "exercise": "Deploy a small Linux service and troubleshoot a broken network configuration.",
+    "project_id": null,
+    "next_step": "Write a runbook for three common failures.",
+    "estimated_effort": "3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon Data Center Operations India; Amazon Support Engineer India 2027.",
+    "docs_links": [
+      "https://man7.org/linux/man-pages/"
+    ]
+  },
+  {
+    "id": "F5-RM-02",
+    "field_id": "F5",
+    "order": 2,
+    "title": "Containers with Docker",
+    "level": "Beginner",
+    "category": "Platform",
+    "prerequisite_id": "F5-RM-01",
+    "capability_id": "F5-C-containers",
+    "tools": "Docker",
+    "exercise": "Containerize a backend app with a database.",
+    "project_id": "F5-P-container",
+    "next_step": "Add health checks and resource limits.",
+    "estimated_effort": "2 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: CNCF Cloud Native Research.",
+    "docs_links": [
+      "https://docs.docker.com/"
+    ]
+  },
+  {
+    "id": "F5-RM-03",
+    "field_id": "F5",
+    "order": 3,
+    "title": "CI/CD",
+    "level": "Intermediate",
+    "category": "Delivery",
+    "prerequisite_id": "F5-RM-02",
+    "capability_id": "F5-C-ci-cd",
+    "tools": "GitHub Actions",
+    "exercise": "Create a pipeline that tests and deploys a containerized app.",
+    "project_id": "F5-P-pipeline",
+    "next_step": "Add a failed-test gate and a rollback step.",
+    "estimated_effort": "2-3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon SDE India 2027; CNCF Cloud Native Research.",
+    "docs_links": [
+      "https://docs.github.com/en/actions"
+    ]
+  },
+  {
+    "id": "F5-RM-04",
+    "field_id": "F5",
+    "order": 4,
+    "title": "Kubernetes",
+    "level": "Intermediate",
+    "category": "Platform",
+    "prerequisite_id": "F5-RM-03",
+    "capability_id": "F5-C-kubernetes",
+    "tools": "Kubernetes",
+    "exercise": "Deploy a two-service application to Kubernetes.",
+    "project_id": null,
+    "next_step": "Add scaling, configuration and a failure simulation.",
+    "estimated_effort": "3-4 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: CNCF Cloud Native Research.",
+    "docs_links": [
+      "https://kubernetes.io/docs/home/"
+    ]
+  },
+  {
+    "id": "F5-RM-05",
+    "field_id": "F5",
+    "order": 5,
+    "title": "Observability",
+    "level": "Intermediate",
+    "category": "Reliability",
+    "prerequisite_id": "F5-RM-04",
+    "capability_id": "F5-C-observability",
+    "tools": "Prometheus",
+    "exercise": "Instrument an API with logs, metrics and traces.",
+    "project_id": "F5-P-observability",
+    "next_step": "Create an incident and use telemetry to diagnose it.",
+    "estimated_effort": "2-3 weeks",
+    "evidence": "Exercise from our research dataset. Capability evidence: Amazon SDE India 2027; CNCF Cloud Native Research.",
+    "docs_links": [
+      "https://prometheus.io/docs/introduction/overview/"
+    ]
+  },
+  {
+    "id": "F5-RM-06",
+    "field_id": "F5",
+    "order": 6,
+    "title": "Infrastructure as code",
+    "level": "Advanced",
+    "category": "Automation",
+    "prerequisite_id": "F5-RM-05",
+    "capability_id": "F5-C-infrastructure-as-code",
+    "tools": "Terraform",
+    "exercise": "Define your container setup as code and rebuild it from scratch.",
+    "project_id": null,
+    "next_step": "Add a second environment from the same code.",
+    "estimated_effort": "3 weeks",
+    "evidence": "No dataset source yet - add one before presenting. Exercise is our suggestion.",
+    "docs_links": [
+      "https://developer.hashicorp.com/terraform/docs"
+    ]
+  }
+]

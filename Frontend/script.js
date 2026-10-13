@@ -1,5 +1,7 @@
 /* =========================================================
    BEYOND HYPE — frontend (reads the Flask + SQLite API)
+   8 pieces: Industry, Work, Human, Roles, Capabilities,
+             Tools, Build, Roadmap
 ========================================================= */
 
 // Local development uses the local backend.
@@ -10,6 +12,8 @@ const API =
     location.hostname === "localhost"
         ? "http://127.0.0.1:5000"
         : "https://YOUR-BACKEND-URL";
+
+const TOTAL_PIECES = 8;
 
 let fieldData = {};
 let currentField = "F1";
@@ -113,14 +117,17 @@ async function loadField(fieldId) {
 
     fieldData[fieldId] = {
         info: bundle.field,
-        industryChanges: bundle.industry_changes,
-        workChanges: bundle.work_changes,
-        humanCapabilities: bundle.human_capabilities,
-        roles: bundle.roles,
-        capabilities: bundle.capabilities,
-        learningPaths: bundle.learning_paths,
-        evidence: bundle.evidence,
-        companyCases: bundle.company_cases
+        industryChanges: bundle.industry_changes || [],
+        workChanges: bundle.work_changes || [],
+        humanCapabilities: bundle.human_capabilities || [],
+        roles: bundle.roles || [],
+        capabilities: bundle.capabilities || [],
+        learningPaths: bundle.learning_paths || [],
+        tools: bundle.tools || [],
+        projects: bundle.projects || [],
+        roadmap: bundle.roadmap || [],
+        evidence: bundle.evidence || [],
+        companyCases: bundle.company_cases || []
     };
 
     return fieldData[fieldId];
@@ -186,7 +193,7 @@ async function updateField(fieldId) {
 }
 
 
-/* ================= FIVE MAIN PUZZLE PIECES ================= */
+/* ================= THE EIGHT PUZZLE PIECES ================= */
 
 function getPieces(data) {
 
@@ -232,6 +239,32 @@ function getPieces(data) {
             title: "What capabilities should I develop?",
             items: data.capabilities,
             source: "Employer + industry evidence"
+        },
+
+        {
+            type: "tools",
+            status: "TOOLS TO LEARN",
+            title: "Which tools support these capabilities?",
+            items: data.tools,
+            limit: 6,
+            source: "Official documentation + capability evidence"
+        },
+
+        {
+            type: "build",
+            status: "LEARN BY BUILDING",
+            title: "What should I build?",
+            items: data.projects,
+            source: "Exercises from our research dataset"
+        },
+
+        {
+            type: "roadmap",
+            status: "YOUR ROADMAP",
+            title: "In what order should I learn it?",
+            items: data.roadmap,
+            limit: 6,
+            source: "Our suggested order"
         }
 
     ];
@@ -270,12 +303,32 @@ const MAIN_TEXT = {
     work: item => [item.task, item.shift],
     human: item => [item.capability, item.why_it_matters],
     roles: item => [item.role, item.what_is_changing],
-    capabilities: item => [item.capability, item.meaning]
+    capabilities: item => [item.capability, item.meaning],
+    tools: item => [
+        item.technology,
+        `${item.category} · ${item.level} — ${item.why_it_matters}`
+    ],
+    build: item => [
+        item.title,
+        `${item.difficulty}: ${item.expected_outcome}`
+    ],
+    roadmap: item => [
+        item.title,
+        `${item.level} · about ${item.estimated_effort} — ${item.exercise}`
+    ]
 };
 
 function renderPieceContent(piece) {
 
-    const items = piece.items.slice(0, 5);
+    const items = piece.items.slice(0, piece.limit || 5);
+
+    // empty state: a field or piece with no content yet
+    if (!items.length) {
+        piecePoints.innerHTML =
+            '<div class="detail-point">Content for this piece is coming soon.</div>';
+        pieceMeaning.innerHTML = "";
+        return;
+    }
 
     piecePoints.innerHTML = items.map((item, index) => {
 
@@ -311,6 +364,18 @@ function renderPieceContent(piece) {
             text = `<strong>Examples:</strong> ${escapeHTML(item.examples)}<br>
                     <strong>Priority:</strong> ${escapeHTML(item.priority)}`;
         }
+        else if (piece.type === "tools") {
+            text = `<strong>Learn first:</strong> ${escapeHTML(item.learn_first)}<br>
+                    <strong>Suggested project:</strong> ${escapeHTML(item.suggested_project)}`;
+        }
+        else if (piece.type === "build") {
+            text = `<strong>Skills:</strong> ${escapeHTML(item.skills_practiced)}<br>
+                    <strong>Show:</strong> ${escapeHTML(item.what_to_demonstrate)}<br>
+                    <strong>Next level:</strong> ${escapeHTML(item.next_level_extension)}`;
+        }
+        else if (piece.type === "roadmap") {
+            text = `<strong>Next step:</strong> ${escapeHTML(item.next_step)}`;
+        }
 
         return `<li>${text}</li>`;
 
@@ -318,26 +383,36 @@ function renderPieceContent(piece) {
 }
 
 
-/* ================= EVIDENCE (tied to the claims on screen) ================= */
+/* ================= EVIDENCE (kept separate from interpretation) ================= */
+
+// These pieces have evidence records linked directly to each item.
+const LINKED_PIECES = ["industry", "roles", "capabilities"];
 
 function updateEvidence(data, piece) {
 
     pieceEvidence.classList.remove("open");
     evidenceToggle.textContent = "See the evidence +";
 
-    // Industry piece: only the evidence linked to the claims on screen.
-    // Other pieces: our interpretation, so show the field's evidence overall.
     let records;
-    let isInterpretation = false;
+    let label = "";
 
-    if (piece.type === "industry") {
-        const ids = new Set(piece.items.flatMap(item => item.evidence_ids || []));
+    if (LINKED_PIECES.includes(piece.type)) {
+
+        const ids = new Set(
+            piece.items.slice(0, piece.limit || 5)
+                .flatMap(item => item.evidence_ids || [])
+        );
         records = data.evidence.filter(item => ids.has(item.evidence_id));
+
     } else {
+
         records = data.evidence.filter(
             item => item.field_id === data.info.field_id
         );
-        isInterpretation = true;
+
+        label = (piece.type === "work" || piece.type === "human")
+            ? "Interpretation (based on this field's evidence)"
+            : "Recommendation (our suggestion, based on this field's evidence)";
     }
 
     if (!records.length) {
@@ -364,9 +439,8 @@ function updateEvidence(data, piece) {
     evidenceDate.textContent =
         unique(records.map(r => r.year)).join(", ") || "—";
 
-    evidenceType.textContent = isInterpretation
-        ? "Interpretation (based on this field's evidence)"
-        : unique(records.map(r => r.evidence_type)).join(", ") || "—";
+    evidenceType.textContent = label ||
+        unique(records.map(r => r.evidence_type)).join(", ") || "—";
 
     evidenceShows.innerHTML = records.slice(0, 6)
         .map(r => `<li>${escapeHTML(r.finding)}</li>`).join("");
@@ -380,7 +454,14 @@ function updateEvidence(data, piece) {
 /* ================= DEEP DIVE ================= */
 
 function para(text, label) {
+    if (!text) return "";
     return `<p>${label ? `<strong>${label}:</strong> ` : ""}${escapeHTML(text)}</p>`;
+}
+
+function linkPara(label, url) {
+    const safe = safeUrl(url);
+    if (!safe) return "";
+    return `<p><strong>${label}:</strong> <a href="${escapeHTML(safe)}" target="_blank" rel="noopener">${escapeHTML(safe)}</a></p>`;
 }
 
 function deepCard(title, paragraphs, small) {
@@ -469,6 +550,71 @@ function updateDeepDive(data, piece) {
         }).join("");
 
     }
+    else if (piece.type === "tools") {
+
+        title = "The tools behind each capability";
+        intro = "The capability evidence comes from our research. The choice of tool is our suggestion, so check the official documentation.";
+
+        content = data.tools.map(item => deepCard(
+            item.technology,
+            [
+                para(`${item.category} · ${item.level}`),
+                para(item.why_it_matters, "Why it matters"),
+                para(item.learn_first, "Learn first"),
+                para(item.suggested_project, "Suggested project"),
+                linkPara("Official docs", item.docs_url),
+                para(item.evidence, "Source note")
+            ]
+        )).join("");
+
+    }
+    else if (piece.type === "build") {
+
+        title = "Projects that prove the capability";
+        intro = "Each project connects learning to something you can show: what you built and what you can explain about it.";
+
+        content = data.projects.map(item => deepCard(
+            item.title,
+            [
+                para(item.difficulty, "Difficulty"),
+                para(item.skills_practiced, "Skills practised"),
+                para(item.tools, "Tools"),
+                para(item.expected_outcome, "Outcome"),
+                para(item.what_to_demonstrate, "What to demonstrate"),
+                para(item.next_level_extension, "Next level")
+            ]
+        )).join("");
+
+    }
+    else if (piece.type === "roadmap") {
+
+        title = "A step-by-step learning order";
+        intro = "Learn the minimum foundation, build something, then move to the next capability. Effort estimates are rough planning guides.";
+
+        content = data.roadmap.map(step => {
+
+            const project = data.projects.find(p => p.id === step.project_id);
+
+            return deepCard(
+                `${step.step_order}. ${step.title}`,
+                [
+                    para(`${step.level} · ${step.category} · about ${step.estimated_effort}`),
+                    para(step.exercise, "Exercise"),
+                    para(step.tools, "Tools"),
+                    para(project ? project.title : "", "Project"),
+                    para(step.next_step, "Next step"),
+                    ...(step.docs_links || []).map(url => linkPara("Docs", url)),
+                    para(step.evidence, "Source note")
+                ]
+            );
+
+        }).join("");
+
+    }
+
+    if (!content) {
+        content = '<div class="deep-dive-item"><p>Content for this piece is coming soon.</p></div>';
+    }
 
     deepDiveTitle.textContent = title;
     deepDiveIntro.textContent = intro;
@@ -489,7 +635,8 @@ function updateBigPicture(data) {
         `Primary evidence: ${info.primary_evidence}`,
         `${data.humanCapabilities.length} human capabilities identified`,
         `${data.roles.length} roles mapped`,
-        `${data.capabilities.length} capabilities to develop`
+        `${data.capabilities.length} capabilities to develop`,
+        `${data.tools.length} tools, ${data.projects.length} projects and ${data.roadmap.length} roadmap steps`
     ];
 
     bigPoints.innerHTML = points
@@ -519,7 +666,7 @@ function updatePuzzlePieces() {
 
     });
 
-    if (currentPiece === 4) {
+    if (currentPiece === TOTAL_PIECES - 1) {
 
         nextPiece.innerHTML = `View the big picture <span>↓</span>`;
 
@@ -537,7 +684,7 @@ function updatePuzzlePieces() {
 }
 
 function nextPieceHandler() {
-    if (currentPiece < 4) {
+    if (currentPiece < TOTAL_PIECES - 1) {
         currentPiece++;
         updatePuzzle();
     }
@@ -596,3 +743,213 @@ revealElements.forEach(element => {
     element.style.transition = "opacity .6s ease, transform .6s ease";
     observer.observe(element);
 });
+
+
+/* =========================================================
+   HYPE CHECK
+   Pick or type a claim -> evidence, interpretation,
+   limitation and recommendation. No verdict is given for
+   claims we have not reviewed.
+========================================================= */
+
+const hypeInput = document.getElementById("hypeInput");
+const hypeButton = document.getElementById("hypeButton");
+const hypeChips = document.getElementById("hypeChips");
+const hypeResult = document.getElementById("hypeResult");
+
+function verdictClass(verdict) {
+    if (verdict === "Supported") return "verdict-supported";
+    if (verdict === "Partly supported") return "verdict-partly";
+    return "verdict-not";
+}
+
+function hypeMessage(text) {
+    hypeResult.innerHTML =
+        `<div class="hype-card-result"><p>${escapeHTML(text)}</p></div>`;
+}
+
+function renderHypeError(retry) {
+    hypeResult.innerHTML =
+        '<div class="hype-card-result">' +
+        '<p>Could not reach the backend. Make sure it is running.</p>' +
+        '<button type="button" class="evidence-toggle" id="hypeRetry">Try again</button>' +
+        '</div>';
+    document.getElementById("hypeRetry").onclick = retry;
+}
+
+function renderHypeMatch(claim) {
+
+    const evidence = (claim.evidence || []).map(item => {
+
+        const url = safeUrl(item.url || item.source_url);
+        const name = item.source_name || "Source";
+        const source = url
+            ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(name)}</a>`
+            : escapeHTML(name);
+        const year = item.year ? `, ${escapeHTML(item.year)}` : "";
+
+        return `<li>${escapeHTML(item.finding)} <small>(${source}${year})</small></li>`;
+
+    }).join("");
+
+    hypeResult.innerHTML = `
+        <div class="hype-card-result">
+
+            <div class="mini-label">THE CLAIM</div>
+            <h3>${escapeHTML(claim.claim)}</h3>
+
+            <span class="verdict-badge ${verdictClass(claim.verdict)}">
+                Our evidence: ${escapeHTML(claim.verdict)}
+            </span>
+
+            <div class="hype-columns">
+
+                <div>
+                    <div class="mini-label">EVIDENCE</div>
+                    <ul>${evidence}</ul>
+                </div>
+
+                <div>
+                    <div class="mini-label">INTERPRETATION</div>
+                    <p>${escapeHTML(claim.interpretation)}</p>
+
+                    <div class="mini-label">WHAT IT DOES NOT PROVE</div>
+                    <p>${escapeHTML(claim.limitation)}</p>
+                </div>
+
+            </div>
+
+            <div class="interpretation-box">
+                <div class="mini-label">WHAT YOU COULD DO</div>
+                <p>${escapeHTML(claim.student_action)}</p>
+            </div>
+
+        </div>
+    `;
+}
+
+function renderHypeNoMatch(result) {
+
+    const chips = (result.suggestions || []).map(item =>
+        `<button type="button" class="hype-chip" data-claim-id="${escapeHTML(item.id)}">${escapeHTML(item.claim)}</button>`
+    ).join("");
+
+    hypeResult.innerHTML = `
+        <div class="hype-card-result">
+            <p>${escapeHTML(result.message)}</p>
+            <div class="hype-chips">${chips}</div>
+        </div>
+    `;
+
+    hypeResult.querySelectorAll(".hype-chip").forEach(button => {
+        button.addEventListener("click", () =>
+            loadHypeClaim(button.dataset.claimId));
+    });
+}
+
+async function loadHypeClaim(id) {
+
+    hypeMessage("Checking the evidence…");
+
+    try {
+        const response = await fetch(
+            `${API}/api/hype-claims/${encodeURIComponent(id)}`
+        );
+        if (!response.ok) throw new Error(`Backend error: ${response.status}`);
+        renderHypeMatch(await response.json());
+    } catch (error) {
+        console.error("Hype claim failed:", error);
+        renderHypeError(() => loadHypeClaim(id));
+    }
+}
+
+async function runHypeCheck(text) {
+
+    const claim = (text || "").trim();
+
+    if (claim.length < 3) {
+        hypeMessage("Type at least a few words to check a claim.");
+        return;
+    }
+
+    hypeInput.value = claim;
+    hypeMessage("Checking the evidence…");
+
+    try {
+
+        const response = await fetch(`${API}/api/hype-check`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ claim })
+        });
+
+        if (!response.ok) {
+            const body = await response.json().catch(() => ({}));
+            hypeMessage(body.error || "Could not check this claim.");
+            return;
+        }
+
+        const result = await response.json();
+
+        if (result.matched) renderHypeMatch(result.claim);
+        else renderHypeNoMatch(result);
+
+    } catch (error) {
+        console.error("Hype check failed:", error);
+        renderHypeError(() => runHypeCheck(claim));
+    }
+}
+
+async function loadHypeChips() {
+
+    try {
+        const response = await fetch(`${API}/api/hype-claims`);
+        if (!response.ok) return;
+        const claims = await response.json();
+
+        hypeChips.innerHTML = claims.map(item =>
+            `<button type="button" class="hype-chip" data-claim-id="${escapeHTML(item.id)}">${escapeHTML(item.claim)}</button>`
+        ).join("");
+
+        hypeChips.querySelectorAll(".hype-chip").forEach(button => {
+            button.addEventListener("click", () =>
+                loadHypeClaim(button.dataset.claimId));
+        });
+
+    } catch (error) {
+        console.error("Could not load the example claims:", error);
+    }
+}
+
+// Only start if the Hype Check section exists in index.html
+if (hypeInput && hypeButton && hypeChips && hypeResult) {
+
+    hypeButton.addEventListener("click", () => runHypeCheck(hypeInput.value));
+
+    hypeInput.addEventListener("keydown", event => {
+        if (event.key === "Enter") runHypeCheck(hypeInput.value);
+    });
+
+    // The floating hype cards in the hero become clickable
+    document.querySelectorAll(".hype-card").forEach(card => {
+
+        card.setAttribute("role", "button");
+        card.tabIndex = 0;
+
+        const open = () => {
+            document.getElementById("hypecheck")
+                .scrollIntoView({ behavior: "smooth" });
+            runHypeCheck(card.textContent);
+        };
+
+        card.addEventListener("click", open);
+        card.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                open();
+            }
+        });
+    });
+
+    loadHypeChips();
+}

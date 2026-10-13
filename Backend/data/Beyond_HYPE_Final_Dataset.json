@@ -1809,6 +1809,20 @@
       "geography": "India",
       "status": "Employer signal",
       "url": "https://www.amazon.jobs/en/jobs/10413868/dco-trainee-data-center-operations-dco"
+    },
+    {
+      "evidence_id": "E16",
+      "field_id": "F1",
+      "claim": "Short name of the claim",
+      "finding": "What the source directly reports",
+      "supports": "What it supports",
+      "does_not_prove": "What it does not prove",
+      "source": "GitHub Octoverse 2025",
+      "year": "2025",
+      "evidence_type": "Platform report",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://..."
     }
   ],
   "sources": [
