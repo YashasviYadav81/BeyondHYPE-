@@ -1823,6 +1823,20 @@
       "geography": "Global",
       "status": "Established signal",
       "url": "https://..."
+    },
+    {
+      "evidence_id": "E17",
+      "field_id": "F2",
+      "claim": "Short name of the claim",
+      "finding": "What the source directly reports, with the figure",
+      "supports": "What it supports",
+      "does_not_prove": "What it does not prove",
+      "source": "Stanford AI Index 2026",
+      "year": "2026",
+      "evidence_type": "Annual report",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report"
     }
   ],
   "sources": [

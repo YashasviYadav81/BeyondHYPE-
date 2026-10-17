@@ -62,6 +62,43 @@ def hype_check():
     return jsonify(services.check_claim(text))
 
 
+@api.route("/search")
+def search():
+    q = (request.args.get("q") or "").strip()
+    if not 2 <= len(q) <= 100:
+        return jsonify({"error": "Search text must be 2 to 100 characters"}), 400
+
+    level = request.args.get("level") or None
+    if level and level not in services.LEVELS:
+        return jsonify({"error": "Unknown level"}), 400
+
+    kind = request.args.get("type") or None
+    if kind and kind not in services.SEARCH_KINDS:
+        return jsonify({"error": "Unknown type"}), 400
+
+    field_id = request.args.get("field") or None
+    if field_id and not services.field_exists(field_id):
+        return jsonify({"error": "Unknown field"}), 400
+
+    return jsonify(services.search(q, level, kind, field_id))
+
+
+@api.route("/roles")
+def list_roles():
+    group = request.args.get("status") or None
+    if group and group not in services.ROLE_GROUPS:
+        return jsonify({"error": "Unknown status"}), 400
+    field_id = request.args.get("field") or None
+    if field_id and not services.field_exists(field_id):
+        return jsonify({"error": "Unknown field"}), 400
+    return jsonify(services.list_roles(group, field_id))
+
+
+@api.route("/method")
+def method():
+    return jsonify(services.get_method())
+
+
 @api.route("/data")
 def get_all_data():
     return jsonify(services.get_all())

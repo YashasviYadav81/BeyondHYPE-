@@ -1,0 +1,6 @@
+   .venv/
+   __pycache__/
+   *.pyc
+   .env
+   Backend/data/beyond_hype.db
+   Backend/data/beyond_hype.db.bak

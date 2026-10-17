@@ -32,6 +32,7 @@
             <a href="#shifts">How it works</a>
             <a href="#method">Evidence</a>
             <a href="#hypecheck">Hype Check</a>
+            <a href="#search">Search</a>
         </div>
 
         <a href="#explore" class="nav-button">
@@ -391,6 +392,109 @@
             </button>
 
         </div>
+
+    </section>
+
+    <!-- ================= ROLES ================= -->
+
+<section class="roles-section" id="roles">
+
+    <div class="section-heading">
+
+        <div class="eyebrow">ROLES</div>
+
+        <h2>Which roles are <span>changing?</span></h2>
+
+        <p>
+            Roles from all five fields, grouped by how our sources describe
+            them. These labels describe the evidence we found. They are not
+            job-market forecasts.
+        </p>
+
+    </div>
+
+    <div class="roles-controls">
+
+        <div class="roles-filter" id="rolesFilter">
+            <button type="button" class="active" data-status="">All</button>
+            <button type="button" data-status="Emerging">Emerging</button>
+            <button type="button" data-status="Specialized">Specialized</button>
+            <button type="button" data-status="Evolving">Evolving</button>
+            <button type="button" data-status="Established">Established</button>
+        </div>
+
+        <select id="rolesField" aria-label="Field">
+            <option value="">Any field</option>
+            <option value="F1">Software Engineering</option>
+            <option value="F2">AI / ML</option>
+            <option value="F3">Data</option>
+            <option value="F4">Cybersecurity</option>
+            <option value="F5">Cloud &amp; DevOps</option>
+        </select>
+
+    </div>
+
+    <div class="roles-grid" id="rolesGrid"></div>
+
+</section>
+
+    <!-- ================= SEARCH ================= -->
+
+    <section class="search-section" id="search">
+
+        <div class="section-heading">
+
+            <div class="eyebrow">SEARCH</div>
+
+            <h2>Looking for something <span>specific?</span></h2>
+
+            <p>
+                Search tools, projects, roles and roadmap steps across all
+                five fields. Filter by level, field or type.
+            </p>
+
+        </div>
+
+        <div class="search-row">
+
+            <input type="text" id="searchInput" maxlength="100" placeholder="e.g. docker, SQL, threat modeling"
+                aria-label="Search">
+
+            <select id="searchLevel" aria-label="Level">
+                <option value="">Any level</option>
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+            </select>
+
+            <select id="searchField" aria-label="Field">
+                <option value="">Any field</option>
+                <option value="F1">Software Engineering</option>
+                <option value="F2">AI / ML</option>
+                <option value="F3">Data</option>
+                <option value="F4">Cybersecurity</option>
+                <option value="F5">Cloud &amp; DevOps</option>
+            </select>
+
+            <select id="searchType" aria-label="Type">
+                <option value="">Anything</option>
+                <option value="tool">Tools</option>
+                <option value="project">Projects</option>
+                <option value="roadmap">Roadmap steps</option>
+                <option value="role">Roles</option>
+                <option value="capability">Capabilities</option>
+                <option value="industry">Industry changes</option>
+                <option value="work">Work changes</option>
+                <option value="human">Human capabilities</option>
+                <option value="evidence">Evidence and sources</option>
+                <option value="hype">Hype claims</option>
+            </select>
+
+            <button type="button" id="searchButton" class="hero-button">Search</button>
+
+        </div>
+
+        <div class="search-results" id="searchResults" aria-live="polite"></div>
 
     </section>
 

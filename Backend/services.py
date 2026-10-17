@@ -185,7 +185,7 @@ def get_hype_claim(claim_id):
     claim["keywords"] = json.loads(claim["keywords"] or "[]")
     claim["evidence"] = query(
         "SELECT e.id AS evidence_id, e.claim, e.finding, e.does_not_prove,"
-        " e.year, e.evidence_type, e.url, s.name AS source_name,"
+        " e.year, e.evidence_type, e.status, e.url, s.name AS source_name,"
         " s.url AS source_url"
         " FROM hype_claim_evidence h"
         " JOIN evidence e ON e.id = h.evidence_id"
@@ -229,7 +229,236 @@ def check_claim(text):
     return {
         "matched": False,
         "message": ("We have not reviewed evidence for this claim yet, so we "
-                    "will not give a verdict. These reviewed claims are the "
-                    "closest:"),
+                    "cannot say what the evidence shows. These reviewed claims "
+                    "are the closest:"),
         "suggestions": _suggestions(words),
+    }
+
+
+# ---------------- SEARCH ----------------
+
+LEVELS = {"Beginner", "Intermediate", "Advanced"}
+
+# kind -> (table, title column, searched columns, snippet column, level column, puzzle piece)
+SEARCH_SPECS = {
+    "industry": ("industry_changes", "change",
+                 ["change", "what_is_happening", "why_it_matters"],
+                 "what_is_happening", None, 0),
+    "work": ("work_changes", "task",
+             ["task", "shift", "mode", "human_role"], "shift", None, 1),
+    "human": ("human_capabilities", "capability",
+              ["capability", "why_it_matters", "why_human"],
+              "why_it_matters", None, 2),
+    "role": ("roles", "role",
+             ["role", "what_is_changing", "key_shift", "status"],
+             "what_is_changing", None, 3),
+    "capability": ("capabilities", "capability",
+                   ["capability", "meaning", "examples", "category"],
+                   "meaning", None, 4),
+    "tool": ("tools", "technology",
+             ["technology", "category", "why_it_matters", "learn_first",
+              "suggested_project"], "why_it_matters", "level", 5),
+    "project": ("projects", "title",
+                ["title", "skills_practiced", "tools", "expected_outcome",
+                 "what_to_demonstrate"], "expected_outcome", "difficulty", 6),
+    "roadmap": ("roadmap_steps", "title",
+                ["title", "category", "tools", "exercise", "next_step"],
+                "exercise", "level", 7),
+    # evidence records and their sources (click opens the source itself)
+    "evidence": ("evidence", "claim",
+                 ["claim", "finding", "supports", "source", "evidence_type"],
+                 "finding", None, None),
+}
+URL_COLUMNS = {"evidence": "url"}      # kinds whose results carry a link
+SEARCH_KINDS = set(SEARCH_SPECS) | {"hype"}
+MAX_RESULTS = 40
+
+
+def field_exists(field_id):
+    return bool(query("SELECT 1 AS ok FROM fields WHERE id = ?", (field_id,)))
+
+
+def _snippet(text, size=140):
+    text = (text or "").strip()
+    return text if len(text) <= size else text[:size].rstrip() + "..."
+
+
+def search(q, level=None, kind=None, field_id=None):
+    """Every word typed must appear somewhere in an item's text."""
+    terms = [t for t in re.findall(r"[a-z0-9+#.]+", q.lower()) if len(t) >= 2][:5]
+    if not terms:
+        return {"query": q, "count": 0, "results": []}
+
+    names = {f["field_id"]: f["field_name"] for f in get_fields()}
+    results = []
+
+    for name, (table, title, cols, snippet, level_col, piece) in SEARCH_SPECS.items():
+        if kind and kind != name:
+            continue
+        if level and not level_col:
+            continue                      # only items that have a level
+        haystack = " || ' ' || ".join(f"COALESCE({c}, '')" for c in cols)
+        where = " AND ".join(f"({haystack}) LIKE ?" for _ in terms)
+        params = [f"%{t}%" for t in terms]
+        if field_id:
+            where += " AND field_id = ?"
+            params.append(field_id)
+        if level:
+            where += f" AND {level_col} = ?"
+            params.append(level)
+        level_sql = level_col if level_col else "NULL"
+        url_sql = URL_COLUMNS.get(name, "NULL")
+        rows = query(
+            f"SELECT id, field_id, {title} AS title, {snippet} AS snippet,"
+            f" {level_sql} AS level, {url_sql} AS url"
+            f" FROM {table} WHERE {where} ORDER BY id",
+            tuple(params))
+        for row in rows:
+            results.append({
+                "type": name, "id": row["id"], "title": row["title"],
+                "snippet": _snippet(row["snippet"]), "field_id": row["field_id"],
+                "field_name": names.get(row["field_id"], ""),
+                "level": row["level"], "piece": piece, "url": row["url"],
+            })
+
+    # hype claims belong to no field and have no level
+    if (not kind or kind == "hype") and not field_id and not level:
+        haystack = ("COALESCE(claim, '') || ' ' || COALESCE(keywords, '')"
+                    " || ' ' || COALESCE(interpretation, '')")
+        where = " AND ".join(f"({haystack}) LIKE ?" for _ in terms)
+        for row in query(
+                f"SELECT id, claim, interpretation FROM hype_claims"
+                f" WHERE {where} ORDER BY id", tuple(f"%{t}%" for t in terms)):
+            results.append({
+                "type": "hype", "id": row["id"], "title": row["claim"],
+                "snippet": _snippet(row["interpretation"]), "field_id": None,
+                "field_name": "", "level": None, "piece": None, "url": None,
+            })
+
+    results = results[:MAX_RESULTS]
+    return {"query": q, "count": len(results), "results": results}
+
+
+# ---------------- ROLES VIEW ----------------
+
+ROLE_GROUPS = ["Emerging", "Specialized", "Evolving", "Established"]
+
+
+def role_group(status):
+    """Plain group for the free-text status the dataset uses."""
+    text = (status or "").lower()
+    if "emerging" in text:
+        return "Emerging"
+    if "special" in text:
+        return "Specialized"
+    if "established" in text:
+        return "Established"
+    return "Evolving"
+
+
+def list_roles(group=None, field_id=None):
+    names = {f["field_id"]: f["field_name"] for f in get_fields()}
+    roles = []
+    for row in query("SELECT * FROM roles ORDER BY field_id, position"):
+        row["status_group"] = role_group(row["status"])
+        row["field_name"] = names.get(row["field_id"], "")
+        if group and row["status_group"] != group:
+            continue
+        if field_id and row["field_id"] != field_id:
+            continue
+        roles.append(row)
+    return roles
+
+
+# ---------------- METHOD (the four "Before we explore" cards) ----------------
+
+def get_method():
+    """Live numbers and examples behind Collect / Cross-check / Interpret / Translate."""
+
+    # ---- Collect
+    sources = query(
+        "SELECT s.name, s.url, COUNT(e.id) AS evidence_count FROM sources s"
+        " LEFT JOIN evidence e ON e.source_id = s.id GROUP BY s.id"
+        " HAVING COUNT(e.id) > 0 ORDER BY evidence_count DESC, s.name")
+    types = query(
+        "SELECT COALESCE(NULLIF(TRIM(evidence_type), ''), 'Other') AS type,"
+        " COUNT(*) AS count FROM evidence GROUP BY type ORDER BY count DESC, type")
+    evidence_total = query("SELECT COUNT(*) AS n FROM evidence")[0]["n"]
+    years = sorted(int(r["year"]) for r in query("SELECT year FROM evidence")
+                   if str(r["year"] or "").isdigit())
+    with_limit = query(
+        "SELECT COUNT(*) AS n FROM evidence"
+        " WHERE TRIM(COALESCE(does_not_prove, '')) != ''")[0]["n"]
+
+    # ---- Cross-check: how many different sources stand behind each claim
+    rows = query(
+        "SELECT c.id, c.claim, e.id AS evidence_id, s.name AS source_name"
+        " FROM hype_claims c"
+        " LEFT JOIN hype_claim_evidence h ON h.hype_claim_id = c.id"
+        " LEFT JOIN evidence e ON e.id = h.evidence_id"
+        " LEFT JOIN sources s ON s.id = e.source_id ORDER BY c.id, e.id")
+    claims = {}
+    for row in rows:
+        item = claims.setdefault(row["id"], {
+            "id": row["id"], "claim": row["claim"], "evidence_ids": [], "sources": []})
+        if row["evidence_id"]:
+            item["evidence_ids"].append(row["evidence_id"])
+        if row["source_name"] and row["source_name"] not in item["sources"]:
+            item["sources"].append(row["source_name"])
+    claim_list = []
+    for item in claims.values():
+        claim_list.append({
+            "id": item["id"], "claim": item["claim"],
+            "evidence_count": len(item["evidence_ids"]),
+            "source_count": len(item["sources"]), "sources": item["sources"]})
+
+    # ---- Interpret: one reviewed claim, split into its four parts
+    interpret = None
+    if claim_list:
+        best = max(claim_list, key=lambda c: (c["evidence_count"], -ord(c["id"][-1])))
+        detail = get_hype_claim(best["id"])
+        interpret = {
+            "claim": detail["claim"],
+            "evidence": [{"finding": e["finding"], "source_name": e["source_name"],
+                          "year": e["year"]} for e in detail["evidence"][:2]],
+            "interpretation": detail["interpretation"],
+            "limitation": detail["limitation"],
+            "student_action": detail["student_action"]}
+
+    # ---- Translate: what each field turns into, with one real linked example
+    counts = []
+    for field in query("SELECT id, name FROM fields ORDER BY position"):
+        entry = {"field_id": field["id"], "field_name": field["name"]}
+        for key, table in (("roles", "roles"), ("capabilities", "capabilities"),
+                           ("tools", "tools"), ("projects", "projects"),
+                           ("roadmap_steps", "roadmap_steps")):
+            entry[key] = query(f"SELECT COUNT(*) AS n FROM {table} WHERE field_id = ?",
+                               (field["id"],))[0]["n"]
+        counts.append(entry)
+
+    example = None
+    for cap in query(
+            "SELECT c.id, c.field_id, c.capability, c.evidence, f.name AS field_name"
+            " FROM capabilities c JOIN fields f ON f.id = c.field_id"
+            " ORDER BY f.position, c.position"):
+        tool = query("SELECT technology FROM tools WHERE capability_id = ? ORDER BY id LIMIT 1", (cap["id"],))
+        project = query("SELECT title FROM projects WHERE capability_id = ? ORDER BY id LIMIT 1", (cap["id"],))
+        step = query("SELECT title, level FROM roadmap_steps WHERE capability_id = ? ORDER BY step_order LIMIT 1", (cap["id"],))
+        if tool and project and step:
+            example = {"field_id": cap["field_id"], "field_name": cap["field_name"],
+                       "capability": cap["capability"], "evidence": cap["evidence"],
+                       "tool": tool[0]["technology"], "project": project[0]["title"],
+                       "roadmap_step": step[0]["title"], "level": step[0]["level"]}
+            break
+
+    return {
+        "collect": {"source_count": len(sources), "evidence_count": evidence_total,
+                    "sources": sources, "types": types,
+                    "first_year": years[0] if years else None,
+                    "last_year": years[-1] if years else None},
+        "cross_check": {"claims": claim_list, "claims_total": len(claim_list),
+                        "multi_source": sum(1 for c in claim_list if c["source_count"] >= 2),
+                        "with_limitation": with_limit, "evidence_total": evidence_total},
+        "interpret": interpret,
+        "translate": {"fields": counts, "example": example},
     }

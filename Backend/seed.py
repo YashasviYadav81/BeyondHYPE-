@@ -14,8 +14,8 @@ BASE = Path(__file__).parent
 JSON_PATH = BASE / "data" / "Beyond_HYPE_Final_Dataset.json"
 DB_PATH = BASE / "data" / "beyond_hype.db"
 SCHEMA_PATH = BASE / "schema.sql"
+EXTRA_PATH = BASE / "data" / "extra_evidence.json"   # optional: new sources + evidence
 
-# Free-text source mentions -> official name in dataset["sources"]
 SOURCE_RULES = [
     (r"stack overflow", "Stack Overflow 2025 AI"),
     (r"github", "GitHub Octoverse 2025"),
@@ -30,9 +30,10 @@ SOURCE_RULES = [
     (r"cncf", "CNCF Cloud Native Research"),
     (r"data center operations|\bdco\b", "Amazon Data Center Operations India"),
     (r"microsoft", "Microsoft Explore India"),
+    (r"ai index", "Stanford AI Index 2026"),
+    (r"canaries", "Canaries in the Coal Mine (Stanford Digital Economy Lab)"),
 ]
 
-# learning-path capability name -> capability name it belongs to
 PATH_ALIASES = {
     ("F1", "APIs & backend"): "APIs & backend systems",
     ("F1", "Testing/debugging"): "Testing & debugging",
@@ -49,7 +50,6 @@ PATH_ALIASES = {
     ("F5", "AI infrastructure"): "AI infrastructure basics",
 }
 
-# company case -> primary field. REVIEW these choices yourselves.
 CASE_FIELD = {
     ("Oracle", "Software/Cloud"): "F1",
     ("Oracle India", "Software/Cloud"): "F1",
@@ -82,8 +82,41 @@ def canon_sources(text):
     return found
 
 
-def main():
+def load_dataset(errors):
+    """The main dataset, plus anything in data/extra_evidence.json."""
     data = json.loads(JSON_PATH.read_text(encoding="utf-8"))
+    if EXTRA_PATH.exists():
+        extra = json.loads(EXTRA_PATH.read_text(encoding="utf-8"))
+        have_sources = {s["source_name"] for s in data["sources"]}
+        for source in extra.get("sources", []):
+            if source["source_name"] not in have_sources:
+                data["sources"].append(source)
+        have_ids = {e["evidence_id"] for e in data["evidence"]}
+        for record in extra.get("evidence", []):
+            if record["evidence_id"] in have_ids:
+                errors.append(f"extra_evidence.json: evidence id "
+                              f"{record['evidence_id']} already exists in the "
+                              f"main dataset - use a new ID")
+            else:
+                data["evidence"].append(record)
+                have_ids.add(record["evidence_id"])
+        # corrections: replace fields of records that already exist
+        by_id = {e["evidence_id"]: e for e in data["evidence"]}
+        for fix in extra.get("corrections", []):
+            target = by_id.get(fix["evidence_id"])
+            if target is None:
+                errors.append(f"extra_evidence.json: correction for unknown "
+                              f"evidence id {fix['evidence_id']}")
+                continue
+            for key, value in fix.items():
+                if key != "evidence_id":
+                    target[key] = value
+    return data
+
+
+def main():
+    errors, warnings = [], []
+    data = load_dataset(errors)
     accessed = data["metadata"].get("research_date")
 
     if DB_PATH.exists():
@@ -93,14 +126,12 @@ def main():
     conn.executescript(SCHEMA_PATH.read_text(encoding="utf-8"))
     cur = conn.cursor()
 
-    errors, warnings = [], []
     counters = defaultdict(int)
 
     def next_pos(table, field_id):
         counters[(table, field_id)] += 1
         return counters[(table, field_id)]
 
-    # ---- fields
     for i, f in enumerate(data["fields"], start=1):
         cur.execute(
             "INSERT INTO fields (id, name, description, current_landscape,"
@@ -109,7 +140,6 @@ def main():
              f["current_landscape"], f["primary_evidence"],
              f["overall_status"], i))
 
-    # ---- sources
     source_id = {}
     for s in data["sources"]:
         cur.execute(
@@ -120,7 +150,6 @@ def main():
         if name not in source_id:
             errors.append(f"SOURCE_RULES name not in dataset sources: {name}")
 
-    # ---- evidence
     evidence_by_source = defaultdict(list)
     for e in data["evidence"]:
         names = canon_sources(e["source"])
@@ -139,7 +168,6 @@ def main():
              e.get("evidence_type"), e.get("geography"), e.get("status"),
              e.get("year"), e.get("url")))
 
-    # ---- industry changes (+ evidence links)
     for c in data["industry_changes"]:
         cid = f"{c['field_id']}-IC{c['piece']}"
         cur.execute(
@@ -159,7 +187,6 @@ def main():
             cur.execute("INSERT INTO industry_change_evidence VALUES (?,?)",
                         (cid, ev_id))
 
-    # ---- work changes
     for w in data["work_changes"]:
         cur.execute(
             "INSERT INTO work_changes (id, field_id, position, task, shift,"
@@ -167,7 +194,6 @@ def main():
             (f"{w['field_id']}-WC{w['item']}", w["field_id"], int(w["item"]),
              w["task"], w["shift"], w["mode"], w["human_role"]))
 
-    # ---- human capabilities
     for h in data["human_capabilities"]:
         fid = h["field_id"]
         cur.execute(
@@ -177,7 +203,6 @@ def main():
              h["capability"], h["why_it_matters"], h["work_mode"],
              h["why_human"]))
 
-    # ---- roles
     for r in data["roles"]:
         fid = r["field_id"]
         cur.execute(
@@ -187,7 +212,6 @@ def main():
              r["role"], r["status"], r["what_is_changing"], r["key_shift"],
              r["evidence"]))
 
-    # ---- capabilities
     cap_id = {}
     for c in data["capabilities"]:
         fid = c["field_id"]
@@ -200,7 +224,6 @@ def main():
             (cid, fid, next_pos("cap", fid), c["capability"], c["category"],
              c["meaning"], c["examples"], c["priority"], c["evidence"]))
 
-    # ---- learning paths (linked to capabilities by ID)
     for lp in data["learning_paths"]:
         fid = lp["field_id"]
         name = PATH_ALIASES.get((fid, lp["capability"]), lp["capability"])
@@ -218,7 +241,6 @@ def main():
              lp["skills_built"], lp["next_step"], lp["industry_connection"],
              lp["evidence"]))
 
-    # ---- company cases
     for c in data["company_cases"]:
         fid = CASE_FIELD.get((c["company"], c["area"]))
         if fid is None:
@@ -232,7 +254,6 @@ def main():
              c["what_students_should_notice"], c["evidence_strength"],
              c["source"], c["url"]))
 
-    # ---- finish
     if errors:
         conn.rollback()
         conn.close()

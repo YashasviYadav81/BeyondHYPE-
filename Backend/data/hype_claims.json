@@ -37,7 +37,7 @@
       "learn ai or get left behind"
     ],
     "verdict": "Partly supported",
-    "interpretation": "Our evidence shows AI adoption in developer workflows and one major IT-services employer organising work around AI. But the AI role we reviewed asks for ML, Python, large-scale data and production deployment together, and nothing in our evidence says every student must specialise in AI. The sensible reading is fundamentals first, then one AI capability backed by a project.",
+    "interpretation": "Our evidence shows AI adoption in developer workflows and one major IT-services employer organising work around AI. But the AI role we reviewed lists practical ML experience and programming skills as qualifications and puts large-scale data, system design and production deployment among its responsibilities, and nothing in our evidence says every student must specialise in AI. The sensible reading is fundamentals first, then one AI capability backed by a project.",
     "limitation": "Company strategy is not proof of industry-wide hiring growth, and one employer's requirements are not universal.",
     "evidence_ids": [
       "E01",
@@ -59,7 +59,7 @@
       "kubernetes is a must"
     ],
     "verdict": "Partly supported",
-    "interpretation": "CNCF research describes widespread production use of Kubernetes, including for GenAI inference, so it is a relevant platform skill. But an Amazon data-center posting asks for Linux, networking, hardware troubleshooting, AWS and scripting, so cloud work is broader than one tool. Our evidence does not show Kubernetes is required for every cloud role.",
+    "interpretation": "CNCF research describes widespread production use of Kubernetes, including for GenAI inference, so it is a relevant platform skill. But an Amazon data-center posting lists Linux, networking and hardware troubleshooting as basic qualifications, with AWS products and scripting as preferred, so cloud work is broader than one tool. Our evidence does not show Kubernetes is required for every cloud role.",
     "limitation": "A survey of production use is not a list of job requirements, and one posting is not the whole market.",
     "evidence_ids": [
       "E11",
@@ -116,7 +116,7 @@
       "data jobs growing"
     ],
     "verdict": "Not supported by our evidence",
-    "interpretation": "The data-engineering posting we reviewed asks for SQL, pipelines, cloud services, validation and documentation, and AI systems depend on large datasets and reliable pipelines. That is an infrastructure requirement. Our evidence does not measure whether data jobs overall are growing.",
+    "interpretation": "The data-engineering posting we reviewed lists SQL, Python, ETL and data-warehousing concepts as basic qualifications, prefers AWS cloud experience, and includes data validation and documentation in its responsibilities. AI systems depend on large datasets and reliable pipelines. That is an infrastructure requirement. Our evidence does not measure whether data jobs overall are growing.",
     "limitation": "One employer's posting cannot show market-wide growth.",
     "evidence_ids": [
       "E06",
@@ -134,7 +134,7 @@
       "only need prompting"
     ],
     "verdict": "Not supported by our evidence",
-    "interpretation": "The applied-science posting we reviewed asks for ML experience, Python, large-scale datasets, end-to-end system design and production deployment. Nothing in our evidence shows that prompting alone is enough for AI roles.",
+    "interpretation": "The applied-science posting we reviewed lists practical ML experience and programming skills as basic qualifications, and its responsibilities include large-scale datasets, end-to-end system design and deploying models to production. Nothing in our evidence shows that prompting alone is enough for AI roles.",
     "limitation": "One employer's requirements are not universal, and some GenAI roles may weigh skills differently.",
     "evidence_ids": [
       "E05",
@@ -191,12 +191,89 @@
       "cloud is only aws"
     ],
     "verdict": "Not supported by our evidence",
-    "interpretation": "CNCF research describes cloud-native production environments built on containers and Kubernetes, and the Amazon data-center posting asks for Linux, networking, hardware troubleshooting and scripting alongside AWS. Cloud work in our evidence is broader than one provider's console.",
+    "interpretation": "CNCF research describes cloud-native production environments built on containers and Kubernetes, and the Amazon data-center posting lists Linux, networking and hardware troubleshooting as basic qualifications, with scripting and AWS products as preferred. Cloud work in our evidence is broader than one provider's console.",
     "limitation": "Two sources do not cover every cloud role.",
     "evidence_ids": [
       "E11",
       "E15"
     ],
     "student_action": "Practise containers, Linux and CI/CD, not only provider dashboards."
+  },
+  {
+    "id": "H11",
+    "claim": "AI is wiping out entry-level tech jobs",
+    "keywords": [
+      "entry level jobs",
+      "entry-level jobs",
+      "ai wiping out entry level",
+      "ai will take entry level",
+      "ai taking junior jobs",
+      "junior developer jobs",
+      "freshers jobs"
+    ],
+    "verdict": "Partly supported",
+    "interpretation": "Two Stanford sources point the same way for early-career workers: payroll data show employment of 22-25 year olds in AI-exposed occupations 19% below where it would be relative to less-exposed peers, with no comparable gap for experienced workers, and the AI Index reports falling headcounts for software developers aged 22-25 from 2021 to 2025 while most older groups grew. But the same paper finds no evidence of widespread, economy-wide displacement and says the gap works mainly through reduced hiring. 'Wiping out' goes further than the evidence.",
+    "limitation": "The paper calls its results early, descriptive indicators rather than causal estimates. The pattern weakens when education is controlled for, and some divergence predates generative AI.",
+    "evidence_ids": [
+      "E21",
+      "E22",
+      "E23"
+    ],
+    "student_action": "Build visible, verifiable work (deployed projects with tests) and practise the tasks where AI complements people, such as reviewing, testing and system design."
+  },
+  {
+    "id": "H12",
+    "claim": "AI will change everything!",
+    "keywords": [
+      "ai will change everything",
+      "ai changes everything",
+      "ai is changing everything"
+    ],
+    "verdict": "Partly supported",
+    "interpretation": "AI use is already widespread: organizations using AI rose from 55% in 2023 to 88% in 2025, and generative AI reached 53% adoption within three years, faster than the internet or personal computers. But 'everything' goes further than the evidence: in the AI Index workforce chart 43% of organizations expect little or no AI-related change next year, and WEF employers expect all structural drivers combined, not AI alone, to create and destroy jobs equal to 22% of today's employment by 2030.",
+    "limitation": "Adoption and expectation figures show spread and sentiment, not total impact. WEF figures are employer survey projections for all drivers combined.",
+    "evidence_ids": [
+      "E24",
+      "E25",
+      "E26",
+      "E35"
+    ],
+    "student_action": "Look at what is changing in your own field before reacting to the headline."
+  },
+  {
+    "id": "H13",
+    "claim": "Future-proof your career",
+    "keywords": [
+      "future proof your career",
+      "future-proof your career",
+      "future proof career"
+    ],
+    "verdict": "Partly supported",
+    "interpretation": "WEF employers expect 39% of workers' existing skill sets to be transformed or outdated over 2025-2030, so a fixed set of skills does not protect a career for long. The same survey finds more workers retraining (50% had completed training, up from 41% in 2023), and AI and big data, networks and cybersecurity, and technology literacy lead the fastest-growing skills. Ongoing learning is supported by the evidence; permanent protection is not.",
+    "limitation": "These are employer expectations and self-reported training, not tracked career outcomes. The 39% figure is an average across occupations.",
+    "evidence_ids": [
+      "E36",
+      "E28"
+    ],
+    "student_action": "Plan to keep learning: build one foundation skill and one growing skill, and revisit the list each year."
+  },
+  {
+    "id": "H14",
+    "claim": "There is one list of 10 skills everyone needs",
+    "keywords": [
+      "10 skills you need",
+      "ten skills you need",
+      "skills you need",
+      "10 skills everyone needs"
+    ],
+    "verdict": "Not supported by our evidence",
+    "interpretation": "Our sources rank skills differently depending on who is asked and which field. WEF employers put AI and big data, networks and cybersecurity, and technology literacy at the top of the fastest-growing skills, and analytical thinking as the most sought-after core skill. In ISC2's cybersecurity study, hiring managers' top five skills were all nontechnical, while professionals ranked AI and cloud security among the top four in-demand skills. No single list fits every field.",
+    "limitation": "These are surveys with different respondents and definitions, so they are not directly comparable.",
+    "evidence_ids": [
+      "E28",
+      "E30",
+      "E37"
+    ],
+    "student_action": "Start from the capabilities listed for your own field instead of a generic list."
   }
 ]

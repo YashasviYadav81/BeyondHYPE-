@@ -100,6 +100,111 @@ function safeUrl(url) {
     return /^https?:\/\//i.test(url || "") ? url : "";
 }
 
+// Small label showing what kind of signal a piece of evidence is
+function strengthClass(status) {
+    const text = (status || "").toLowerCase();
+    if (text.includes("employer")) return "strength-employer";
+    if (text.includes("emerging")) return "strength-emerging";
+    if (text.includes("established")) return "strength-established";
+    return "strength-other";
+}
+
+function strengthBadge(status) {
+    if (!status) return "";
+    return `<span class="strength-badge ${strengthClass(status)}">${escapeHTML(status)}</span>`;
+}
+
+const STRENGTH_LEGEND =
+    "Signal labels are ours. Established: reported by a major survey or report. " +
+    "Employer: from one employer's posting or statement. " +
+    "Emerging: early or preliminary evidence.";
+
+/* ===== BACK BUTTON (created here, so index.html needs no change) ===== */
+
+const prevPiece = document.createElement("button");
+prevPiece.type = "button";
+prevPiece.id = "prevPiece";
+prevPiece.className = "prev-piece";
+prevPiece.innerHTML = "<span>←</span> Back";
+
+if (nextPiece && nextPiece.parentNode) {
+    nextPiece.parentNode.insertBefore(prevPiece, nextPiece);
+}
+
+prevPiece.addEventListener("click", () => {
+    if (currentPiece > 0) {
+        currentPiece--;
+        updatePuzzle();
+    }
+});
+
+// Make a plain element behave like a button (mouse + keyboard)
+function makeActivatable(element, handler, title) {
+    if (!element) return;
+    element.setAttribute("role", "button");
+    element.tabIndex = 0;
+    element.title = title;
+    element.classList.add("pill-action");
+    element.addEventListener("click", handler);
+    element.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handler();
+        }
+    });
+}
+
+function openEvidenceDrawer() {
+    pieceEvidence.classList.add("open");
+    evidenceToggle.textContent = "Hide the evidence −";
+    pieceEvidence.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function openDeepDivePanel() {
+    deepDivePanel.classList.add("open");
+    deepDiveToggle.textContent = "Close deep dive −";
+    deepDivePanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+// The two pills above each piece now work:
+//   status pill (e.g. ROLE LANDSCAPE)  -> opens the deep dive
+//   source pill (e.g. sources used)    -> opens the evidence
+makeActivatable(pieceSource, openEvidenceDrawer, "Click to see the evidence");
+makeActivatable(pieceStatus, openDeepDivePanel, "Click for the deep dive");
+
+/* ===== COLLAPSIBLE AREAS (Roles grid, Search results) ===== */
+
+// Wrap an element so it can be folded away smoothly and opened again
+function makeCollapsible(element) {
+    const wrap = document.createElement("div");
+    wrap.className = "collapse open";
+    const inner = document.createElement("div");
+    inner.className = "collapse-inner";
+    element.parentNode.insertBefore(wrap, element);
+    wrap.appendChild(inner);
+    inner.appendChild(element);
+    return wrap;
+}
+
+function setCollapse(wrap, button, open, label) {
+    wrap.classList.toggle("open", open);
+    button.setAttribute("aria-expanded", String(open));
+    button.textContent = open ? `Hide ${label} −` : `Show ${label} +`;
+}
+
+function setEvidenceOpen(open) {
+    pieceEvidence.classList.toggle("open", open);
+    evidenceToggle.textContent = open ? "Hide the evidence −" : "See the evidence +";
+}
+
+// one legend line inside the evidence drawer
+if (pieceEvidence && !pieceEvidence.querySelector(".strength-legend")) {
+    const legend = document.createElement("p");
+    legend.className = "strength-legend";
+    legend.textContent = STRENGTH_LEGEND;
+    pieceEvidence.appendChild(legend);
+}
+
 
 /* ================= LOAD ONE FIELD FROM THE API (cached) ================= */
 
@@ -428,6 +533,14 @@ function updateEvidence(data, piece) {
 
     const names = unique(records.map(r => r.source_name || r.source));
 
+    // the pill above the piece names the real sources (click opens the evidence)
+    pieceSource.textContent = label
+        ? (piece.type === "work" || piece.type === "human"
+            ? "Interpretation · field evidence"
+            : "Recommendation · field evidence")
+        : names.slice(0, 2).join(" · ") +
+          (names.length > 2 ? ` +${names.length - 2} more` : "");
+
     evidenceSource.innerHTML = names.map(name => {
         const record = records.find(r => (r.source_name || r.source) === name);
         const url = safeUrl(record.url || record.source_url);
@@ -443,7 +556,7 @@ function updateEvidence(data, piece) {
         unique(records.map(r => r.evidence_type)).join(", ") || "—";
 
     evidenceShows.innerHTML = records.slice(0, 6)
-        .map(r => `<li>${escapeHTML(r.finding)}</li>`).join("");
+        .map(r => `<li>${escapeHTML(r.finding)} ${strengthBadge(r.status)}</li>`).join("");
 
     evidenceDoesNot.innerHTML = records.slice(0, 6)
         .map(r => `<li>${escapeHTML(r.does_not_prove || "Not enough evidence to make a broader claim.")}</li>`)
@@ -624,30 +737,131 @@ function updateDeepDive(data, piece) {
 
 /* ================= BIG PICTURE ================= */
 
+// The big picture: a short summary of the field plus concrete next steps
+function firstBy(list, predicate) {
+    return list.find(predicate) || list[0] || null;
+}
+
+function bigRow(label, text, action, piece, button) {
+    return `
+        <li class="bp-item">
+            <div>
+                <span class="bp-label">${escapeHTML(label)}</span>
+                <span class="bp-text">${escapeHTML(text)}</span>
+            </div>
+            <button type="button" class="bp-action"
+                    data-action="${escapeHTML(action)}"
+                    data-piece="${escapeHTML(piece === null ? "" : piece)}">
+                ${escapeHTML(button)} →
+            </button>
+        </li>`;
+}
+
 function updateBigPicture(data) {
 
     const info = data.info;
 
     bigTitle.textContent = info.current_landscape;
 
-    const points = [
-        `Overall status: ${info.overall_status}`,
-        `Primary evidence: ${info.primary_evidence}`,
-        `${data.humanCapabilities.length} human capabilities identified`,
-        `${data.roles.length} roles mapped`,
-        `${data.capabilities.length} capabilities to develop`,
-        `${data.tools.length} tools, ${data.projects.length} projects and ${data.roadmap.length} roadmap steps`
-    ];
+    // one small line of facts under the title
+    let meta = document.getElementById("bigMeta");
+    if (!meta) {
+        meta = document.createElement("p");
+        meta.id = "bigMeta";
+        meta.className = "bp-meta";
+        bigTitle.insertAdjacentElement("afterend", meta);
+    }
+    meta.innerHTML =
+        `<span>Overall status: ${escapeHTML(info.overall_status)}</span>` +
+        `<span>Main evidence: ${escapeHTML(info.primary_evidence)}</span>` +
+        `<span>${data.roles.length} roles · ${data.capabilities.length} capabilities · ` +
+        `${data.tools.length} tools · ${data.projects.length} projects · ` +
+        `${data.roadmap.length} roadmap steps</span>`;
 
-    bigPoints.innerHTML = points
-        .map(point => `<li>${escapeHTML(point)}</li>`)
-        .join("");
+    // what to do next, taken from this field's own data
+    const rows = [];
+
+    const step = data.roadmap[0];
+    if (step) {
+        rows.push(bigRow(
+            "START HERE",
+            `Step 1 of ${data.roadmap.length}: ${step.title} (${step.level}, about ${step.estimated_effort})`,
+            "piece", 7, "Open the roadmap"));
+    }
+
+    // the tool for the first roadmap step's capability (so the advice matches the roadmap)
+    const tool = (step && data.tools.find(t => t.capability_id === step.capability_id)) ||
+                 firstBy(data.tools, t => t.level === "Beginner");
+    if (tool) {
+        rows.push(bigRow(
+            "LEARN FIRST",
+            `${tool.technology}: ${tool.learn_first}`,
+            "piece", 5, "See the tools"));
+    }
+
+    // the project attached to the earliest roadmap step that has one
+    const projectStep = data.roadmap.find(r => r.project_id);
+    const project = (projectStep && data.projects.find(p => p.id === projectStep.project_id)) ||
+                    firstBy(data.projects, p => p.difficulty === "Beginner");
+    if (project) {
+        rows.push(bigRow(
+            "BUILD FIRST",
+            `${project.title} (${project.difficulty})`,
+            "piece", 6, "See the projects"));
+    }
+
+    const role = firstBy(data.roles, r => /emerging/i.test(r.status));
+    if (role) {
+        const emerging = /emerging/i.test(role.status);
+        rows.push(bigRow(
+            emerging ? "ROLE TO WATCH" : "ROLE TO KNOW",
+            `${role.role}: ${role.what_is_changing}`,
+            "piece", 3, "See the roles"));
+    }
+
+    const sourceCount = unique(data.evidence.map(e => e.source_name || e.source)).length;
+    if (data.evidence.length) {
+        rows.push(bigRow(
+            "CHECK THE EVIDENCE",
+            `${data.evidence.length} evidence records from ${sourceCount} sources support this field.`,
+            "evidence", null, "See the evidence"));
+    }
+
+    rows.push(bigRow(
+        "NEXT",
+        "Compare with another field.",
+        "picker", null, "Choose a field"));
+
+    bigPoints.innerHTML = rows.join("");
 
     takeawayTitle.innerHTML = `Understand the <span>change.</span>`;
 
     takeawayText.textContent =
         `The goal isn't to chase every new technology. Understand what is changing in ${info.field_name}, how the work is shifting, and which capabilities you can actually practise.`;
 }
+
+// one click handler for all the buttons in the big picture
+bigPoints.addEventListener("click", async event => {
+
+    const button = event.target.closest(".bp-action");
+    if (!button) return;
+
+    const action = button.dataset.action;
+
+    if (action === "picker") {
+        const picker = document.getElementById("explore");
+        if (picker) picker.scrollIntoView({ behavior: "smooth" });
+        return;
+    }
+
+    if (action === "evidence") {
+        await openPiece(currentField, 0);
+        if (fieldData[currentField]) setEvidenceOpen(true);
+        return;
+    }
+
+    openPiece(currentField, Number(button.dataset.piece));
+});
 
 
 /* ================= PUZZLE PIECES VISUAL STATE ================= */
@@ -665,6 +879,8 @@ function updatePuzzlePieces() {
         if (index === currentPiece) element.classList.add("active");
 
     });
+
+    prevPiece.disabled = currentPiece === 0;
 
     if (currentPiece === TOTAL_PIECES - 1) {
 
@@ -691,13 +907,58 @@ function nextPieceHandler() {
 }
 
 
+/* ================= PAGE LAYOUT ================= */
+
+// Put the five field cards ("Explore the landscape") directly above the
+// field content, so choosing a field and reading it happen in one place.
+(function placeFieldPicker() {
+    const picker = document.getElementById("explore");
+    const content = document.getElementById("shifts");
+    if (picker && content && content.previousElementSibling !== picker) {
+        content.parentNode.insertBefore(picker, content);
+    }
+})();
+
+// "Let's look at the evidence." in the hero scrolls to the evidence section.
+// To point it somewhere else, change this id (for example "hypecheck").
+const HERO_NOTE_TARGET = "method";
+
+(function makeHeroNoteWork() {
+    const note = document.querySelector(".hero-note");
+    if (!note) return;
+    makeActivatable(note, () => {
+        const target = document.getElementById(HERO_NOTE_TARGET);
+        if (target) target.scrollIntoView({ behavior: "smooth" });
+    }, "Click to see how we use evidence");
+})();
+
+
 /* ================= EVENTS ================= */
 
 fieldCards.forEach(card => {
-    card.addEventListener("click", () => {
+    card.addEventListener("click", async () => {
+
         const fieldId = keyToField[card.dataset.field];
-        if (fieldId) updateField(fieldId);
+        if (!fieldId) return;
+
+        // go straight to the field's content...
+        const target = document.getElementById("shifts");
+        if (target) target.scrollIntoView({ behavior: "smooth" });
+
+        await updateField(fieldId);
+
+        // ...with its evidence already open (the reader can hide it again)
+        if (currentField === fieldId && fieldData[fieldId]) setEvidenceOpen(true);
     });
+});
+
+document.querySelectorAll(".puzzle-piece").forEach((tile, index) => {
+    makeActivatable(tile, () => {
+        if (fieldData[currentField]) {
+            currentPiece = index;
+            updatePuzzle();
+        }
+    }, `Go to piece ${index + 1}`);
 });
 
 evidenceToggle.addEventListener("click", () => {
@@ -757,12 +1018,6 @@ const hypeButton = document.getElementById("hypeButton");
 const hypeChips = document.getElementById("hypeChips");
 const hypeResult = document.getElementById("hypeResult");
 
-function verdictClass(verdict) {
-    if (verdict === "Supported") return "verdict-supported";
-    if (verdict === "Partly supported") return "verdict-partly";
-    return "verdict-not";
-}
-
 function hypeMessage(text) {
     hypeResult.innerHTML =
         `<div class="hype-card-result"><p>${escapeHTML(text)}</p></div>`;
@@ -788,7 +1043,7 @@ function renderHypeMatch(claim) {
             : escapeHTML(name);
         const year = item.year ? `, ${escapeHTML(item.year)}` : "";
 
-        return `<li>${escapeHTML(item.finding)} <small>(${source}${year})</small></li>`;
+        return `<li>${escapeHTML(item.finding)} <small>(${source}${year})</small> ${strengthBadge(item.status)}</li>`;
 
     }).join("");
 
@@ -798,15 +1053,13 @@ function renderHypeMatch(claim) {
             <div class="mini-label">THE CLAIM</div>
             <h3>${escapeHTML(claim.claim)}</h3>
 
-            <span class="verdict-badge ${verdictClass(claim.verdict)}">
-                Our evidence: ${escapeHTML(claim.verdict)}
-            </span>
 
             <div class="hype-columns">
 
                 <div>
                     <div class="mini-label">EVIDENCE</div>
                     <ul>${evidence}</ul>
+                    <p class="strength-legend">${escapeHTML(STRENGTH_LEGEND)}</p>
                 </div>
 
                 <div>
@@ -953,3 +1206,623 @@ if (hypeInput && hypeButton && hypeChips && hypeResult) {
 
     loadHypeChips();
 }
+
+
+/* =========================================================
+   SEARCH
+   Find tools, projects, roles, roadmap steps and more
+   across all five fields, with level / field / type filters.
+========================================================= */
+
+const searchInput = document.getElementById("searchInput");
+const searchLevel = document.getElementById("searchLevel");
+const searchField = document.getElementById("searchField");
+const searchType = document.getElementById("searchType");
+const searchButton = document.getElementById("searchButton");
+const searchResults = document.getElementById("searchResults");
+
+// results can be folded away and opened again
+let searchWrap = null;
+let searchBar = null;
+let searchToggle = null;
+let searchCount = 0;
+
+if (searchResults) {
+
+    searchWrap = makeCollapsible(searchResults);
+
+    searchBar = document.createElement("div");
+    searchBar.className = "results-bar";
+    searchBar.hidden = true;
+
+    searchToggle = document.createElement("button");
+    searchToggle.type = "button";
+    searchToggle.className = "collapse-toggle";
+    searchBar.appendChild(searchToggle);
+
+    searchWrap.parentNode.insertBefore(searchBar, searchWrap);
+
+    searchToggle.addEventListener("click", () => {
+        setCollapse(searchWrap, searchToggle,
+            !searchWrap.classList.contains("open"), `results (${searchCount})`);
+    });
+}
+
+function showSearchBar(count) {
+    if (!searchBar) return;
+    searchCount = count;
+    searchBar.hidden = false;
+    setCollapse(searchWrap, searchToggle, true, `results (${count})`);
+}
+
+function hideSearchBar() {
+    if (!searchBar) return;
+    searchBar.hidden = true;
+    searchWrap.classList.add("open");
+}
+
+const TYPE_LABELS = {
+    industry: "Industry change",
+    work: "Work change",
+    human: "Human capability",
+    role: "Role",
+    capability: "Capability",
+    tool: "Tool",
+    project: "Project",
+    roadmap: "Roadmap step",
+    evidence: "Evidence",
+    hype: "Hype claim"
+};
+
+// Jump to a field and one of its eight pieces
+async function openPiece(fieldId, pieceIndex) {
+
+    await updateField(fieldId);
+
+    if (currentField !== fieldId || !fieldData[fieldId]) return;
+
+    currentPiece = pieceIndex;
+    updatePuzzle();
+
+    document.getElementById("shifts")
+        .scrollIntoView({ behavior: "smooth" });
+}
+
+function activeFilters() {
+    const parts = [];
+    [[searchLevel, "Level"], [searchField, "Field"], [searchType, "Type"]]
+        .forEach(([select, label]) => {
+            if (select && select.value) {
+                parts.push(`${label}: ${select.options[select.selectedIndex].text}`);
+            }
+        });
+    return parts;
+}
+
+function searchMessage(text) {
+    hideSearchBar();
+    searchResults.innerHTML =
+        `<p class="search-summary">${escapeHTML(text)}</p>`;
+}
+
+function renderSearch(data) {
+
+    if (!data.count) {
+
+        hideSearchBar();
+
+        const filters = activeFilters();
+
+        if (filters.length) {
+            searchResults.innerHTML =
+                `<p class="search-summary">No results for "${escapeHTML(data.query)}" with ${escapeHTML(filters.join(", "))}. ` +
+                'Filters are combined, so try removing one. ' +
+                '<button type="button" class="evidence-toggle" id="searchClear">Clear filters</button></p>';
+            document.getElementById("searchClear").onclick = () => {
+                searchLevel.value = "";
+                searchField.value = "";
+                searchType.value = "";
+                runSearch();
+            };
+        } else {
+            searchMessage(`No results for "${data.query}". Try a shorter or different word.`);
+        }
+        return;
+    }
+
+    const items = data.results.map(item => {
+
+        const meta = [
+            TYPE_LABELS[item.type] || item.type,
+            item.field_name,
+            item.level
+        ].filter(Boolean).join(" · ");
+
+        return `
+            <button type="button" class="search-result"
+                    data-type="${escapeHTML(item.type)}"
+                    data-id="${escapeHTML(item.id)}"
+                    data-field="${escapeHTML(item.field_id || "")}"
+                    data-piece="${escapeHTML(item.piece === null ? "" : item.piece)}"
+                    data-url="${escapeHTML(item.url || "")}">
+                <small>${escapeHTML(meta.toUpperCase())}</small>
+                <strong>${escapeHTML(item.title)}</strong>
+                <span>${escapeHTML(item.snippet)}</span>
+            </button>
+        `;
+
+    }).join("");
+
+    const plural = data.count === 1 ? "result" : "results";
+
+    searchResults.innerHTML =
+        `<p class="search-summary">${data.count} ${plural}</p>${items}`;
+
+    showSearchBar(data.count);
+
+    searchResults.querySelectorAll(".search-result").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            if (button.dataset.type === "hype") {
+                if (hypeResult) {
+                    document.getElementById("hypecheck")
+                        .scrollIntoView({ behavior: "smooth" });
+                    loadHypeClaim(button.dataset.id);
+                }
+                return;
+            }
+
+            if (button.dataset.type === "evidence" && safeUrl(button.dataset.url)) {
+                window.open(button.dataset.url, "_blank", "noopener");
+                return;
+            }
+
+            openPiece(button.dataset.field, Number(button.dataset.piece));
+        });
+    });
+}
+
+let searchTimer = null;
+let searchRequest = 0;
+
+async function runSearch() {
+
+    clearTimeout(searchTimer);
+
+    const q = searchInput.value.trim();
+
+    if (q.length < 2) {
+        searchMessage("Type at least two letters to search.");
+        return;
+    }
+
+    const params = new URLSearchParams({ q });
+    if (searchLevel.value) params.set("level", searchLevel.value);
+    if (searchField.value) params.set("field", searchField.value);
+    if (searchType.value) params.set("type", searchType.value);
+
+    searchMessage("Searching…");
+
+    const mine = ++searchRequest;
+
+    try {
+
+        const response = await fetch(`${API}/api/search?${params}`);
+
+        if (mine !== searchRequest) return;      // a newer search is running
+
+        if (!response.ok) {
+            const body = await response.json().catch(() => ({}));
+            searchMessage(body.error || "Search failed.");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (mine !== searchRequest) return;
+
+        renderSearch(data);
+
+    } catch (error) {
+        if (mine !== searchRequest) return;
+        console.error("Search failed:", error);
+        hideSearchBar();
+        searchResults.innerHTML =
+            '<p class="search-summary">Could not reach the backend. ' +
+            'Make sure it is running. ' +
+            '<button type="button" class="evidence-toggle" id="searchRetry">Try again</button></p>';
+        document.getElementById("searchRetry").onclick = runSearch;
+    }
+}
+
+// Only start if the Search section exists in index.html
+if (searchInput && searchButton && searchResults) {
+
+    searchButton.addEventListener("click", runSearch);
+
+    searchInput.addEventListener("keydown", event => {
+        if (event.key === "Enter") runSearch();
+    });
+
+    // search while typing (waits for a short pause)
+    searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimer);
+        if (searchInput.value.trim().length < 2) return;
+        searchTimer = setTimeout(runSearch, 400);
+    });
+
+    [searchLevel, searchField, searchType].forEach(select => {
+        if (select) {
+            select.addEventListener("change", () => {
+                if (searchInput.value.trim().length >= 2) runSearch();
+            });
+        }
+    });
+}
+
+
+
+/* =========================================================
+   ROLES VIEW
+   Roles from all five fields, grouped by how our sources
+   describe them (Emerging / Specialized / Evolving / Established).
+========================================================= */
+
+const rolesGrid = document.getElementById("rolesGrid");
+const rolesFilter = document.getElementById("rolesFilter");
+const rolesField = document.getElementById("rolesField");
+
+let rolesGroup = "";
+let rolesCount = 0;
+
+// the roles grid can be folded away and opened again
+let rolesWrap = null;
+let rolesToggle = null;
+
+if (rolesGrid) {
+
+    rolesWrap = makeCollapsible(rolesGrid);
+
+    rolesToggle = document.createElement("button");
+    rolesToggle.type = "button";
+    rolesToggle.className = "collapse-toggle";
+    setCollapse(rolesWrap, rolesToggle, true, "roles");
+
+    const controls = rolesFilter ? rolesFilter.parentNode : rolesWrap.parentNode;
+    controls.appendChild(rolesToggle);
+
+    rolesToggle.addEventListener("click", () => {
+        setCollapse(rolesWrap, rolesToggle,
+            !rolesWrap.classList.contains("open"),
+            rolesCount ? `roles (${rolesCount})` : "roles");
+    });
+}
+
+function expandRoles() {
+    if (rolesWrap) {
+        setCollapse(rolesWrap, rolesToggle, true,
+            rolesCount ? `roles (${rolesCount})` : "roles");
+    }
+}
+
+function roleCard(role) {
+
+    const groupClass = role.status_group.toLowerCase();
+    const label = role.status && role.status.toLowerCase() !== role.status_group.toLowerCase()
+        ? `<small class="role-label">Our label: ${escapeHTML(role.status)}</small>`
+        : "";
+
+    return `
+        <button type="button" class="role-card"
+                data-field="${escapeHTML(role.field_id)}">
+            <div class="role-top">
+                <span class="role-category">${escapeHTML(role.field_name.toUpperCase())}</span>
+                <span class="role-status ${escapeHTML(groupClass)}">${escapeHTML(role.status_group)}</span>
+            </div>
+            <h3>${escapeHTML(role.role)}</h3>
+            <p class="role-change">${escapeHTML(role.what_is_changing)}</p>
+            <p class="role-shift"><strong>Key shift:</strong> ${escapeHTML(role.key_shift)}</p>
+            ${label}
+        </button>
+    `;
+}
+
+async function loadRoles() {
+
+    rolesGrid.innerHTML = '<p class="search-summary">Loading roles…</p>';
+
+    const params = new URLSearchParams();
+    if (rolesGroup) params.set("status", rolesGroup);
+    if (rolesField && rolesField.value) params.set("field", rolesField.value);
+
+    try {
+
+        const response = await fetch(`${API}/api/roles?${params}`);
+        if (!response.ok) throw new Error(`Backend error: ${response.status}`);
+
+        const roles = await response.json();
+
+        if (!roles.length) {
+            rolesGrid.innerHTML =
+                '<p class="search-summary">No roles match these filters.</p>';
+            return;
+        }
+
+        rolesGrid.innerHTML = roles.map(roleCard).join("");
+
+        rolesCount = roles.length;
+        expandRoles();
+
+        rolesGrid.querySelectorAll(".role-card").forEach(card => {
+            // open the Roles piece (04) of that field
+            card.addEventListener("click", () => openPiece(card.dataset.field, 3));
+        });
+
+    } catch (error) {
+        console.error("Could not load roles:", error);
+        rolesGrid.innerHTML =
+            '<p class="search-summary">Could not reach the backend. ' +
+            'Make sure it is running. ' +
+            '<button type="button" class="evidence-toggle" id="rolesRetry">Try again</button></p>';
+        document.getElementById("rolesRetry").onclick = loadRoles;
+    }
+}
+
+// Only start if the Roles section exists in index.html
+if (rolesGrid && rolesFilter) {
+
+    rolesFilter.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", () => {
+            rolesGroup = button.dataset.status || "";
+            rolesFilter.querySelectorAll("button").forEach(b =>
+                b.classList.toggle("active", b === button));
+            loadRoles();
+        });
+    });
+
+    if (rolesField) rolesField.addEventListener("change", loadRoles);
+
+    loadRoles();
+}
+
+
+
+/* =========================================================
+   BEFORE WE EXPLORE: Collect / Cross-check / Interpret / Translate
+   Click a card to see the real numbers and an example behind it.
+========================================================= */
+
+const methodGrid = document.querySelector(".evidence-method");
+
+let methodData = null;
+let methodActive = null;
+let methodPanel = null;
+
+const METHOD_KEYS = {
+    "collect": "collect",
+    "cross-check": "cross",
+    "interpret": "interpret",
+    "translate": "translate"
+};
+
+async function loadMethod() {
+    if (methodData) return methodData;
+    const response = await fetch(`${API}/api/method`);
+    if (!response.ok) throw new Error(`Backend error: ${response.status}`);
+    methodData = await response.json();
+    return methodData;
+}
+
+function methodList(items) {
+    return `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`;
+}
+
+function renderCollect(d) {
+
+    const years = d.first_year
+        ? (d.first_year === d.last_year ? ` from ${d.first_year}` : ` from ${d.first_year} to ${d.last_year}`)
+        : "";
+
+    const types = d.types.map(t =>
+        `${escapeHTML(t.type)} <strong>${escapeHTML(t.count)}</strong>`);
+
+    const sources = d.sources.map(src => {
+        const url = safeUrl(src.url);
+        const name = url
+            ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(src.name)}</a>`
+            : escapeHTML(src.name);
+        return `${name} <small>(${escapeHTML(src.evidence_count)} record${src.evidence_count === 1 ? "" : "s"})</small>`;
+    });
+
+    return `
+        <div class="mini-label">COLLECT</div>
+        <h3>What we have gathered so far</h3>
+        <p class="method-lead">
+            ${escapeHTML(d.evidence_count)} evidence records from
+            ${escapeHTML(d.source_count)} sources${escapeHTML(years)}.
+            Every record names its source, year and type.
+        </p>
+        <div class="method-columns">
+            <div><div class="mini-label">BY TYPE</div>${methodList(types)}</div>
+            <div><div class="mini-label">SOURCES</div>${methodList(sources)}</div>
+        </div>
+    `;
+}
+
+function renderCross(d) {
+
+    const limitText = d.with_limitation === d.evidence_total
+        ? `Every one of the ${escapeHTML(d.evidence_total)} evidence records also states what it does not prove.`
+        : `${escapeHTML(d.with_limitation)} of ${escapeHTML(d.evidence_total)} evidence records also state what they do not prove.`;
+
+    const claims = d.claims.map(c => {
+        const sources = c.sources.length ? ` — ${escapeHTML(c.sources.join(", "))}` : "";
+        return `<strong>${escapeHTML(c.claim)}</strong>: ` +
+               `${escapeHTML(c.evidence_count)} record${c.evidence_count === 1 ? "" : "s"} ` +
+               `from ${escapeHTML(c.source_count)} source${c.source_count === 1 ? "" : "s"}${sources}`;
+    });
+
+    return `
+        <div class="mini-label">CROSS-CHECK</div>
+        <h3>One source is a signal. Several are context.</h3>
+        <p class="method-lead">
+            ${escapeHTML(d.multi_source)} of ${escapeHTML(d.claims_total)} reviewed claims
+            are checked against two or more different sources. ${limitText}
+        </p>
+        ${methodList(claims)}
+    `;
+}
+
+function renderInterpret(d) {
+
+    if (!d) return "<p>No reviewed claim yet.</p>";
+
+    const evidence = methodList(d.evidence.map(e =>
+        `${escapeHTML(e.finding)} <small>(${escapeHTML(e.source_name || "Source")}${e.year ? ", " + escapeHTML(e.year) : ""})</small>`));
+
+    return `
+        <div class="mini-label">INTERPRET</div>
+        <h3>Evidence, interpretation and advice are kept apart</h3>
+        <p class="method-lead">Example: <strong>${escapeHTML(d.claim)}</strong></p>
+        <div class="method-steps">
+            <div class="method-step"><div class="mini-label">1 · EVIDENCE (what the sources say)</div>${evidence}</div>
+            <div class="method-step"><div class="mini-label">2 · INTERPRETATION (what we infer)</div><p>${escapeHTML(d.interpretation)}</p></div>
+            <div class="method-step"><div class="mini-label">3 · WHAT IT DOES NOT PROVE</div><p>${escapeHTML(d.limitation)}</p></div>
+            <div class="method-step"><div class="mini-label">4 · RECOMMENDATION (what you could do)</div><p>${escapeHTML(d.student_action)}</p></div>
+        </div>
+        <button type="button" class="evidence-toggle" id="methodTryHype">Try the Hype Check →</button>
+    `;
+}
+
+function renderTranslate(d) {
+
+    const rows = d.fields.map(f => `
+        <tr>
+            <td>${escapeHTML(f.field_name)}</td>
+            <td>${escapeHTML(f.roles)}</td>
+            <td>${escapeHTML(f.capabilities)}</td>
+            <td>${escapeHTML(f.tools)}</td>
+            <td>${escapeHTML(f.projects)}</td>
+            <td>${escapeHTML(f.roadmap_steps)}</td>
+            <td><button type="button" class="evidence-toggle method-open" data-field="${escapeHTML(f.field_id)}">Open →</button></td>
+        </tr>`).join("");
+
+    const ex = d.example;
+    const chain = ex ? `
+        <div class="method-example">
+            <div class="mini-label">ONE REAL EXAMPLE · ${escapeHTML(ex.field_name.toUpperCase())}</div>
+            <div class="method-chain">
+                <span>Capability<br><strong>${escapeHTML(ex.capability)}</strong></span><i>→</i>
+                <span>Tool<br><strong>${escapeHTML(ex.tool)}</strong></span><i>→</i>
+                <span>Project<br><strong>${escapeHTML(ex.project)}</strong></span><i>→</i>
+                <span>Roadmap step<br><strong>${escapeHTML(ex.roadmap_step)}</strong> <small>(${escapeHTML(ex.level)})</small></span>
+            </div>
+            <small>Capability evidence: ${escapeHTML(ex.evidence)}</small>
+        </div>` : "";
+
+    return `
+        <div class="mini-label">TRANSLATE</div>
+        <h3>From evidence to things you can do</h3>
+        <p class="method-lead">
+            Each field turns its evidence into roles, capabilities, tools,
+            projects and a learning order.
+        </p>
+        <div class="method-table-wrap">
+            <table class="method-table">
+                <thead><tr><th>Field</th><th>Roles</th><th>Capabilities</th><th>Tools</th><th>Projects</th><th>Roadmap steps</th><th></th></tr></thead>
+                <tbody>${rows}</tbody>
+            </table>
+        </div>
+        ${chain}
+    `;
+}
+
+function ensureMethodPanel() {
+    if (methodPanel) return methodPanel;
+    methodPanel = document.createElement("div");
+    methodPanel.id = "methodDetail";
+    methodPanel.className = "method-detail";
+    methodPanel.setAttribute("aria-live", "polite");
+    methodGrid.insertAdjacentElement("afterend", methodPanel);
+    return methodPanel;
+}
+
+async function showMethod(card, key) {
+
+    const cards = methodGrid.querySelectorAll(".method-card");
+
+    // clicking the open card again closes it
+    if (methodActive === card) {
+        methodActive = null;
+        cards.forEach(c => c.classList.remove("method-active"));
+        ensureMethodPanel().innerHTML = "";
+        ensureMethodPanel().classList.remove("open");
+        return;
+    }
+
+    methodActive = card;
+    cards.forEach(c => c.classList.toggle("method-active", c === card));
+
+    const panel = ensureMethodPanel();
+    panel.classList.add("open");
+    panel.innerHTML = '<p class="search-summary">Loading…</p>';
+
+    try {
+
+        const data = await loadMethod();
+
+        if (methodActive !== card) return;     // user already clicked another card
+
+        const html = {
+            collect: () => renderCollect(data.collect),
+            cross: () => renderCross(data.cross_check),
+            interpret: () => renderInterpret(data.interpret),
+            translate: () => renderTranslate(data.translate)
+        }[key]();
+
+        panel.innerHTML = html +
+            '<button type="button" class="evidence-toggle" id="methodClose">Close ×</button>';
+
+        document.getElementById("methodClose").onclick = () => showMethod(card, key);
+
+        panel.querySelectorAll(".method-open").forEach(button => {
+            button.addEventListener("click", () =>
+                openPiece(button.dataset.field, 3));
+        });
+
+        const tryHype = document.getElementById("methodTryHype");
+        if (tryHype) {
+            tryHype.onclick = () => {
+                const target = document.getElementById("hypecheck");
+                if (target) target.scrollIntoView({ behavior: "smooth" });
+            };
+        }
+
+        panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    } catch (error) {
+        console.error("Could not load the method data:", error);
+        panel.innerHTML =
+            '<p class="search-summary">Could not reach the backend. Make sure it is running. ' +
+            '<button type="button" class="evidence-toggle" id="methodRetry">Try again</button></p>';
+        document.getElementById("methodRetry").onclick = () => {
+            methodActive = null;
+            showMethod(card, key);
+        };
+    }
+}
+
+// Only start if the four method cards exist in index.html
+if (methodGrid) {
+    methodGrid.querySelectorAll(".method-card").forEach(card => {
+
+        const heading = card.querySelector("h3");
+        const key = heading ? METHOD_KEYS[heading.textContent.trim().toLowerCase()] : null;
+        if (!key) return;
+
+        makeActivatable(card, () => showMethod(card, key),
+            "Click to see the numbers and an example");
+    });
+}
+

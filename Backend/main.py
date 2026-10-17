@@ -1,103 +1,62 @@
-import json
-from pathlib import Path
+import os
 
 from flask import Flask, jsonify
 from flask_cors import CORS
+from werkzeug.exceptions import HTTPException
 
 from routes import api
+from security import init_security
 
-BASE = Path(__file__).parent
+# Websites allowed to call this API. For the deployed site, set the
+# ALLOWED_ORIGINS environment variable, e.g.
+#   ALLOWED_ORIGINS=https://beyond-hype.vercel.app
+# (several addresses can be separated by commas).
+LOCAL_ORIGINS = [
+    f"http://{host}:{port}"
+    for host in ("127.0.0.1", "localhost")
+    for port in list(range(5500, 5511)) + [3000, 8000, 8080]
+]
+
+
+def allowed_origins():
+    configured = [o.strip().rstrip("/")
+                  for o in os.environ.get("ALLOWED_ORIGINS", "").split(",")
+                  if o.strip()]
+    return configured + LOCAL_ORIGINS
+
 
 app = Flask(__name__)
-CORS(app)
-app.register_blueprint(api)            # new /api/... routes
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024          # requests are tiny: 10 KB max
 
-# Old dataset, kept so the original routes below still work
-with open(BASE / "data" / "Beyond_HYPE_Final_Dataset.json", "r", encoding="utf-8") as file:
-    data = json.load(file)
+CORS(app,
+     resources={r"/api/*": {"origins": allowed_origins()}},
+     methods=["GET", "POST", "OPTIONS"],
+     max_age=600)
 
-
-def for_field(key, field_id):
-    return [item for item in data[key] if item.get("field_id") == field_id]
+app.register_blueprint(api)
+init_security(app)
 
 
 @app.route("/")
 def home():
-    return "Beyond HYPE backend is running!"
+    return jsonify({"name": "Beyond HYPE API", "status": "running",
+                    "health": "/api/health"})
 
 
-@app.route("/data")
-def get_data():
-    return jsonify(data)
+@app.errorhandler(HTTPException)
+def http_error(error):
+    """Short JSON errors instead of HTML pages."""
+    return jsonify({"error": error.name}), error.code
 
 
-@app.route("/fields")
-def get_fields():
-    return jsonify(data["fields"])
-
-
-@app.route("/fields/<field_id>")
-def get_field(field_id):
-    for field in data["fields"]:
-        if field["field_id"] == field_id:
-            return jsonify(field)
-    return jsonify({"error": "Field not found"}), 404
-
-
-@app.route("/fields/<field_id>/industry-changes")
-def get_industry_changes(field_id):
-    return jsonify(for_field("industry_changes", field_id))
-
-
-@app.route("/fields/<field_id>/work-changes")
-def get_work_changes(field_id):
-    return jsonify(for_field("work_changes", field_id))
-
-
-@app.route("/fields/<field_id>/human-capabilities")
-def get_human_capabilities(field_id):
-    return jsonify(for_field("human_capabilities", field_id))
-
-
-@app.route("/fields/<field_id>/roles")
-def get_roles(field_id):
-    return jsonify(for_field("roles", field_id))
-
-
-@app.route("/capabilities")
-def get_capabilities():
-    return jsonify(data["capabilities"])
-
-
-@app.route("/learning-paths")
-def get_learning_paths():
-    return jsonify(data["learning_paths"])
-
-
-@app.route("/fields/<field_id>/learning-paths")
-def get_field_learning_paths(field_id):
-    return jsonify(for_field("learning_paths", field_id))
-
-
-@app.route("/company-cases")
-def get_company_cases():
-    return jsonify(data["company_cases"])
-
-
-@app.route("/fields/<field_id>/company-cases")
-def get_field_company_cases(field_id):
-    return jsonify(for_field("company_cases", field_id))
-
-
-@app.route("/evidence")
-def get_evidence():
-    return jsonify(data["evidence"])
-
-
-@app.route("/fields/<field_id>/evidence")
-def get_field_evidence(field_id):
-    return jsonify(for_field("evidence", field_id))
+@app.errorhandler(Exception)
+def unexpected_error(error):
+    """Log the details on the server, tell the visitor nothing sensitive."""
+    app.logger.exception("Unexpected error")
+    return jsonify({"error": "Something went wrong on the server"}), 500
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Debug mode is OFF by default. To turn it on while developing:
+    #   PowerShell:  $env:FLASK_DEBUG = "1"; python main.py
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")

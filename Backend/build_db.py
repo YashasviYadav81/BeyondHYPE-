@@ -8,6 +8,7 @@ Build the complete database with ONE command:   python build_db.py
 Missing content files are skipped. Mistakes in them are reported by name.
 """
 import json
+import shutil
 import sqlite3
 import sys
 from collections import defaultdict
@@ -26,10 +27,10 @@ def load_optional(filename):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def main():
+def build():
     seed.main()                       # stops with an error message if it fails
 
-    data = json.loads(JSON_PATH.read_text(encoding="utf-8"))
+    data = seed.load_dataset([])
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA foreign_keys = ON")
     cur = conn.cursor()
@@ -219,6 +220,26 @@ def main():
         for w in warnings:
             print("  -", w)
     conn.close()
+
+
+def main():
+    """Build safely: if anything fails, restore the previous database."""
+    backup = DB_PATH.with_name(DB_PATH.name + ".bak")
+    had_db = DB_PATH.exists()
+    if had_db:
+        shutil.copy2(DB_PATH, backup)
+    try:
+        build()
+    except BaseException as problem:
+        failed = not (isinstance(problem, SystemExit) and not problem.code)
+        if failed and had_db:
+            shutil.copy2(backup, DB_PATH)
+            print("\nThe build failed, so your previous database was restored. "
+                  "The website keeps working with the old data.")
+        raise
+    finally:
+        if backup.exists():
+            backup.unlink()
 
 
 if __name__ == "__main__":

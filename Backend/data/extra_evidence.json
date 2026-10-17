@@ -1,0 +1,270 @@
+{
+  "sources": [
+    {
+      "source_name": "Stanford AI Index 2026",
+      "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report"
+    },
+    {
+      "source_name": "Canaries in the Coal Mine (Stanford Digital Economy Lab)",
+      "url": "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E21",
+      "field_id": "F1",
+      "claim": "Early-career employment in AI-exposed occupations",
+      "finding": "Payroll data covering millions of US workers through June 2026 show employment of workers aged 22-25 in AI-exposed occupations 19% below where it would be had it kept pace with less-exposed peers. Experienced workers show no comparable gap.",
+      "supports": "Early-career workers in AI-exposed occupations are seeing weaker employment than comparable peers.",
+      "does_not_prove": "The authors call these early, descriptive indicators rather than causal estimates. The pattern weakens when education is controlled for, some divergence predates generative AI, and it is stronger in the payroll sample than in national survey benchmarks.",
+      "source": "Canaries in the Coal Mine (Stanford Digital Economy Lab)",
+      "year": "2026",
+      "evidence_type": "Working paper (payroll data)",
+      "geography": "United States",
+      "status": "Emerging signal",
+      "url": "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/"
+    },
+    {
+      "evidence_id": "E22",
+      "field_id": "F2",
+      "claim": "No economy-wide displacement; hiring is the channel",
+      "finding": "The same paper finds no evidence of widespread, economy-wide job displacement. The gap for young workers operates mainly through reduced hiring rather than more separations. Declines are concentrated where AI usage substitutes for human tasks; where it complements workers, employment is flat or rising.",
+      "supports": "AI's labour effects appear concentrated, and depend on how AI is used.",
+      "does_not_prove": "It does not show what happens after June 2026, and it describes patterns in one payroll dataset.",
+      "source": "Canaries in the Coal Mine (Stanford Digital Economy Lab)",
+      "year": "2026",
+      "evidence_type": "Working paper (payroll data)",
+      "geography": "United States",
+      "status": "Emerging signal",
+      "url": "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/"
+    },
+    {
+      "evidence_id": "E23",
+      "field_id": "F1",
+      "claim": "Headcount of younger software developers",
+      "finding": "AI Index 2026 charts show normalized headcounts of software developers aged 22-25 falling between 2021 and 2025 while most older age groups grew. Customer support agents show the same pattern.",
+      "supports": "Entry-level software roles are changing differently from experienced ones.",
+      "does_not_prove": "A headcount chart shows a pattern, not its cause, and does not by itself link the change to AI.",
+      "source": "Stanford AI Index 2026",
+      "year": "2026",
+      "evidence_type": "Annual report (chart)",
+      "geography": "United States",
+      "status": "Emerging signal",
+      "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy"
+    },
+    {
+      "evidence_id": "E24",
+      "field_id": "F2",
+      "claim": "Organizational AI adoption",
+      "finding": "The share of organizations worldwide using AI rose from 55% in 2023 to 88% in 2025, with Europe at 91% and North America at 90%.",
+      "supports": "AI use is now mainstream across organizations.",
+      "does_not_prove": "Using AI somewhere in an organization does not show how deeply it is deployed or what benefit it brings.",
+      "source": "Stanford AI Index 2026",
+      "year": "2026",
+      "evidence_type": "Annual report (chart)",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy"
+    },
+    {
+      "evidence_id": "E25",
+      "field_id": "F2",
+      "claim": "Speed of generative AI adoption",
+      "finding": "Generative AI reached 53% adoption within three years, faster than the internet or personal computers did at the same stage of their spread.",
+      "supports": "Generative AI is spreading faster than earlier general-purpose technologies.",
+      "does_not_prove": "Speed of adoption does not show productivity gains or effects on jobs.",
+      "source": "Stanford AI Index 2026",
+      "year": "2026",
+      "evidence_type": "Annual report (chart)",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy"
+    },
+    {
+      "evidence_id": "E26",
+      "field_id": "F2",
+      "claim": "Expected AI-related workforce change",
+      "finding": "In the AI Index chart of expected AI-related workforce change next year, 43% of organizations expect little or no change, 32% expect a decrease, 13% expect an increase and 12% don't know. Larger organizations are more likely to expect decreases.",
+      "supports": "Employer expectations are mixed, not uniformly pessimistic.",
+      "does_not_prove": "Expectations are not outcomes, and the chart covers one year ahead.",
+      "source": "Stanford AI Index 2026",
+      "year": "2026",
+      "evidence_type": "Annual report (chart)",
+      "geography": "Global",
+      "status": "Emerging signal",
+      "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy"
+    },
+    {
+      "evidence_id": "E27",
+      "field_id": "F2",
+      "claim": "Corporate AI investment",
+      "finding": "Global corporate AI investment reached a record $581.69 billion in 2025, up from $14.57 billion in 2013.",
+      "supports": "Money flowing into AI is large and growing.",
+      "does_not_prove": "Investment is not job creation and says nothing about returns.",
+      "source": "Stanford AI Index 2026",
+      "year": "2026",
+      "evidence_type": "Annual report (chart)",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy"
+    },
+    {
+      "evidence_id": "E28",
+      "field_id": "F3",
+      "claim": "Fastest-growing skills to 2030",
+      "finding": "AI and big data top the list of fastest-growing skills for 2025-2030, followed closely by networks and cybersecurity and technology literacy.",
+      "supports": "Data and AI skills are among those employers expect to grow fastest.",
+      "does_not_prove": "This reflects employer expectations from a survey of over 1,000 employers, not observed hiring.",
+      "source": "WEF Future of Jobs 2025",
+      "year": "2025",
+      "evidence_type": "Employer survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/"
+    },
+    {
+      "evidence_id": "E29",
+      "field_id": "F3",
+      "claim": "Fastest-growing and declining roles",
+      "finding": "Big Data Specialists are among the fastest-growing roles in percentage terms, alongside Fintech Engineers, AI and Machine Learning Specialists and Software and Application Developers. Data Entry Clerks are among the fastest-declining roles.",
+      "supports": "Analysis-heavy data roles are expected to grow while routine data-entry roles are expected to decline.",
+      "does_not_prove": "Percentage growth can come from a small starting base, and these are employer expectations to 2030, not outcomes.",
+      "source": "WEF Future of Jobs 2025",
+      "year": "2025",
+      "evidence_type": "Employer survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/"
+    },
+    {
+      "evidence_id": "E30",
+      "field_id": "F3",
+      "claim": "Most sought-after core skill",
+      "finding": "Analytical thinking remains the most sought-after core skill, considered essential by seven out of ten companies in 2025.",
+      "supports": "Analytical skills matter alongside technical tools.",
+      "does_not_prove": "These are employer survey responses, not counts of job postings.",
+      "source": "WEF Future of Jobs 2025",
+      "year": "2025",
+      "evidence_type": "Employer survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/"
+    },
+    {
+      "evidence_id": "E31",
+      "field_id": "F4",
+      "claim": "Expected AI-driven security roles",
+      "finding": "73% of respondents say AI will create more specialized cybersecurity skills, 72% say it will create a need for more strategic mindsets, and 65% expect more communication roles and skills.",
+      "supports": "Security professionals expect AI to create new specialist and strategic work.",
+      "does_not_prove": "These are professionals' expectations, not measured job growth.",
+      "source": "ISC2 Workforce Study 2025",
+      "year": "2025",
+      "evidence_type": "Workforce survey",
+      "geography": "Global",
+      "status": "Emerging signal",
+      "url": "https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study"
+    },
+    {
+      "evidence_id": "E32",
+      "field_id": "F4",
+      "claim": "Skills versus headcount",
+      "finding": "59% of respondents cite critical or significant skills needs in 2025, up from 44% in 2024. The study says the need for skills now outweighs the need for more headcount.",
+      "supports": "Skills, not only headcount, are a constraint for security teams.",
+      "does_not_prove": "These are self-reported perceptions, not vacancy counts.",
+      "source": "ISC2 Workforce Study 2025",
+      "year": "2025",
+      "evidence_type": "Workforce survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study"
+    },
+    {
+      "evidence_id": "E33",
+      "field_id": "F5",
+      "claim": "Kubernetes in production and AI inference",
+      "finding": "82% of container users run Kubernetes in production, up from 66% in 2023, and 66% of organizations hosting generative AI models use Kubernetes for some or all of their inference workloads.",
+      "supports": "Kubernetes is established in production, including for AI inference.",
+      "does_not_prove": "A survey of container users is not a list of job requirements. 44% of respondents do not yet run AI/ML workloads on Kubernetes, so its AI use is still early.",
+      "source": "CNCF research",
+      "year": "2026",
+      "evidence_type": "Industry survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.cncf.io/announcements/2026/01/20/kubernetes-established-as-the-de-facto-operating-system-for-ai-as-production-use-hits-82-in-2025-cncf-annual-cloud-native-survey/"
+    },
+    {
+      "evidence_id": "E34",
+      "field_id": "F1",
+      "claim": "Humans as arbiters of AI output",
+      "finding": "75% of respondents said that in a future where AI does most coding tasks they would still ask a person for help when they don't trust the AI's answers.",
+      "supports": "Human verification and judgment remain central to development work.",
+      "does_not_prove": "These are stated intentions in a survey, not observed behavior.",
+      "source": "Stack Overflow 2025 AI",
+      "year": "2025",
+      "evidence_type": "Developer survey",
+      "geography": "Global survey",
+      "status": "Established signal",
+      "url": "https://survey.stackoverflow.co/2025/ai"
+    },
+    {
+      "evidence_id": "E35",
+      "field_id": "F2",
+      "claim": "Expected job creation and displacement to 2030",
+      "finding": "Employers expect structural labour-market change over 2025-2030 to create jobs equal to 14% of today's employment (170 million) and displace 8% (92 million), a net gain of 7% (78 million jobs).",
+      "supports": "Employers expect churn, with growth outweighing displacement overall.",
+      "does_not_prove": "These are survey projections for all structural drivers combined, not AI alone, and they do not forecast any single role.",
+      "source": "WEF Future of Jobs 2025",
+      "year": "2025",
+      "evidence_type": "Employer survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/"
+    },
+    {
+      "evidence_id": "E36",
+      "field_id": "F3",
+      "claim": "Skill instability and training",
+      "finding": "Workers can expect 39% of their existing skill sets to be transformed or become outdated over 2025-2030. This 'skill instability' figure has fallen from 44% in 2023 and 57% in 2020, as the share of workers who completed training rose to 50% from 41% in 2023.",
+      "supports": "Skills keep changing, and more workers are retraining.",
+      "does_not_prove": "This is an average across occupations based on employer responses, not a prediction for any one person.",
+      "source": "WEF Future of Jobs 2025",
+      "year": "2025",
+      "evidence_type": "Employer survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/"
+    },
+    {
+      "evidence_id": "E37",
+      "field_id": "F4",
+      "claim": "Which skills hiring managers and professionals prioritize",
+      "finding": "Cybersecurity hiring managers' top five skills sought were all nontechnical: problem solving (29%), collaboration (24%), communications (22%), willingness to learn (20%) and strategic thinking (16%). Professionals ranked AI and cloud security among the top four in-demand skills.",
+      "supports": "Which skills are 'needed' depends on whom you ask.",
+      "does_not_prove": "This covers cybersecurity respondents only.",
+      "source": "ISC2 Workforce Study 2025",
+      "year": "2025",
+      "evidence_type": "Workforce survey",
+      "geography": "Global",
+      "status": "Established signal",
+      "url": "https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study"
+    }
+  ],
+  "corrections": [
+    {
+      "evidence_id": "E06",
+      "finding": "The Amazon Applied Scientist Intern posting (India) lists practical machine learning experience and strong programming skills (Python preferred) as basic qualifications. Its responsibilities include working with large-scale datasets, owning end-to-end system design from research to production, and deploying models to production with scientists."
+    },
+    {
+      "evidence_id": "E07",
+      "finding": "The Amazon Data Engineer Intern posting (India) lists hands-on SQL and Python, and knowledge of RDBMS, NoSQL, ETL and data-warehousing concepts, as basic qualifications. AWS data technologies are preferred, and data integrity, validation and documentation appear among the responsibilities."
+    },
+    {
+      "evidence_id": "E13",
+      "finding": "The Amazon SDE Intern posting (India) lists a general-purpose programming language and data-structure and algorithm skills as basic qualifications. Preferred experience includes AI tools for development productivity, cloud platforms, SQL and NoSQL databases, open source, version control and debugging. Responsibilities include owning code from design through deployment and operations, CI/CD practice, monitoring and operational excellence."
+    },
+    {
+      "evidence_id": "E15",
+      "finding": "The Amazon data-center operations trainee posting (India) lists Linux/Unix administration, server hardware troubleshooting, and network protocols and hardware as basic qualifications. Knowledge of AWS products and scripting (Bash, Python and others) are preferred."
+    }
+  ]
+}
