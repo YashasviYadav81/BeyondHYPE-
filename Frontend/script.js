@@ -1826,3 +1826,18 @@ if (methodGrid) {
     });
 }
 
+/* ===== SEE HOW BEYOND HYPE WORKS ===== */
+
+document.querySelectorAll('a[href="#how-it-works"]').forEach(link => {
+    link.addEventListener("click", function (event) {
+        const section = document.getElementById("how-it-works");
+
+        if (section) {
+            event.preventDefault();
+            section.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    });
+});
