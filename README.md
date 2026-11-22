@@ -8,14 +8,6 @@ Theme: **Open Source and Innovation**
 
 ---
 
-## Live Demo
-
-- **Frontend (Netlify):** To be added after deployment.
-- **Backend (Render):** https://beyondhype.onrender.com/api/health
-- **GitHub Repository:** https://github.com/YashasviYadav81/BeyondHYPE-
-
----
-
 ## About the Project
 
 Beyond HYPE is an interactive technology-industry intelligence platform that helps students understand how the technology industry is changing, which skills matter, and how to prepare for future opportunities.
