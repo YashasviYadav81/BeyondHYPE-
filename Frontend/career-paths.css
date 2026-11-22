@@ -1,0 +1,965 @@
+/* =========================================
+   BEYOND HYPE — CAREER PATHS
+   Original brand colors and typography
+========================================= */
+
+:root {
+  --cream: #FFF8E8;
+  --cream-dark: #F7EFD9;
+  --green: #8FCB81;
+  --green-dark: #3fa151;
+  --pink: #bf6474;
+  --yellow: #FFD84D;
+  --blue: #60bad5;
+  --brown: #332D29;
+  --muted: #6F6A60;
+  --white: #FFFDF8;
+  --line: #E4D9C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body.career-page {
+  margin: 0;
+  background: var(--cream);
+  color: var(--brown);
+  font-family: "DM Sans", sans-serif;
+  line-height: 1.6;
+}
+
+.career-page h1,
+.career-page h2,
+.career-page h3,
+.career-page h4 {
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--brown);
+  line-height: 1.15;
+}
+
+.career-page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.career-page button {
+  font: inherit;
+}
+
+.career-page em {
+  color: var(--pink);
+  font-style: normal;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.career-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  min-height: 76px;
+  padding: 14px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: rgba(255, 248, 232, 0.96);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+
+.career-navbar .nav-logo {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 23px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.career-navbar .nav-logo span,
+.career-footer .footer-brand span {
+  color: var(--pink);
+}
+
+.career-navbar .nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.career-navbar .nav-links a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.career-navbar .nav-links a:hover {
+  color: var(--pink);
+}
+
+.career-navbar .nav-button {
+  padding: 10px 16px;
+  border: 1px solid var(--brown);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.career-navbar .nav-button:hover {
+  background: var(--brown);
+  color: var(--white);
+}
+
+
+/* =========================================
+   MAIN WRAPPER AND BREADCRUMB
+========================================= */
+
+.career-wrap {
+  width: min(1160px, 88%);
+  margin: 0 auto;
+}
+
+.career-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 28px 0 18px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.career-breadcrumb a:hover {
+  color: var(--pink);
+}
+
+.career-breadcrumb strong {
+  color: var(--brown);
+}
+
+
+/* =========================================
+   INTRODUCTION
+========================================= */
+
+.career-intro {
+  display: grid;
+  grid-template-columns: 1.45fr 0.8fr;
+  align-items: center;
+  gap: 65px;
+  padding: 48px 0 75px;
+}
+
+.eyebrow {
+  margin-bottom: 15px;
+  color: var(--pink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.career-intro h1 {
+  margin: 0 0 22px;
+  font-size: clamp(38px, 5vw, 62px);
+  letter-spacing: -2.8px;
+  font-weight: 700;
+}
+
+.career-intro-copy > p {
+  max-width: 580px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.career-intro-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.career-primary-btn {
+  display: inline-block;
+  padding: 13px 20px;
+  background: var(--yellow);
+  border: 1px solid var(--brown);
+  border-radius: 5px;
+  color: var(--brown);
+  font-size: 13px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.career-primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 4px 4px 0 var(--brown);
+}
+
+.career-meta {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+
+/* =========================================
+   ROLE SNAPSHOT
+========================================= */
+
+.role-snapshot {
+  padding: 25px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--blue);
+  border-radius: 7px;
+  box-shadow: 5px 5px 0 var(--cream-dark);
+}
+
+.snapshot-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.snapshot-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green-dark);
+}
+
+.snapshot-label {
+  margin-left: auto;
+  padding: 4px 9px;
+  background: var(--blue);
+  border-radius: 3px;
+  color: var(--brown);
+  font-size: 10px;
+}
+
+.role-snapshot h2 {
+  margin: 23px 0 10px;
+  font-size: 22px;
+}
+
+.role-snapshot > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.snapshot-divider {
+  height: 1px;
+  margin: 20px 0;
+  background: var(--line);
+}
+
+.snapshot-facts {
+  display: grid;
+  gap: 15px;
+}
+
+.snapshot-facts div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.snapshot-facts b {
+  font-size: 12px;
+}
+
+.snapshot-facts span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.text-link {
+  display: inline-block;
+  margin-top: 22px;
+  color: var(--pink) !important;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   ROLE EVOLUTION
+========================================= */
+
+.evolution-strip {
+  display: grid;
+  grid-template-columns: 0.8fr 1.5fr;
+  gap: 45px;
+  align-items: start;
+  padding: 50px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.evolution-strip h2,
+.section-topline h2,
+.practice-band h2,
+.project-preview h2 {
+  margin: 0 0 15px;
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: -1.4px;
+}
+
+.evolution-strip > div:first-child > p,
+.section-topline > div:first-child > p,
+.practice-band > div:first-child > p,
+.project-preview > div:first-child > p {
+  max-width: 390px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.evolution-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+}
+
+.evolution-card {
+  min-height: 205px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.evolution-pink {
+  background: #F5E2E3;
+  border-top: 4px solid var(--pink);
+}
+
+.evolution-blue {
+  background: #E1F0F4;
+  border-top: 4px solid var(--blue);
+}
+
+.evolution-green {
+  background: #E6F0DF;
+  border-top: 4px solid var(--green-dark);
+}
+
+.evolution-card > span {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.evolution-card h3 {
+  margin: 18px 0 9px;
+  font-size: 17px;
+}
+
+.evolution-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.evolution-card small {
+  display: block;
+  margin-top: 15px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   LEARNING JOURNEY
+========================================= */
+
+.learning-section {
+  padding: 75px 0;
+}
+
+.section-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 35px;
+}
+
+.sequence-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  background: var(--cream-dark);
+  border-radius: 5px;
+}
+
+.sequence-note span {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.sequence-note small {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.learning-layout {
+  display: grid;
+  grid-template-columns: 0.85fr 1.4fr;
+  align-items: start;
+  gap: 22px;
+}
+
+.learning-list {
+  display: grid;
+  gap: 10px;
+}
+
+
+/* JavaScript-generated learning cards */
+
+.learning-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 15px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.learning-card:hover {
+  border-color: var(--pink);
+  transform: translateX(3px);
+}
+
+.learning-card.active {
+  background: var(--yellow);
+  border-color: var(--brown);
+  box-shadow: 3px 3px 0 var(--brown);
+}
+
+.learning-number {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  background: var(--cream-dark);
+  border-radius: 4px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.learning-card.active .learning-number {
+  background: var(--white);
+}
+
+.learning-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.learning-card-content h3 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.learning-card-content p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.learning-arrow {
+  font-size: 17px;
+}
+
+
+/* =========================================
+   LEARNING DETAIL PANEL
+========================================= */
+
+.learning-detail {
+  min-height: 500px;
+  padding: 30px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  box-shadow: 5px 5px 0 var(--cream-dark);
+}
+
+.detail-empty {
+  display: flex;
+  min-height: 430px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.detail-empty span {
+  display: grid;
+  place-items: center;
+  width: 55px;
+  height: 55px;
+  margin-bottom: 18px;
+  background: var(--yellow);
+  border-radius: 50%;
+  font-size: 23px;
+}
+
+.detail-empty h3 {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.detail-empty p {
+  max-width: 280px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.detail-header {
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-header > span {
+  color: var(--pink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.detail-header h2 {
+  margin: 10px 0;
+  font-size: 28px;
+}
+
+.detail-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.detail-section {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-section:last-child {
+  border-bottom: none;
+}
+
+.detail-section h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+
+.detail-section p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.detail-section ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding-left: 19px;
+}
+
+.detail-section li {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.detail-tag {
+  display: inline-block;
+  margin: 4px 5px 4px 0;
+  padding: 6px 10px;
+  background: var(--cream-dark);
+  border-radius: 3px;
+  color: var(--brown);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.detail-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--pink) !important;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   PRACTICE BAND
+========================================= */
+
+.practice-band {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 45px;
+  padding: 42px;
+  background: var(--brown);
+  border-radius: 7px;
+  color: var(--white);
+}
+
+.practice-band h2 {
+  color: var(--white);
+}
+
+.practice-band h2 em {
+  color: var(--yellow);
+}
+
+.practice-band > div:first-child > p {
+  color: #D8D0C3;
+}
+
+.practice-band .eyebrow {
+  color: var(--yellow);
+}
+
+.practice-steps {
+  display: grid;
+  gap: 13px;
+}
+
+.practice-steps div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.17);
+}
+
+.practice-steps b {
+  color: var(--yellow);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 17px;
+}
+
+.practice-steps span {
+  color: var(--white);
+  font-size: 12px;
+}
+
+
+/* =========================================
+   PROJECT PROGRESSION
+========================================= */
+
+.project-preview {
+  display: grid;
+  grid-template-columns: 0.8fr 1.3fr;
+  gap: 55px;
+  align-items: start;
+  padding: 80px 0;
+}
+
+.project-ladder {
+  display: grid;
+  gap: 12px;
+}
+
+.project-ladder article {
+  position: relative;
+  padding: 20px 22px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--blue);
+  border-radius: 5px;
+  transition: 0.2s ease;
+}
+
+.project-ladder article:nth-child(2) {
+  border-left-color: var(--pink);
+}
+
+.project-ladder article:nth-child(3) {
+  border-left-color: var(--green-dark);
+}
+
+.project-ladder article:hover {
+  transform: translateX(4px);
+}
+
+.project-ladder article > span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.project-ladder h3 {
+  margin: 8px 0;
+  font-size: 17px;
+}
+
+.project-ladder p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.career-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 25px 6%;
+  background: var(--cream-dark);
+  border-top: 1px solid var(--line);
+}
+
+.career-footer .footer-brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.career-footer p {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.career-footer > a {
+  color: var(--pink);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 950px) {
+
+  .career-navbar {
+    padding: 14px 4%;
+  }
+
+  .career-navbar .nav-links {
+    gap: 12px;
+  }
+
+  .career-navbar .nav-links a {
+    font-size: 11px;
+  }
+
+  .career-intro {
+    gap: 30px;
+  }
+
+  .evolution-strip {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .learning-layout {
+    grid-template-columns: 1fr 1.2fr;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .career-navbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .career-navbar .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+
+  .career-navbar .nav-button {
+    font-size: 10px;
+  }
+
+  .career-wrap {
+    width: 90%;
+  }
+
+  .career-intro {
+    grid-template-columns: 1fr;
+    padding: 35px 0 55px;
+  }
+
+  .career-intro h1 {
+    font-size: 43px;
+  }
+
+  .evolution-items {
+    grid-template-columns: 1fr;
+  }
+
+  .evolution-card {
+    min-height: auto;
+  }
+
+  .section-topline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .learning-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .learning-detail {
+    min-height: 350px;
+    padding: 22px;
+  }
+
+  .detail-empty {
+    min-height: 280px;
+  }
+
+  .practice-band {
+    grid-template-columns: 1fr;
+    padding: 28px 22px;
+  }
+
+  .project-preview {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 55px 0;
+  }
+
+  .career-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+
+@media (max-width: 400px) {
+
+  .career-intro h1 {
+    font-size: 36px;
+  }
+
+  .career-breadcrumb {
+    font-size: 10px;
+  }
+
+  .role-snapshot {
+    padding: 20px;
+  }
+
+  .learning-detail {
+    padding: 18px;
+  }
+
+}
+
+/* =====================================
+   LEARNING JOURNEY — FINAL COLOR STYLE
+===================================== */
+
+/* All nine learning cards */
+.learning-card,
+.learning-card:nth-child(n) {
+    background: #FFD84D !important;
+    border: none !important;
+    border-radius: 12px;
+    box-shadow: none !important;
+}
+
+/* Hover */
+.learning-card:hover {
+    background: #F5CC3D !important;
+    border: none !important;
+    transform: translateY(-3px);
+    box-shadow: none !important;
+}
+
+/* Selected card */
+.learning-card.active {
+    background: #F5CC3D !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Number circles */
+.learning-number,
+.learning-card.active .learning-number {
+    background: #FFF8E8;
+    border: none;
+}
+
+/* Remove outlines from other content cards */
+.role-snapshot,
+.evolution-card,
+.learning-detail,
+.project-ladder article,
+.sequence-note {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Remove colored project side borders */
+.project-ladder article {
+    border-left: none !important;
+}
+
+/* Remove unnecessary horizontal lines inside detail panel */
+.detail-header,
+.detail-section {
+    border-bottom: none !important;
+}

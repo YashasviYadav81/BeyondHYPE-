@@ -103,6 +103,22 @@ def method():
 def get_all_data():
     return jsonify(services.get_all())
 
+# ================= CAREER PATH API =================
+
+@api.route("/career-paths")
+def career_paths():
+    return jsonify(services.get_career_paths())
+
+
+@api.route("/career-paths/<role_id>")
+def career_path_details(role_id):
+    result = services.get_career_path_details(role_id)
+
+    if result is None:
+        return jsonify({"error": "Career path not found"}), 404
+
+    return jsonify(result)
+
 
 @api.errorhandler(DatabaseMissing)
 def database_missing(error):

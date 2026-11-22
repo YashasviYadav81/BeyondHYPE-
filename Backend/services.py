@@ -2,6 +2,7 @@ import json
 import re
 
 from db import query
+from pathlib import Path
 
 FIELD_COLUMNS = (
     "id AS field_id, name AS field_name, description,"
@@ -461,4 +462,127 @@ def get_method():
                         "with_limitation": with_limit, "evidence_total": evidence_total},
         "interpret": interpret,
         "translate": {"fields": counts, "example": example},
+    }
+
+# ================= CAREER PATH SERVICES =================
+
+CAREER_PATHS_FILE = (
+    Path(__file__).parent / "data" / "career_paths.json"
+)
+
+
+def get_career_paths():
+    """Return the available curated career paths."""
+
+    with open(CAREER_PATHS_FILE, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    results = []
+
+    for path in data["career_paths"]:
+        role_rows = query(
+            "SELECT * FROM roles WHERE id = ?",
+            (path["role_id"],)
+        )
+
+        if not role_rows:
+            continue
+
+        results.append({
+            "role_id": path["role_id"],
+            "field_id": path["field_id"],
+            "role": role_rows[0]["role"],
+            "tagline": path["tagline"],
+            "audience": path["audience"]
+        })
+
+    return results
+
+
+def get_career_path_details(role_id):
+    """Retrieve the complete learning path for one profession."""
+
+    with open(CAREER_PATHS_FILE, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    path = next(
+        (item for item in data["career_paths"]
+         if item["role_id"] == role_id),
+        None
+    )
+
+    if path is None:
+        return None
+
+    role_rows = query(
+        "SELECT * FROM roles WHERE id = ?",
+        (role_id,)
+    )
+
+    if not role_rows:
+        return None
+
+    def fetch_by_ids(table, ids):
+        records = []
+
+        for item_id in ids:
+            rows = query(
+                f"SELECT * FROM {table} WHERE id = ?",
+                (item_id,)
+            )
+            if rows:
+                records.extend(rows)
+
+        return records
+
+    capabilities = fetch_by_ids(
+        "capabilities", path["capability_ids"]
+    )
+
+    learning_paths = fetch_by_ids(
+        "learning_paths", path["learning_path_ids"]
+    )
+
+    roadmap_steps = fetch_by_ids(
+        "roadmap_steps", path["roadmap_step_ids"]
+    )
+
+    projects = fetch_by_ids(
+        "projects", path["project_ids"]
+    )
+
+    tools = query(
+        "SELECT * FROM tools WHERE field_id = ?",
+        (path["field_id"],)
+    )
+
+    evidence = query(
+        """
+        SELECT DISTINCT e.*, s.name AS source_name,
+               s.url AS source_url
+        FROM evidence e
+        LEFT JOIN sources s ON s.id = e.source_id
+        WHERE e.id IN (
+            SELECT evidence_id
+            FROM capability_evidence
+            WHERE capability_id IN (
+                SELECT id FROM capabilities WHERE field_id = ?
+            )
+        )
+        ORDER BY e.id
+        """,
+        (path["field_id"],)
+    )
+
+    return {
+        "role": role_rows[0],
+        "tagline": path["tagline"],
+        "audience": path["audience"],
+        "capabilities": capabilities,
+        "learning_paths": learning_paths,
+        "roadmap_steps": roadmap_steps,
+        "tools": tools,
+        "projects": projects,
+        "main_project_id": path["main_project_id"],
+        "evidence": evidence
     }

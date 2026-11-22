@@ -1968,3 +1968,123 @@ header[id] { scroll-margin-top: 72px; }
         align-items: flex-start;
     }
 }
+
+/* ===== SEE HOW BEYOND HYPE WORKS ===== */
+
+.how-it-works-section {
+    background: #f8f3e8;
+    padding: 100px 7vw;
+}
+
+.how-it-works-section .how-intro {
+    max-width: 760px;
+    margin-bottom: 42px;
+}
+
+.how-it-works-section .how-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    color: #3fa151;
+    margin-bottom: 15px;
+}
+
+.how-it-works-section h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(36px, 5vw, 62px);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    color: #332d29;
+    max-width: 780px;
+}
+
+.how-it-works-section .how-intro > p {
+    margin-top: 20px;
+    max-width: 680px;
+    color: #6f6a60;
+    font-size: 17px;
+}
+
+.how-it-works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.how-card {
+    background: #fffdf8;
+    border: 1px solid #e4d9c5;
+    border-radius: 18px;
+    padding: 28px;
+    min-height: 240px;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.how-card:hover {
+    transform: translateY(-5px);
+    border-color: #8fcb81;
+}
+
+.how-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #ffd84d;
+    color: #332d29;
+    font-weight: 700;
+    margin-bottom: 28px;
+}
+
+.how-card h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 23px;
+    line-height: 1.15;
+    color: #332d29;
+    margin-bottom: 12px;
+}
+
+.how-card p {
+    color: #6f6a60;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.how-next {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 13px 20px;
+    border-radius: 30px;
+    background: #ffd84d;
+    color: #332d29;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+}
+
+.how-next:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 800px) {
+    .how-it-works-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .how-card {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 650px) {
+    .how-it-works-section {
+        padding: 75px 5vw;
+    }
+
+    .how-card {
+        padding: 24px;
+    }
+}

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Roadmap | Beyond HYPE</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="career-detail.css">
+</head>
+
+<body class="career-detail-page">
+
+    <!-- NAVIGATION -->
+    <nav class="navbar career-navbar">
+
+        <a class="nav-logo" href="index.html">
+            <span>Beyond</span> HYPE
+        </a>
+
+        <div class="nav-links">
+            <a href="career-paths.html">Career paths</a>
+            <a href="#role-overview">Role overview</a>
+            <a href="#role-evolution">Industry changes</a>
+            <a href="#learning-map">Learning roadmap</a>
+        </div>
+
+        <a href="career-paths.html" class="nav-button">
+            ← All careers
+        </a>
+
+    </nav>
+
+
+    <main class="career-detail-wrap">
+
+        <!-- THREE CAREER CHOICES -->
+<section class="career-choices" id="careerChoices">
+
+    <div class="eyebrow">EXPLORE CAREER PATHS</div>
+
+    <h1>Choose your career path.</h1>
+
+    <p>Explore the roles, skills and learning journeys shaping technology.</p>
+
+    <div class="career-choice-grid">
+
+        <a href="career-paths.html" class="career-choice-card">
+            <span>01 · SOFTWARE ENGINEERING</span>
+            <h2>Software Development Engineer</h2>
+            <p>Learn programming, software development, databases and system design.</p>
+            <strong>Explore SDE →</strong>
+        </a>
+
+        <a href="career-detail.html?role=F2-R-machine-learning-engineer"
+           class="career-choice-card">
+            <span>02 · ARTIFICIAL INTELLIGENCE</span>
+            <h2>Machine Learning Engineer</h2>
+            <p>Explore machine learning, model development and deployment.</p>
+            <strong>Explore ML →</strong>
+        </a>
+
+        <a href="career-detail.html?role=F3-R-data-engineer"
+           class="career-choice-card">
+            <span>03 · DATA ENGINEERING</span>
+            <h2>Data Engineer</h2>
+            <p>Explore databases, data pipelines and large-scale data systems.</p>
+            <strong>Explore Data →</strong>
+        </a>
+
+    </div>
+
+</section>
+
+        <!-- LOADING / ERROR MESSAGE -->
+        <div id="careerStatus" class="career-status">
+            Loading career information...
+        </div>
+
+
+        <!-- ROLE CONTENT -->
+        <div id="careerContent" hidden>
+
+            <!-- BREADCRUMB -->
+            <div class="career-breadcrumb">
+                <a href="index.html">Beyond HYPE</a>
+                <span>/</span>
+                <a href="career-paths.html">Career paths</a>
+                <span>/</span>
+                <strong id="breadcrumbRole"></strong>
+            </div>
+
+
+            <!-- ROLE HERO -->
+            <section class="detail-hero" id="role-overview">
+
+                <div class="detail-hero-copy">
+
+                    <div class="eyebrow">
+                        CAREER EXPLORER
+                    </div>
+
+                    <span id="roleCategory" class="role-category"></span>
+
+                    <h1 id="roleTitle">
+                        Career title
+                    </h1>
+
+                    <p id="roleTagline">
+                        Role introduction will appear here.
+                    </p>
+
+                    <div class="detail-hero-actions">
+
+                        <a href="#learning-map" class="detail-primary-btn">
+                            Explore learning roadmap ↓
+                        </a>
+
+                        <span id="roleAudience" class="role-audience"></span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROLE SNAPSHOT -->
+                <aside class="detail-role-card">
+
+                    <div class="role-card-heading">
+                        ROLE SNAPSHOT
+                    </div>
+
+                    <h2>What does this professional do?</h2>
+
+                    <p id="roleDescription"></p>
+
+                    <div class="role-card-divider"></div>
+
+                    <div class="role-card-facts" id="roleFacts">
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- INDUSTRY EVOLUTION -->
+            <section class="detail-evolution" id="role-evolution">
+
+                <div class="eyebrow">
+                    THE INDUSTRY IS EVOLVING
+                </div>
+
+                <h2>
+                    Understand how<br>
+                    the role is <em>changing.</em>
+                </h2>
+
+                <p>
+                    Explore how responsibilities, tools and working
+                    practices are evolving, and what professionals
+                    still need to understand and do.
+                </p>
+
+                <div id="evolutionContent" class="evolution-content">
+                </div>
+
+            </section>
+
+
+            <!-- LEARNING ROADMAP -->
+            <section class="detail-learning" id="learning-map">
+
+                <div class="eyebrow">
+                    YOUR LEARNING JOURNEY
+                </div>
+
+                <div class="detail-section-heading">
+
+                    <div>
+                        <h2>
+                            What should you <em>learn?</em>
+                        </h2>
+
+                        <p>
+                            Follow the learning sequence, explore individual
+                            skills and understand how each connects to
+                            practical engineering work.
+                        </p>
+                    </div>
+
+                    <span class="roadmap-count" id="roadmapCount">
+                        00 AREAS
+                    </span>
+
+                </div>
+
+
+                <!-- Learning timeline -->
+                <div class="detail-learning-layout">
+
+                    <div
+                        id="learningList"
+                        class="detail-learning-list">
+                    </div>
+
+                    <!-- Selected learning area -->
+                    <div
+                        id="learningDetail"
+                        class="detail-learning-panel"
+                        aria-live="polite">
+
+                        <div class="detail-placeholder">
+                            <h3>Select a learning area</h3>
+
+                            <p>
+                                Choose an area from the learning sequence
+                                to explore its topics, resources and exercises.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROJECT ROADMAP -->
+            <section class="detail-projects" id="projects">
+
+                <div class="eyebrow">
+                    APPLY WHAT YOU LEARN
+                </div>
+
+                <h2>
+                    Build your way<br>
+                    towards <em>real projects.</em>
+                </h2>
+
+                <p>
+                    Work through practical projects that gradually
+                    introduce more complex concepts and responsibilities.
+                </p>
+
+                <div id="projectContent" class="project-content">
+                </div>
+
+            </section>
+
+
+            <!-- TOOLS AND TECHNOLOGIES -->
+            <section class="detail-tools" id="tools">
+
+                <div class="eyebrow">
+                    YOUR TOOLKIT
+                </div>
+
+                <h2>
+                    Technologies used<br>
+                    in the <em>profession.</em>
+                </h2>
+
+                <div id="toolsContent" class="tools-content">
+                </div>
+
+            </section>
+
+
+            <!-- EVIDENCE -->
+            <section class="detail-evidence" id="evidence">
+
+                <div class="eyebrow">
+                    LOOK BEYOND THE HYPE
+                </div>
+
+                <h2>
+                    What does the <em>evidence</em> say?
+                </h2>
+
+                <p>
+                    Explore the sources and supporting evidence behind
+                    the skills and industry changes discussed in this roadmap.
+                </p>
+
+                <div id="evidenceContent" class="evidence-content">
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="career-footer">
+
+        <div class="footer-brand">
+            <span>Beyond</span> HYPE
+        </div>
+
+        <p>
+            Understand the change. Prepare for what's next.
+        </p>
+
+        <a href="career-paths.html">
+            Explore other careers ↑
+        </a>
+
+    </footer>
+
+
+    <script src="career-detail.js"></script>
+
+</body>
+</html>
